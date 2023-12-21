@@ -1,8 +1,5 @@
-import { StatusBar } from "expo-status-bar";
-import { Image, View, StyleSheet } from "react-native";
-import InputButton from "./src/components/InputButton";
-import { assets } from "./src/utils/assets";
-import { colors } from "./src/utils/colors";
+import { View, StyleSheet } from "react-native";
+import Login from "./src/screens/Login";
 
 export default function App() {
   return (
@@ -10,15 +7,7 @@ export default function App() {
       className="flex-1 items-center justify-center h-screen"
       style={styles.appContainer}
     >
-      <Image source={assets.RSALogoWhite} width={60} height={30} />
-      <InputButton
-        title="Next"
-        onPress={(e) => {
-          e.preventDefault();
-          alert("Next");
-        }}
-      />
-      <StatusBar style="auto" />
+      <Login />
     </View>
   );
 }
