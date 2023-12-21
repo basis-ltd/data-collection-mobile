@@ -6,7 +6,7 @@ import { fonts } from "../utils/fonts";
 import { View, StyleSheet, TextInput, Text, Image } from "react-native";
 
 const AppInput = (props) => {
-  const { iconUrl, labelText, placeholder, keyboardType } = props;
+  const { iconUrl, labelText, placeholder, keyboardType, onChangeText } = props;
   return (
     <View style={styles.container}>
       {labelText && <Text style={styles.label}>{labelText}</Text>}
@@ -20,19 +20,27 @@ const AppInput = (props) => {
           keyboardType={keyboardType}
           style={[styles.input, props.style]}
           placeholderTextColor={colors.ACCENT_DARK}
+          onChangeText={onChangeText}
         />
       </View>
     </View>
   );
 };
+
 // proptypes:
 AppInput.propTypes = {
   onChangeText: PropTypes.func,
   placeholder: PropTypes.string.isRequired,
   defaultValue: PropTypes.string,
-  iconUrl: PropTypes.number,
   labelText: PropTypes.string,
-  keyboardType: PropTypes.checkPropTypes,
+  keyboardType: PropTypes.oneOf([
+    "default",
+    "number-pad",
+    "decimal-pad",
+    "numeric",
+    "email-address",
+    "phone-pad",
+  ]),
 };
 
 // styles
