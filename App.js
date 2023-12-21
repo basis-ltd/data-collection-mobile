@@ -17,7 +17,7 @@ export default function App() {
   }, []);
 
   // show loading ---
-  if (fontsLoaded === false) return <LoadingPage />;
+  if (fontsLoaded === false) return <LoadingPage loading={fontsLoaded} />;
 
   return (
     <View

@@ -1,20 +1,31 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
+import PropTypes from "prop-types";
 import { colors } from "../utils/colors";
 import LottieView from "lottie-react-native";
 import { assets, lotties } from "../utils/assets";
-import { fonts } from "../utils/fonts";
 
-const LoadingPage = () => {
+const LoadingPage = (props) => {
+  const { loading } = props;
+  const animation = useRef(null);
+
+  useEffect(() => {
+    if (loading) {
+      animation.current?.reset();
+      animation.current?.play();
+    }
+  }, [loading]);
+
   return (
     <View style={styles.loadingContainer}>
       <View style={styles.topHomePage}>
         <Image source={assets.RSALogoWhite} style={styles.logoAppWhite} />
         <LottieView
-          source={lotties.LoadingPages}
           autoPlay
+          ref={animation}
           loop
           style={styles.lottieViewAnim}
+          source={lotties.LoadingPages}
         />
       </View>
       <View style={styles.bottonHomePage}>
@@ -22,6 +33,11 @@ const LoadingPage = () => {
       </View>
     </View>
   );
+};
+
+// protypes---
+LoadingPage.propTypes = {
+  loading: PropTypes.bool.isRequired,
 };
 
 const styles = StyleSheet.create({
@@ -47,6 +63,8 @@ const styles = StyleSheet.create({
   logoAppWhite: {
     width: 161,
     height: 74,
+    position: "relative",
+    zIndex: 1,
   },
   lottieViewAnim: {
     width: "100%",
@@ -56,9 +74,9 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     zIndex: 0,
+    opacity: 0.5,
   },
   bottonHomePage: {
-    // flex: 1,
     backgroundColor: colors.TRANSPARENT,
     display: "flex",
     justifyContent: "flex-end",
