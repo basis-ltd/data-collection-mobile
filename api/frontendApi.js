@@ -1,4 +1,4 @@
-export const apiRoutes = {
+export const frontendAPI = {
   Home: "/",
-  Login: "login",
+  Login: "/login",
 };

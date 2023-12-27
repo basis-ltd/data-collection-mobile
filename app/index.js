@@ -1,23 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, StyleSheet, SafeAreaView } from "react-native";
+import { StyleSheet, SafeAreaView } from "react-native";
 import LoadingPage from "../components/LoadingPage";
 import { colors } from "../utils/colors";
+import GettingStarted from "../ui/GettingStarted";
+import { loadAppFonts } from "../utils/fonts";
 
 const Home = () => {
-  const [showLoadingPage, setShowLoadingPage] = useState(true);
+  const [loadFontsFamily, setLoadFontsFamily] = useState(true);
 
   useEffect(() => {
+    async function loadFonts() {
+      await loadAppFonts();
+    }
+    loadFonts();
+
     const timer = setTimeout(() => {
-      setShowLoadingPage(false);
-    }, 3000);
+      setLoadFontsFamily(false);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <SafeAreaView style={styles.appContainer}>
-      {showLoadingPage && <LoadingPage loading={showLoadingPage} />}
-      {!showLoadingPage && <Text>Home</Text>}
+      {/* show loading --- */}
+      {loadFontsFamily && <LoadingPage loading={loadFontsFamily} />}
+      {!loadFontsFamily && <GettingStarted />}
     </SafeAreaView>
   );
 };
