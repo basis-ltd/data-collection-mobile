@@ -1,27 +1,38 @@
 import React, { useEffect, useState } from "react";
-import { Text, View } from "react-native";
-import { apiRoutes } from "../api/frontendApi";
+import { Text, View, StyleSheet, SafeAreaView } from "react-native";
 import LoadingPage from "../components/LoadingPage";
+import { colors } from "../utils/colors";
 
 const Home = () => {
   const [showLoadingPage, setShowLoadingPage] = useState(true);
 
-  // const goToLogin = () => {
-  //   navigation.navigate(apiRoutes.Login);
-  // };
-
   useEffect(() => {
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setShowLoadingPage(false);
-    }, 1000);
+    }, 3000);
+
+    return () => clearTimeout(timer);
   }, []);
 
   return (
-    <View>
+    <SafeAreaView style={styles.appContainer}>
       {showLoadingPage && <LoadingPage loading={showLoadingPage} />}
       {!showLoadingPage && <Text>Home</Text>}
-    </View>
+    </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  appContainer: {
+    flex: 1,
+    backgroundColor: colors.PRIMARY,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 0,
+    display: "flex",
+    flexDirection: "column",
+    gap: 0,
+  },
+});
 
 export default Home;

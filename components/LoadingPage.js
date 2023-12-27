@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, Dimensions } from "react-native";
 import PropTypes from "prop-types";
 import { colors } from "../utils/colors";
 import LottieView from "lottie-react-native";
@@ -71,8 +71,12 @@ const styles = StyleSheet.create({
     aspectRatio: 1 / 1,
     height: "auto",
     position: "absolute",
-    left: 0,
-    right: 0,
+    top: "-50%",
+    left: "-50%",
+    transform: [
+      { translateX: Dimensions.get("window").width / 2.8 },
+      { translateY: Dimensions.get("window").height / 2.2 },
+    ],
     zIndex: 0,
     opacity: 0.5,
   },

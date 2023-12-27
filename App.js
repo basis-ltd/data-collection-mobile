@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NavigationContainer } from "@react-navigation/native";
 import { loadAppFonts } from "./src/utils/fonts";
-import LoadingPage from "./src/components/LoadingPage";
-import Home from "./src/screens/Home";
-import Login from "./src/screens/Login";
-import { apiRoutes } from "./src/api/frontendApi";
+import LoadingPage from "./components/LoadingPage";
+import { Text, View, StyleSheet } from "react-native";
+import { colors } from "./utils/colors";
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
-  const Stack = createNativeStackNavigator();
 
   useEffect(() => {
     async function loadFonts() {
@@ -23,11 +19,20 @@ export default function App() {
   if (fontsLoaded === false) return <LoadingPage loading={fontsLoaded} />;
 
   return (
-    <NavigationContainer initialRouteName={apiRoutes.Home}>
-      <Stack.Navigator>
-        <Stack.Screen name={apiRoutes.Home} component={Home} />
-        <Stack.Screen name={apiRoutes.Login} component={Login} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <View style={styles.container}>
+      <Text>Home page</Text>
+    </View>
   );
 }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.PRIMARY,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 0,
+    display: "flex",
+    flexDirection: "column",
+    gap: 0,
+  },
+});

@@ -12,24 +12,20 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./src/assets/images/favicon.png",
+        "foregroundImage": "./assets/images/favicon.png",
         "backgroundColor": "#064B64"
       }
     },
     "web": {
-      "favicon": "./src/assets/images/favicon.png",
+      "favicon": "./assets/images/favicon.png",
       "bundler": "metro"
     },
-    "plugins": [
-      "expo-router"
-    ]
+    "plugins": ["expo-router"]
   }
 }
