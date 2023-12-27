@@ -4,7 +4,8 @@ A mobile app of the Data Collection Service Application powered by Rwanda Space 
 
 # Notes on the app structure
 
-![Alt text](image.png)
+![image](https://github.com/Rwanda-Space-Agency-Dev/Data-collection-Mobile/assets/91186046/686c990b-54d0-4b19-b638-2ac93088e319)
+
 
 As you see on the image above,
 these are the folders and its corresponding contents:
