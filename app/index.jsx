@@ -23,7 +23,6 @@ const Home = () => {
 
   return (
     <SafeAreaView style={styles.appContainer}>
-      {/* show loading --- */}
       {loadFontsFamily && <LoadingPage loading={loadFontsFamily} />}
       {!loadFontsFamily && <GettingStarted />}
     </SafeAreaView>
