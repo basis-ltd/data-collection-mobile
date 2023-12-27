@@ -4,8 +4,11 @@ import { assets } from "../utils/assets";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Image } from "react-native";
+import { useState, useEffect } from "react";
 
 const AppLayout = () => {
+  const [waitForHomeToLoad, setWaitForHomeToLoad] = useState(true);
+
   const headerTitleStyle = {
     color: colors.PRIMARY,
     textAlign: "center",
@@ -17,6 +20,14 @@ const AppLayout = () => {
     headerTitleStyle,
   };
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setWaitForHomeToLoad(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <Stack>
       <Stack.Screen
@@ -24,8 +35,16 @@ const AppLayout = () => {
         options={{
           headerTitle: "Home",
           ...generalStyles,
+          // only for home page
+          headerStyle: {
+            backgroundColor: waitForHomeToLoad ? colors.PRIMARY : colors.LIGHT,
+          },
+          headerTitleStyle: {
+            color: waitForHomeToLoad ? colors.LIGHT : colors.PRIMARY,
+          },
         }}
       />
+
       <Stack.Screen
         name="login/index"
         options={{
