@@ -1,10 +1,10 @@
 import React from "react";
 import { StyleSheet, SafeAreaView, Image, View, Text } from "react-native";
-import AppButton from "../ui/AppButton";
-import AppInput from "../ui/AppInput";
-import { assets } from "../utils/assets";
-import { colors } from "../utils/colors";
-import { fonts } from "../utils/fonts";
+import AppButton from "../../components/AppButton";
+import AppInput from "../../components/AppInput";
+import { assets } from "../../utils/assets";
+import { colors } from "../../utils/colors";
+import { fonts } from "../../utils/fonts";
 
 const Login = () => {
   const handleLoginSubmit = () => {};

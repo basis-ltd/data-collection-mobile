@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet } from "react-native";
-import Login from "./src/screens/Login";
-import { colors } from "./src/utils/colors";
-import { fonts } from "./src/utils/fonts";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavigationContainer } from "@react-navigation/native";
 import { loadAppFonts } from "./src/utils/fonts";
 import LoadingPage from "./src/components/LoadingPage";
+import Home from "./src/screens/Home";
+import Login from "./src/screens/Login";
+import { apiRoutes } from "./src/api/frontendApi";
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
+  const Stack = createNativeStackNavigator();
+
   useEffect(() => {
     async function loadFonts() {
       await loadAppFonts();
@@ -20,20 +23,11 @@ export default function App() {
   if (fontsLoaded === false) return <LoadingPage loading={fontsLoaded} />;
 
   return (
-    <View
-      className="flex-1 items-center justify-center h-screen"
-      style={styles.appContainer}
-    >
-      <Login />
-    </View>
+    <NavigationContainer initialRouteName={apiRoutes.Home}>
+      <Stack.Navigator>
+        <Stack.Screen name={apiRoutes.Home} component={Home} />
+        <Stack.Screen name={apiRoutes.Login} component={Login} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  appContainer: {
-    flex: 1,
-    backgroundColor: colors.PRIMARY,
-    padding: 0,
-    fontFamily: fonts.MONTSERRAT_BLACK,
-  },
-});
