@@ -33,9 +33,8 @@ const AppLayout = () => {
       <Stack.Screen
         name="index"
         options={{
-          headerTitle: "Home",
           ...generalStyles,
-          // only for home page
+          headerShown: false,
           headerStyle: {
             backgroundColor: waitForHomeToLoad ? colors.PRIMARY : colors.LIGHT,
           },
@@ -48,8 +47,9 @@ const AppLayout = () => {
       <Stack.Screen
         name="login/index"
         options={{
-          headerTitle: "Login",
+          headerTitle: "",
           ...generalStyles,
+          headerShown: false,
           headerLeft: (props) => <CustomBackButton {...props} />,
         }}
       />

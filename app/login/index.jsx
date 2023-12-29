@@ -5,9 +5,14 @@ import AppInput from "../../components/AppInput";
 import { assets } from "../../utils/assets";
 import { colors } from "../../utils/colors";
 import { fonts } from "../../utils/fonts";
+import { Formik } from "formik";
+import { phoneNumberValidationSchema } from "../../validations/phoneValidationSchema";
 
 const Login = () => {
-  const handleLoginSubmit = () => {};
+  const handleLoginSubmit = (values) => {
+    console.log(values, "test values");
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Image
@@ -24,16 +29,32 @@ const Login = () => {
         <Text style={styles.title}>Data Collection App</Text>
       </View>
       <Text style={styles.labelLogin}>Login, to Start Collecting data</Text>
-      <AppInput
-        iconUrl={assets.PhoneIcon}
-        placeholder="Your telephone"
-        keyboardType="number-pad"
-      />
-      <AppButton
-        fullWidth={true}
-        title="Send OTP"
-        handleOnPress={handleLoginSubmit}
-      />
+      {/* Form login and validation */}
+      <Formik
+        initialValues={{ phone: "" }}
+        validationSchema={phoneNumberValidationSchema}
+        onSubmit={handleLoginSubmit}
+      >
+        {({ handleSubmit, errors, values, handleChange }) => {
+          return (
+            <View style={styles.formikContainer}>
+              <AppInput
+                iconUrl={assets.PhoneIcon}
+                placeholder="Your telephone"
+                keyboardType="number-pad"
+                error={errors.phone}
+                value={values.phone}
+                onChangeText={handleChange("phone")}
+              />
+              <AppButton
+                fullWidth={true}
+                title="Send OTP"
+                handleOnPress={handleSubmit}
+              />
+            </View>
+          );
+        }}
+      </Formik>
     </SafeAreaView>
   );
 };
@@ -81,6 +102,15 @@ const styles = StyleSheet.create({
     marginTop: 29,
     alignItems: "flex-start",
     textAlign: "left",
+  },
+  formikContainer: {
+    padding: 0,
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    margin: 0,
+    flexDirection: "column",
+    gap: 10,
   },
 });
 
