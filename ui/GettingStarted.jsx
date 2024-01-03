@@ -42,8 +42,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   loginImage: {
-    width: "70.41221374045802%",
-    aspectRatio: 1 / 1,
+    width: "78.16030534351145%",
+    aspectRatio: 307.17 / 393,
     height: "auto",
     marginTop: 100,
   },

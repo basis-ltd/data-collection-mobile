@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   },
   loginImage: {
     width: "66.41221374045802%",
-    aspectRatio: 1 / 1,
+    aspectRatio: 261 / 262,
     height: "auto",
     marginTop: 50,
   },
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   labelLogin: {
     width: "100%",
     color: colors.ACCENT_DARK,
-    fontFamily: fonts.MONTSERRAT_MEDIUM,
+    fontFamily: fonts.MONTSERRAT_SEMI_BOLD,
     fontSize: 17,
     marginTop: 29,
     alignItems: "flex-start",
