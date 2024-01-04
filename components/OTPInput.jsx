@@ -1,33 +1,55 @@
-import { StyleSheet, TextInput } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, TextInput, Text } from "react-native";
 import { borders } from "../utils/border";
 import { colors } from "../utils/colors";
+import { fonts } from "../utils/fonts";
 
 const OTPInput = (props) => {
   const { onChange, disabled } = props;
+  const [isFocused, setIsFocused] = useState(false);
+
   return (
     <TextInput
-      style={styles.TextInputOtp}
+      style={!isFocused ? styles.TextInputOtp : styles.textInputFocused}
       maxLength={1}
       editable={!disabled}
       onChangeText={onChange}
       selectTextOnFocus
       contextMenuHidden
       keyboardType="decimal-pad"
+      selectionColor={colors.ACCENT_DARK}
+      onFocus={() => setIsFocused(true)}
+      onBlur={() => setIsFocused(false)}
     />
   );
 };
 
+const generalInputStyles = {
+  ...borders("s", colors.ACCENT_DARK),
+  width: "100%",
+  backgroundColor: colors.LIGHT,
+  aspectRatio: 58 / 44,
+  alignItems: "center",
+  justifyContent: "center",
+  color: colors.PRIMARY,
+  fontSize: 24,
+  flex: 1,
+  borderRadius: 7,
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  textAlign: "center",
+  fontFamily: fonts.MONTSERRAT_BOLD,
+};
+
 const styles = StyleSheet.create({
   TextInputOtp: {
-    ...borders("s", colors.ACCENT_DARK),
-    width: "100%",
-    backgroundColor: colors.LIGHT,
-    aspectRatio: 58 / 44,
-    alignItems: "center",
-    justifyContent: "center",
-    color: colors.PRIMARY,
-    fontSize: 24,
-    flex: 1,
+    ...generalInputStyles,
+  },
+  textInputFocused: {
+    ...generalInputStyles,
+    borderColor: colors.PRIMARY,
+    borderWidth: 2,
   },
 });
 

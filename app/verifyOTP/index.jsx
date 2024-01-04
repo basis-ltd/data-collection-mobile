@@ -30,22 +30,23 @@ const verifyOTP = () => {
         {({ handleSubmit, errors, values, handleChange }) => {
           return (
             <View style={styles.formikContainer}>
-              <View style={styles.optBox} className="p-0 m-0 w-full">
-                {[1, 2, 3, 4, 5].map((value, index) => {
-                  <OTPInput key={index} onChange={getSingleOtpChange} />;
-                })}
+              <View style={styles.optBox} className="p-0 flex m-0 w-full">
+                {[1, 2, 3, 4, 5].map((value, index) => (
+                  <OTPInput key={index} />
+                ))}
               </View>
+              {/* <Text style={styles.error}>errors with resend</Text> */}
               <View
                 style={styles.resendCodeBox}
-                className="p-0 m-0 w-full flex justify-end items-end"
+                className="p-0 m-0 w-full flex"
               >
-                <Pressable className="bg-primary text-end border-none py-0 px-1">
+                <Pressable className="p-0 m-0 cursor-pointer">
                   <Text style={styles.resendCodeText}>Resend Code</Text>
                 </Pressable>
               </View>
               <AppButton
                 fullWidth={true}
-                title="Send OTP"
+                title="Confirm"
                 handleOnPress={handleSubmit}
               />
             </View>
@@ -100,21 +101,33 @@ const styles = StyleSheet.create({
   },
   optBox: {
     display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     width: "100%",
-    backgroundColor: "gray",
     gap: 10,
     flexWrap: "nowrap",
     height: 44,
     marginTop: 35,
   },
   resendCodeBox: {
-    marginTop: 5,
     marginBottom: 5,
+    alignItems: "flex-end",
   },
   resendCodeText: {
     color: colors.ACCENT_DARK,
     fontFamily: fonts.MONTSERRAT_MEDIUM,
     fontSize: 17,
+    textAlign: "right",
+    backgroundColor: colors.TRANSPARENT,
+  },
+  error: {
+    marginTop: -15,
+    color: colors.ERROR,
+    fontFamily: fonts.MONTSERRAT_BOLD,
+    fontSize: 12,
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
   },
 });
 
