@@ -2,6 +2,7 @@
   "expo": {
     "name": "Data-collection-Mobile",
     "slug": "Data-collection-Mobile",
+    "scheme": "Data-collection-Mobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "",
@@ -11,20 +12,20 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/images/favicon.png",
+        "backgroundColor": "#064B64"
       }
     },
     "web": {
-      "favicon": ""
-    }
+      "favicon": "./assets/images/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": ["expo-router"]
   }
 }

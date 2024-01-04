@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet } from "react-native";
-import Login from "./src/screens/Login";
-import { colors } from "./src/utils/colors";
-import { fonts } from "./src/utils/fonts";
 import { loadAppFonts } from "./src/utils/fonts";
-import LoadingPage from "./src/components/LoadingPage";
+import LoadingPage from "./components/LoadingPage";
+import { Text, View, StyleSheet } from "react-native";
+import { colors } from "./utils/colors";
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
+
   useEffect(() => {
     async function loadFonts() {
       await loadAppFonts();
@@ -20,20 +19,20 @@ export default function App() {
   if (fontsLoaded === false) return <LoadingPage loading={fontsLoaded} />;
 
   return (
-    <View
-      className="flex-1 items-center justify-center h-screen"
-      style={styles.appContainer}
-    >
-      <Login />
+    <View style={styles.container}>
+      <Text>Home page</Text>
     </View>
   );
 }
-
 const styles = StyleSheet.create({
-  appContainer: {
+  container: {
     flex: 1,
     backgroundColor: colors.PRIMARY,
+    justifyContent: "center",
+    alignItems: "center",
     padding: 0,
-    fontFamily: fonts.MONTSERRAT_BLACK,
+    display: "flex",
+    flexDirection: "column",
+    gap: 0,
   },
 });

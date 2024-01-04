@@ -1,7 +1,7 @@
+import React, { FC } from "react";
 import PropTypes from "prop-types";
 import { colors } from "../utils/colors";
 import { fonts } from "../utils/fonts";
-import React, { FC } from "react";
 import { StyleSheet, Text, Pressable } from "react-native";
 
 const AppButton = (props) => {
