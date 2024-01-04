@@ -2,6 +2,7 @@ import { Stack } from "expo-router";
 import { colors } from "../utils/colors";
 import { useState, useEffect } from "react";
 import CustomBackButton from "../components/CustomBackButton";
+import { Platform } from "react-native";
 
 const AppLayout = () => {
   const [waitForHomeToLoad, setWaitForHomeToLoad] = useState(true);
@@ -12,7 +13,13 @@ const AppLayout = () => {
   };
 
   const generalStyles = {
-    headerStyle: { backgroundColor: colors.LIGHT },
+    headerStyle: {
+      backgroundColor: colors.LIGHT,
+      elevation: 0,
+      borderBottomWidth: 0,
+      shadowColor: colors.TRANSPARENT,
+    },
+    headerShadowVisible: false,
     headerTitleAlign: "center",
     headerTitleStyle,
   };
@@ -47,7 +54,6 @@ const AppLayout = () => {
           headerTitle: "",
           ...generalStyles,
           headerShown: false,
-          // headerLeft: (props) => <CustomBackButton {...props} />,
         }}
       />
       <Stack.Screen

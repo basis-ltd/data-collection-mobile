@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, SafeAreaView, View, Text } from "react-native";
+import { StyleSheet, SafeAreaView, View, Text, Pressable } from "react-native";
 import AppButton from "../../components/AppButton";
 import AppInput from "../../components/AppInput";
 import { assets } from "../../utils/assets";
@@ -30,10 +30,18 @@ const verifyOTP = () => {
         {({ handleSubmit, errors, values, handleChange }) => {
           return (
             <View style={styles.formikContainer}>
-              <View style={styles.optBox}>
+              <View style={styles.optBox} className="p-0 m-0 w-full">
                 {[1, 2, 3, 4, 5].map((value, index) => {
                   <OTPInput key={index} onChange={getSingleOtpChange} />;
                 })}
+              </View>
+              <View
+                style={styles.resendCodeBox}
+                className="p-0 m-0 w-full flex justify-end items-end"
+              >
+                <Pressable className="bg-primary text-end border-none py-0 px-1">
+                  <Text style={styles.resendCodeText}>Resend Code</Text>
+                </Pressable>
               </View>
               <AppButton
                 fullWidth={true}
@@ -70,14 +78,14 @@ const styles = StyleSheet.create({
     color: colors.PRIMARY,
     fontFamily: fonts.MONTSERRAT_BOLD,
     fontWeight: "bold",
-    marginTop: 33,
+    marginTop: 10,
     textAlign: "left",
   },
   labelVerify: {
     width: "100%",
     color: colors.ACCENT_DARK,
-    fontFamily: fonts.MONTSERRAT_MEDIUM,
-    fontSize: 17,
+    fontFamily: fonts.MONTSERRAT_REGULAR,
+    fontSize: 15,
     alignItems: "flex-start",
     textAlign: "left",
   },
@@ -93,8 +101,20 @@ const styles = StyleSheet.create({
   optBox: {
     display: "flex",
     width: "100%",
+    backgroundColor: "gray",
     gap: 10,
     flexWrap: "nowrap",
+    height: 44,
+    marginTop: 35,
+  },
+  resendCodeBox: {
+    marginTop: 5,
+    marginBottom: 5,
+  },
+  resendCodeText: {
+    color: colors.ACCENT_DARK,
+    fontFamily: fonts.MONTSERRAT_MEDIUM,
+    fontSize: 17,
   },
 });
 
