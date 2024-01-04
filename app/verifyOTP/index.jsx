@@ -14,13 +14,14 @@ const verifyOTP = () => {
     console.log(values, "test values");
   };
 
-  const demoOTPLength = 5;
   const getSingleOtpChange = () => {};
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Verify Code</Text>
-      <Text style={styles.labelVerify}>Please Enter OTP we’ve sent you</Text>
+      <View style={styles.titleBox}>
+        <Text style={styles.title}>Verify Code</Text>
+        <Text style={styles.labelVerify}>Please Enter OTP we’ve sent you</Text>
+      </View>
       <Formik
         initialValues={{ phone: "" }}
         validationSchema={phoneNumberValidationSchema}
@@ -30,7 +31,7 @@ const verifyOTP = () => {
           return (
             <View style={styles.formikContainer}>
               <View style={styles.optBox}>
-                {[...new Array(demoOTPLength)].map((value, index) => {
+                {[1, 2, 3, 4, 5].map((value, index) => {
                   <OTPInput key={index} onChange={getSingleOtpChange} />;
                 })}
               </View>
@@ -53,22 +54,30 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.LIGHT,
     padding: 24,
-    gap: 18,
+    gap: 10,
     alignItems: "center",
+  },
+  titleBox: {
+    flexDirection: "column",
+    gap: 10,
+    width: "100%",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
   },
 
   title: {
-    fontSize: 24,
+    fontSize: 28,
     color: colors.PRIMARY,
     fontFamily: fonts.MONTSERRAT_BOLD,
     fontWeight: "bold",
+    marginTop: 33,
+    textAlign: "left",
   },
   labelVerify: {
     width: "100%",
     color: colors.ACCENT_DARK,
     fontFamily: fonts.MONTSERRAT_MEDIUM,
     fontSize: 17,
-    marginTop: 29,
     alignItems: "flex-start",
     textAlign: "left",
   },
@@ -82,6 +91,7 @@ const styles = StyleSheet.create({
     gap: 21,
   },
   optBox: {
+    display: "flex",
     width: "100%",
     gap: 10,
     flexWrap: "nowrap",

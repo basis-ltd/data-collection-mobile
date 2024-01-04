@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     color: colors.PRIMARY,
     fontSize: 24,
+    flex: 1,
   },
 });
 
