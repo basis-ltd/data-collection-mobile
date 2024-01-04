@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, SafeAreaView, Image, View, Text } from "react-native";
+import { StyleSheet, SafeAreaView, View, Text } from "react-native";
 import AppButton from "../../components/AppButton";
 import AppInput from "../../components/AppInput";
 import { assets } from "../../utils/assets";
@@ -7,32 +7,20 @@ import { colors } from "../../utils/colors";
 import { fonts } from "../../utils/fonts";
 import { Formik } from "formik";
 import { phoneNumberValidationSchema } from "../../validations/phoneValidationSchema";
-import { router } from "expo-router";
-import { frontendAPI } from "../../api/frontendApi";
+import OTPInput from "../../components/OTPInput";
 
-const Login = () => {
+const verifyOTP = () => {
   const handleLoginSubmit = (values) => {
     console.log(values, "test values");
-    router.push(frontendAPI.verifyOTP);
   };
+
+  const demoOTPLength = 5;
+  const getSingleOtpChange = () => {};
 
   return (
     <SafeAreaView style={styles.container}>
-      <Image
-        source={assets.LoginPageImage}
-        style={styles.loginImage}
-        alt="Login SVG"
-      />
-      <View style={styles.titleBox}>
-        <Image
-          source={assets.CirclesLoginSVG}
-          style={styles.titleCircleImage}
-          alt="Login SVG"
-        />
-        <Text style={styles.title}>Data Collection App</Text>
-      </View>
-      <Text style={styles.labelLogin}>Login, to Start Collecting data</Text>
-      {/* Form login and validation */}
+      <Text style={styles.title}>Verify Code</Text>
+      <Text style={styles.labelVerify}>Please Enter OTP we’ve sent you</Text>
       <Formik
         initialValues={{ phone: "" }}
         validationSchema={phoneNumberValidationSchema}
@@ -41,14 +29,11 @@ const Login = () => {
         {({ handleSubmit, errors, values, handleChange }) => {
           return (
             <View style={styles.formikContainer}>
-              <AppInput
-                iconUrl={assets.PhoneIcon}
-                placeholder="Your telephone"
-                keyboardType="number-pad"
-                error={errors.phone}
-                value={values.phone}
-                onChangeText={handleChange("phone")}
-              />
+              <View style={styles.optBox}>
+                {[...new Array(demoOTPLength)].map((value, index) => {
+                  <OTPInput key={index} onChange={getSingleOtpChange} />;
+                })}
+              </View>
               <AppButton
                 fullWidth={true}
                 title="Send OTP"
@@ -71,36 +56,17 @@ const styles = StyleSheet.create({
     gap: 18,
     alignItems: "center",
   },
-  loginImage: {
-    width: "66.41221374045802%",
-    aspectRatio: 261 / 262,
-    height: "auto",
-    marginTop: 50,
-  },
-  titleBox: {
-    display: "flex",
-    width: "100%",
-    gap: 9,
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center",
-  },
 
-  titleCircleImage: {
-    width: 40,
-    aspectRatio: 1 / 1,
-    height: "auto",
-  },
   title: {
     fontSize: 24,
     color: colors.PRIMARY,
     fontFamily: fonts.MONTSERRAT_BOLD,
     fontWeight: "bold",
   },
-  labelLogin: {
+  labelVerify: {
     width: "100%",
     color: colors.ACCENT_DARK,
-    fontFamily: fonts.MONTSERRAT_SEMI_BOLD,
+    fontFamily: fonts.MONTSERRAT_MEDIUM,
     fontSize: 17,
     marginTop: 29,
     alignItems: "flex-start",
@@ -113,8 +79,13 @@ const styles = StyleSheet.create({
     height: "100%",
     margin: 0,
     flexDirection: "column",
+    gap: 21,
+  },
+  optBox: {
+    width: "100%",
     gap: 10,
+    flexWrap: "nowrap",
   },
 });
 
-export default Login;
+export default verifyOTP;

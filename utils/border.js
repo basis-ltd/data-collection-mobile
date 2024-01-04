@@ -7,7 +7,7 @@ export const borders = (borderType, borderColor) => {
     borderColor: borderColor,
     borderStyle: borderType === "s" ? "solid" : "dashed",
     elevation: 0,
-    shadowColor: colors.TRANSPARENT, // For iOS box shadow
+    shadowColor: colors.TRANSPARENT,
     shadowOpacity: 0,
   };
 };
