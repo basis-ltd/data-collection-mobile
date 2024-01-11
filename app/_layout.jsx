@@ -2,7 +2,7 @@ import { Stack } from "expo-router";
 import { colors } from "../utils/colors";
 import { useState, useEffect } from "react";
 import CustomBackButton from "../components/CustomBackButton";
-import { Platform } from "react-native";
+// import { Platform } from "react-native";
 
 const AppLayout = () => {
   const [waitForHomeToLoad, setWaitForHomeToLoad] = useState(true);
