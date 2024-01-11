@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { StyleSheet, SafeAreaView, View, Text, Pressable } from "react-native";
+import { StyleSheet, SafeAreaView, View, Text, Pressable, Keyboard } from "react-native";
 import AppButton from "../../components/AppButton";
 import { colors } from "../../utils/colors";
 import { fonts } from "../../utils/fonts";
@@ -12,11 +12,10 @@ const verifyOTP = () => {
   const [otpBoxes, setOtpBoxes] = useState([...optArray]);
 
   const handleSubmit = (values) => {
-    console.log(values, "test values");
+    console.log(otpBoxes, "test values");
   };
 
   const handleChange = (value, index) => {
-    console.log(value, 'valuee')
     const newOTP = [...otpBoxes];
 
     if (value === 'Backspace') {
@@ -31,6 +30,15 @@ const verifyOTP = () => {
     }
     setOtpBoxes([...newOTP])
   };
+
+  const handlePasteOtp = (value) => {
+    if (value === 5) {
+      Keyboard.dismiss()
+      const optsToPaste = value.split("");
+      setOtpBoxes([...optsToPaste])
+    }
+
+  }
 
   useEffect(() => {
     optRef.current?.focus();
@@ -50,8 +58,10 @@ const verifyOTP = () => {
               key={index}
               index={index}
               ref={activeOptInput === index ? optRef : null}
-              // onChangeText={(text) => handleChange(text, index)}
               onKeyPress={({ nativeEvent }) => handleChange(nativeEvent.key, index)}
+              keyboardType="numeric"
+              onChangeText={handlePasteOtp}
+              value={otpBoxes[index] || ""}
             />
           ))}
         </View>

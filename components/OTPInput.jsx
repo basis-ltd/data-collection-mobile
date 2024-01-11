@@ -9,17 +9,15 @@ const OTPInput = forwardRef((props, ref) => {
 
   return (
     <TextInput
+      {...props}
       ref={ref}
       style={!isFocused ? styles.TextInputOtp : styles.textInputFocused}
       maxLength={1}
       selectTextOnFocus
       contextMenuHidden
-      keyboardType="decimal-pad"
       selectionColor={colors.ACCENT_DARK}
       onFocus={() => setIsFocused(true)}
       onBlur={() => setIsFocused(false)}
-      {...props}
-
     />
   );
 });
