@@ -1,28 +1,28 @@
-import React, { useState } from "react";
-import { StyleSheet, TextInput, Text } from "react-native";
+import React, { useState, useRef, forwardRef } from "react";
+import { StyleSheet, TextInput } from "react-native";
 import { borders } from "../utils/border";
 import { colors } from "../utils/colors";
 import { fonts } from "../utils/fonts";
 
-const OTPInput = (props) => {
-  const { onChange, disabled } = props;
+const OTPInput = forwardRef((props, ref) => {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
     <TextInput
+      ref={ref}
       style={!isFocused ? styles.TextInputOtp : styles.textInputFocused}
       maxLength={1}
-      editable={!disabled}
-      onChangeText={onChange}
       selectTextOnFocus
       contextMenuHidden
       keyboardType="decimal-pad"
       selectionColor={colors.ACCENT_DARK}
       onFocus={() => setIsFocused(true)}
       onBlur={() => setIsFocused(false)}
+      {...props}
+
     />
   );
-};
+});
 
 const generalInputStyles = {
   ...borders("s", colors.ACCENT_DARK),

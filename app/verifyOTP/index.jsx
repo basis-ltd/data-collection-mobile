@@ -1,20 +1,41 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { StyleSheet, SafeAreaView, View, Text, Pressable } from "react-native";
 import AppButton from "../../components/AppButton";
-import AppInput from "../../components/AppInput";
-import { assets } from "../../utils/assets";
 import { colors } from "../../utils/colors";
 import { fonts } from "../../utils/fonts";
-import { Formik } from "formik";
-import { phoneNumberValidationSchema } from "../../validations/phoneValidationSchema";
 import OTPInput from "../../components/OTPInput";
 
 const verifyOTP = () => {
-  const handleLoginSubmit = (values) => {
+  const optArray = new Array(5).fill("");
+  const optRef = useRef(null)
+  const [activeOptInput, setActiveOptInput] = useState(0);
+  const [otpBoxes, setOtpBoxes] = useState([...optArray]);
+
+  const handleSubmit = (values) => {
     console.log(values, "test values");
   };
 
-  const getSingleOtpChange = () => {};
+  const handleChange = (value, index) => {
+    console.log(value, 'valuee')
+    const newOTP = [...otpBoxes];
+
+    if (value === 'Backspace') {
+      //move to the previous opt
+      if (!newOTP[index]) setActiveOptInput(index - 1)
+      newOTP[index] = "";
+
+    } else {
+      //move to the next opt
+      setActiveOptInput(index + 1)
+      newOTP[index] = value;
+    }
+    setOtpBoxes([...newOTP])
+  };
+
+  useEffect(() => {
+    optRef.current?.focus();
+  }, [activeOptInput])
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -22,37 +43,33 @@ const verifyOTP = () => {
         <Text style={styles.title}>Verify Code</Text>
         <Text style={styles.labelVerify}>Please Enter OTP we’ve sent you</Text>
       </View>
-      <Formik
-        initialValues={{ phone: "" }}
-        validationSchema={phoneNumberValidationSchema}
-        onSubmit={handleLoginSubmit}
-      >
-        {({ handleSubmit, errors, values, handleChange }) => {
-          return (
-            <View style={styles.formikContainer}>
-              <View style={styles.optBox} className="p-0 flex m-0 w-full">
-                {[1, 2, 3, 4, 5].map((value, index) => (
-                  <OTPInput key={index} />
-                ))}
-              </View>
-              {/* <Text style={styles.error}>errors with resend</Text> */}
-              <View
-                style={styles.resendCodeBox}
-                className="p-0 m-0 w-full flex"
-              >
-                <Pressable className="p-0 m-0 cursor-pointer">
-                  <Text style={styles.resendCodeText}>Resend Code</Text>
-                </Pressable>
-              </View>
-              <AppButton
-                fullWidth={true}
-                title="Confirm"
-                handleOnPress={handleSubmit}
-              />
-            </View>
-          );
-        }}
-      </Formik>
+      <View style={styles.formikContainer}>
+        <View style={styles.optBox} className="p-0 flex m-0 w-full">
+          {optArray.map((_, index) => (
+            <OTPInput
+              key={index}
+              index={index}
+              ref={activeOptInput === index ? optRef : null}
+              // onChangeText={(text) => handleChange(text, index)}
+              onKeyPress={({ nativeEvent }) => handleChange(nativeEvent.key, index)}
+            />
+          ))}
+        </View>
+        {/* <Text style={styles.error}>errors with resend</Text> */}
+        <View
+          style={styles.resendCodeBox}
+          className="p-0 m-0 w-full flex"
+        >
+          <Pressable className="p-0 m-0 cursor-pointer">
+            <Text style={styles.resendCodeText}>Resend Code</Text>
+          </Pressable>
+        </View>
+        <AppButton
+          fullWidth={true}
+          title="Confirm"
+          handleOnPress={handleSubmit}
+        />
+      </View>
     </SafeAreaView>
   );
 };
