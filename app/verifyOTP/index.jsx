@@ -4,12 +4,16 @@ import AppButton from "../../components/AppButton";
 import { colors } from "../../utils/colors";
 import { fonts } from "../../utils/fonts";
 import OTPInput from "../../components/OTPInput";
+import { useSelector } from "react-redux";
+import { getAuthState } from "../login/phoneNumber.slice";
+
 
 const verifyOTP = () => {
   const optArray = new Array(5).fill("");
   const optRef = useRef(null)
   const [activeOptInput, setActiveOptInput] = useState(0);
   const [otpBoxes, setOtpBoxes] = useState([...optArray]);
+  const authState = useSelector(getAuthState);
 
   const handleSubmit = (values) => {
     console.log(otpBoxes, "test values");
@@ -52,7 +56,7 @@ const verifyOTP = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.titleBox}>
         <Text style={styles.title}>Verify Code</Text>
-        <Text style={styles.labelVerify}>Please Enter OTP we’ve sent you</Text>
+        <Text style={styles.labelVerify}>Please Enter OTP we’ve sent you on {authState?.phone}</Text>
       </View>
       <View style={styles.formikContainer}>
         <View style={styles.optBox} className="p-0 flex m-0 w-full">

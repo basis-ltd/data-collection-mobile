@@ -9,10 +9,13 @@ import { Formik } from "formik";
 import { phoneNumberValidationSchema } from "../../validations/phoneValidationSchema";
 import { router } from "expo-router";
 import { frontendAPI } from "../../api/frontendApi";
+import { setPhone } from "./phoneNumber.slice";
 
 const Login = () => {
   const handleLoginSubmit = (values) => {
-    console.log(values, "test values");
+    setPhone(values.phone);
+
+
     router.push(frontendAPI.verifyOTP);
   };
 
