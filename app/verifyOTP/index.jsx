@@ -18,9 +18,9 @@ const verifyOTP = () => {
   const handleChange = (value, index) => {
     const newOTP = [...otpBoxes];
 
-    if (value === 'Backspace') {
+    if (value === "" && newOTP[index]) {
       //move to the previous opt
-      if (!newOTP[index]) setActiveOptInput(index - 1)
+      if (index !== 0) setActiveOptInput(index - 1)
       newOTP[index] = "";
 
     } else {
@@ -31,13 +31,16 @@ const verifyOTP = () => {
     setOtpBoxes([...newOTP])
   };
 
-  const handlePasteOtp = (value) => {
-    if (value === 5) {
-      Keyboard.dismiss()
-      const optsToPaste = value.split("");
-      setOtpBoxes([...optsToPaste])
+  const handlePasteOtp = (text, index) => {
+    console.log(text, "text pasted")
+    const newInputs = [...otpBoxes];
+    const numberOfInputs = 5;
+    let pastedText = text.split('').slice(0, numberOfInputs);
+    for (let i = index; i < numberOfInputs; i++) {
+      newInputs[i] = pastedText.shift() || '';
     }
-
+    setOtpBoxes([...newInputs])
+    setActiveOptInput(Math.min(index + text.length, numberOfInputs));
   }
 
   useEffect(() => {
@@ -58,9 +61,8 @@ const verifyOTP = () => {
               key={index}
               index={index}
               ref={activeOptInput === index ? optRef : null}
-              onKeyPress={({ nativeEvent }) => handleChange(nativeEvent.key, index)}
               keyboardType="numeric"
-              onChangeText={handlePasteOtp}
+              onChangeText={(value) => value.length > 1 ? handlePasteOtp(value, index) : handleChange(value, index)}
               value={otpBoxes[index] || ""}
             />
           ))}
