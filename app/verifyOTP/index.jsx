@@ -5,7 +5,6 @@ import { colors } from "../../utils/colors";
 import { fonts } from "../../utils/fonts";
 import OTPInput from "../../components/OTPInput";
 import { useSelector } from "react-redux";
-import { getAuthState } from "../login/phoneNumber.slice";
 
 
 const verifyOTP = () => {
@@ -13,10 +12,10 @@ const verifyOTP = () => {
   const optRef = useRef(null)
   const [activeOptInput, setActiveOptInput] = useState(0);
   const [otpBoxes, setOtpBoxes] = useState([...optArray]);
-  const authState = useSelector(getAuthState);
+  const phoneNumber = useSelector(state => state.authReducer.phone);
 
-  const handleSubmit = (values) => {
-    console.log(otpBoxes, "test values");
+  const handleSubmit = () => {
+    const otp = otpBoxes.join("");
   };
 
   const handleChange = (value, index) => {
@@ -56,7 +55,7 @@ const verifyOTP = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.titleBox}>
         <Text style={styles.title}>Verify Code</Text>
-        <Text style={styles.labelVerify}>Please Enter OTP we’ve sent you on {authState?.phone}</Text>
+        <Text style={styles.labelVerify}>Please Enter OTP we’ve sent you on {phoneNumber}</Text>
       </View>
       <View style={styles.formikContainer}>
         <View style={styles.optBox} className="p-0 flex m-0 w-full">
@@ -81,6 +80,7 @@ const verifyOTP = () => {
           </Pressable>
         </View>
         <AppButton
+          disabled={otpBoxes.join("").length < 5 ? true : false}
           fullWidth={true}
           title="Confirm"
           handleOnPress={handleSubmit}

@@ -10,12 +10,12 @@ import { phoneNumberValidationSchema } from "../../validations/phoneValidationSc
 import { router } from "expo-router";
 import { frontendAPI } from "../../api/frontendApi";
 import { setPhone } from "./phoneNumber.slice";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
+  const dispatch = useDispatch()
   const handleLoginSubmit = (values) => {
-    setPhone(values.phone);
-
-
+    dispatch(setPhone(values.phone));
     router.push(frontendAPI.verifyOTP);
   };
 

@@ -1,12 +1,9 @@
-import React, { useEffect, useState, useRef } from "react";
-import { Provider } from "react-redux";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, SafeAreaView } from "react-native";
 import LoadingPage from "../components/LoadingPage";
 import { colors } from "../utils/colors";
 import GettingStarted from "../ui/GettingStarted";
 import { loadAppFonts } from "../utils/fonts";
-// import store from "../store/store";
-import { makeStore } from "../store/store";
 
 const App = () => {
   const [loadFontsFamily, setLoadFontsFamily] = useState(true);
@@ -24,19 +21,11 @@ const App = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const storeRef = useRef()
-  if (!storeRef.current) {
-    // Create the store instance the first time this renders
-    storeRef.current = makeStore()
-  }
-
   return (
-    <Provider store={storeRef.current}>
-      <SafeAreaView style={styles.appContainer}>
-        {loadFontsFamily && <LoadingPage loading={loadFontsFamily} />}
-        {!loadFontsFamily && <GettingStarted />}
-      </SafeAreaView>
-    </Provider>
+    <SafeAreaView style={styles.appContainer}>
+      {loadFontsFamily && <LoadingPage loading={loadFontsFamily} />}
+      {!loadFontsFamily && <GettingStarted />}
+    </SafeAreaView>
   );
 };
 

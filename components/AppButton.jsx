@@ -10,6 +10,7 @@ const AppButton = (props) => {
     <Pressable
       style={fullWidth ? styles.button : styles.buttonShort}
       onPress={handleOnPress}
+      {...props}
     >
       <Text style={styles.buttonText}>{title}</Text>
     </Pressable>

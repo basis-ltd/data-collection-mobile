@@ -18,6 +18,6 @@ const slice = createSlice({
 })
 export const { setPhone, setLoggedIn } = slice.actions;
 // create selectors
-export const getAuthState = createSelector((state) => state, (authState) => authState)
+// export const getAuthState = createSelector((state) => state, (authState) => authState)
 
 export default slice.reducer;
