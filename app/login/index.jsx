@@ -11,11 +11,16 @@ import { router } from "expo-router";
 import { frontendAPI } from "../../api/frontendApi";
 import { setPhone } from "./phoneNumber.slice";
 import { useDispatch } from "react-redux";
+import usePostData from "../../hooks/usePostData";
 
 const Login = () => {
   const dispatch = useDispatch()
+  const { data, error, loading, handler } = usePostData()
+
   const handleLoginSubmit = (values) => {
     dispatch(setPhone(values.phone));
+    handler()
+
     router.push(frontendAPI.verifyOTP);
   };
 
