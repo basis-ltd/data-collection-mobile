@@ -5,6 +5,10 @@ import { colors } from "../../utils/colors";
 import { fonts } from "../../utils/fonts";
 import OTPInput from "../../components/OTPInput";
 import { useSelector } from "react-redux";
+import usePostData from "../../hooks/usePostData";
+import { backendAPI } from "../../api/backendApi";
+import AppError from "../../components/AppError";
+import AppLoadingSpin from "../../components/AppLoadingSpin";
 
 
 const verifyOTP = () => {
@@ -13,8 +17,13 @@ const verifyOTP = () => {
   const [activeOptInput, setActiveOptInput] = useState(0);
   const [otpBoxes, setOtpBoxes] = useState([...optArray]);
   const phoneNumber = useSelector(state => state.authReducer.phone);
+  const { data, error, loading, handler } = usePostData()
+
+
   const handleSubmit = () => {
     const otp = otpBoxes.join("");
+    const data = { phone: phoneNumber, otp, }
+    handler(backendAPI.verifyOTP, data)
   };
 
   const handleChange = (value, index) => {
@@ -49,6 +58,13 @@ const verifyOTP = () => {
     optRef.current?.focus();
   }, [activeOptInput])
 
+  // handle save token
+  useEffect(() => {
+    if (!loading && data) {
+      console.log(data, "success")
+    }
+
+  }, [data, loading])
 
   return (
     <SafeAreaView style={styles.container}>
@@ -56,6 +72,8 @@ const verifyOTP = () => {
         <Text style={styles.title}>Verify Code</Text>
         <Text style={styles.labelVerify}>Please Enter OTP we’ve sent you on {phoneNumber}</Text>
       </View>
+      {error && !loading && <AppError message={error} />}
+      {loading && <AppLoadingSpin loading={loading} />}
       <View style={styles.formikContainer}>
         <View style={styles.optBox} className="p-0 flex m-0 w-full">
           {optArray.map((_, index) => (

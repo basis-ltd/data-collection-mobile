@@ -2,6 +2,7 @@ const PRIMARY = '#064B64';
 const PRIMARY_DARK = '#03284C';
 const PRIMARY_LIGHT = '#E4F2F6';
 const LIGHT = '#FFFFFF';
+const LIGHT_Opaque = 'rgba(255,255,255,.5)';
 const DARK = '#000000';
 
 const DANGER = '#FFE9E9';
@@ -32,4 +33,5 @@ export const colors = {
   ACCENT_LIGHT,
   ACCENT_DARK,
   TRANSPARENT,
+  LIGHT_Opaque,
 };

@@ -12,16 +12,18 @@ import { frontendAPI } from "../../api/frontendApi";
 import { setPhone } from "./phoneNumber.slice";
 import { useDispatch } from "react-redux";
 import usePostData from "../../hooks/usePostData";
+import { backendAPI } from "../../api/backendApi";
+import AppError from "../../components/AppError";
+import AppLoadingSpin from "../../components/AppLoadingSpin";
 
 const Login = () => {
   const dispatch = useDispatch()
   const { data, error, loading, handler } = usePostData()
 
   const handleLoginSubmit = (values) => {
+    handler(backendAPI.login, values);
     dispatch(setPhone(values.phone));
-    handler()
-
-    router.push(frontendAPI.verifyOTP);
+    !loading && data && router.push(frontendAPI.verifyOTP);
   };
 
   return (
@@ -40,6 +42,8 @@ const Login = () => {
         <Text style={styles.title}>Data Collection App</Text>
       </View>
       <Text style={styles.labelLogin}>Login, to Start Collecting data</Text>
+      {error && !loading && <AppError message={error} />}
+      {loading && <AppLoadingSpin loading={loading} />}
       {/* Form login and validation */}
       <Formik
         initialValues={{ phone: "" }}

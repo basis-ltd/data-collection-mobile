@@ -9,6 +9,8 @@ const ArrowBack = require(`../assets/images/ArrowBack.png`);
 
 // lotties
 const LoadingPages = require(`../assets/lotties/loading_data_hub.json`);
+const Loading = require(`../assets/lotties/loading.json`);
+const Done = require(`../assets/lotties/done.json`);
 
 // exports
 export const assets = {
@@ -23,4 +25,6 @@ export const assets = {
 // ANIMATIONS FROM LOTTIE FILERS
 export const lotties = {
   LoadingPages,
+  Loading,
+  Done
 };

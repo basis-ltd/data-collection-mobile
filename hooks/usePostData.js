@@ -15,7 +15,7 @@ const usePostData = () => {
             setData(response.data);
             setLoading(false);
         } catch (err) {
-            setError(err);
+            setError(err?.message);
             setLoading(false);
         }
     };
