@@ -1,5 +1,5 @@
 export const frontendAPI = {
-  Home: "/",
+  Home: "/home",
   Login: "/login",
   verifyOTP: "/verifyOTP",
 };

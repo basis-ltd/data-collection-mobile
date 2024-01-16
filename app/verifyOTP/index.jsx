@@ -1,14 +1,16 @@
 import React, { useState, useRef, useEffect } from "react";
-import { StyleSheet, SafeAreaView, View, Text, Pressable, Keyboard } from "react-native";
+import { StyleSheet, SafeAreaView, View, Text, Pressable } from "react-native";
 import AppButton from "../../components/AppButton";
 import { colors } from "../../utils/colors";
 import { fonts } from "../../utils/fonts";
 import OTPInput from "../../components/OTPInput";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import usePostData from "../../hooks/usePostData";
 import { backendAPI } from "../../api/backendApi";
 import AppError from "../../components/AppError";
 import AppLoadingSpin from "../../components/AppLoadingSpin";
+import { setLoggedIn } from "../login/phoneNumber.slice";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const verifyOTP = () => {
@@ -18,6 +20,8 @@ const verifyOTP = () => {
   const [otpBoxes, setOtpBoxes] = useState([...optArray]);
   const phoneNumber = useSelector(state => state.authReducer.phone);
   const { data, error, loading, handler } = usePostData()
+  const dispatch = useDispatch()
+
 
 
   const handleSubmit = () => {
@@ -58,10 +62,16 @@ const verifyOTP = () => {
     optRef.current?.focus();
   }, [activeOptInput])
 
-  // handle save token
+  // handle save token on login confirmed
   useEffect(() => {
+    const saveToken = async () => {
+      await AsyncStorage.setItem('accessToken', data?.data?.token);
+    }
+
     if (!loading && data) {
-      console.log(data, "success")
+      console.log(data?.data?.token, "token")
+      saveToken()
+      dispatch(setLoggedIn(true));
     }
 
   }, [data, loading])
@@ -73,7 +83,7 @@ const verifyOTP = () => {
         <Text style={styles.labelVerify}>Please Enter OTP we’ve sent you on {phoneNumber}</Text>
       </View>
       {error && !loading && <AppError message={error} />}
-      {loading && <AppLoadingSpin loading={loading} />}
+      {loading && <AppLoadingSpin />}
       <View style={styles.formikContainer}>
         <View style={styles.optBox} className="p-0 flex m-0 w-full">
           {optArray.map((_, index) => (

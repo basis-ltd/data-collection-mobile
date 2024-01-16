@@ -66,6 +66,20 @@ const AppLayout = () => {
             headerLeft: (props) => <CustomBackButton {...props} />,
           }}
         />
+        {/*  projects home */}
+        <Stack.Screen
+          name="home/index"
+          options={{
+            ...generalStyles,
+            headerShown: false,
+            headerStyle: {
+              backgroundColor: colors.LIGHT,
+            },
+            headerTitleStyle: {
+              color: colors.LIGHT,
+            },
+          }}
+        />
       </Stack>
     </StoreProvider>
   );

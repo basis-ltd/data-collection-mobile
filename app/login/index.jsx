@@ -28,8 +28,7 @@ const Login = () => {
   useEffect(() => {
 
     if (!loading && data) {
-      console.log(data, "data")
-      // router.push(frontendAPI.verifyOTP);
+      router.push(frontendAPI.verifyOTP);
     }
   }, [data, error, loading]);
 
@@ -50,7 +49,7 @@ const Login = () => {
       </View>
       <Text style={styles.labelLogin}>Login, to Start Collecting data</Text>
       {error && !loading && <AppError message={error} />}
-      {loading && <AppLoadingSpin loading={loading} />}
+      {loading && <AppLoadingSpin />}
       {/* Form login and validation */}
       <Formik
         initialValues={{ phone: "" }}
