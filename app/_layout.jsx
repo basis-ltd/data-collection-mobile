@@ -49,7 +49,7 @@ const AppLayout = () => {
             },
           }}
         />
-
+        {/* login */}
         <Stack.Screen
           name="login/index"
           options={{
@@ -68,7 +68,7 @@ const AppLayout = () => {
         />
         {/*  projects home */}
         <Stack.Screen
-          name="home/index"
+          name="institutionHome/index"
           options={{
             ...generalStyles,
             headerShown: false,

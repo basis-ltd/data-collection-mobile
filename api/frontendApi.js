@@ -1,5 +1,6 @@
 export const frontendAPI = {
-  Home: "/home",
+  Home: "/",
   Login: "/login",
   verifyOTP: "/verifyOTP",
+  InstitutionHome: "/institutionHome"
 };

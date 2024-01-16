@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { fonts } from "../utils/fonts";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import useIsUSerLoggedIn from "../hooks/useIsUSerLoggedIn";
 import { colors } from "../utils/colors";
 import { useDispatch } from "react-redux";

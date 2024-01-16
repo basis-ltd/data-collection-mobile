@@ -32,14 +32,14 @@ const App = () => {
   useEffect(() => {
     if (!loadFontsFamily && token) {
       dispatch(setLoggedIn(true));
-      router.push(frontendAPI.Home);
+      router.push(frontendAPI.InstitutionHome);
     }
-  }, [loadFontsFamily, token]);
+  }, [loadFontsFamily]);
 
   return (
     <SafeAreaView style={styles.appContainer}>
       {loadFontsFamily && <LoadingPage loading={loadFontsFamily} />}
-      {!loadFontsFamily && <GettingStarted />}
+      {!loadFontsFamily && !token && <GettingStarted />}
     </SafeAreaView>
   );
 };

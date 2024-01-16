@@ -11,6 +11,8 @@ import AppError from "../../components/AppError";
 import AppLoadingSpin from "../../components/AppLoadingSpin";
 import { setLoggedIn } from "../login/phoneNumber.slice";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { router } from "expo-router";
+import { frontendAPI } from "../../api/frontendApi";
 
 
 const verifyOTP = () => {
@@ -69,9 +71,9 @@ const verifyOTP = () => {
     }
 
     if (!loading && data) {
-      console.log(data?.data?.token, "token")
       saveToken()
       dispatch(setLoggedIn(true));
+      router.push(frontendAPI.InstitutionHome)
     }
 
   }, [data, loading])

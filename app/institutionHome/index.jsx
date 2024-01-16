@@ -5,10 +5,7 @@ import { fonts } from "../../utils/fonts";
 import PageGuard from "../../components/Guards";
 
 
-const Home = (props) => {
-  const { token } = props;
-  console.log(token, "test tokne in projesct");
-
+const Home = () => {
 
   return (
     <PageGuard style={styles.containerHome}>
