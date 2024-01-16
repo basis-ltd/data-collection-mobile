@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, SafeAreaView, Image, View, Text } from "react-native";
 import AppButton from "../../components/AppButton";
 import AppInput from "../../components/AppInput";
@@ -23,8 +23,15 @@ const Login = () => {
   const handleLoginSubmit = (values) => {
     handler(backendAPI.login, values);
     dispatch(setPhone(values.phone));
-    !loading && data && router.push(frontendAPI.verifyOTP);
   };
+
+  useEffect(() => {
+
+    if (!loading && data) {
+      console.log(data, "data")
+      // router.push(frontendAPI.verifyOTP);
+    }
+  }, [data, error, loading]);
 
   return (
     <SafeAreaView style={styles.container}>
