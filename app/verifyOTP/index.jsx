@@ -13,7 +13,6 @@ const verifyOTP = () => {
   const [activeOptInput, setActiveOptInput] = useState(0);
   const [otpBoxes, setOtpBoxes] = useState([...optArray]);
   const phoneNumber = useSelector(state => state.authReducer.phone);
-
   const handleSubmit = () => {
     const otp = otpBoxes.join("");
   };
