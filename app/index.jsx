@@ -32,6 +32,7 @@ const App = () => {
   useEffect(() => {
     if (!loadFontsFamily && token) {
       dispatch(setLoggedIn(true));
+      console.log(loadFontsFamily, token, 'testing');
       router.push(frontendAPI.InstitutionHome);
     }
   }, [loadFontsFamily]);

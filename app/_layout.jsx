@@ -70,13 +70,11 @@ const AppLayout = () => {
         <Stack.Screen
           name="institutionHome/index"
           options={{
+            headerTitle: "",
             ...generalStyles,
             headerShown: false,
             headerStyle: {
               backgroundColor: colors.LIGHT,
-            },
-            headerTitleStyle: {
-              color: colors.LIGHT,
             },
           }}
         />

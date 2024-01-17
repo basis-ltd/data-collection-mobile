@@ -44,6 +44,9 @@ const styles = StyleSheet.create({
         width: 150,
         aspectRatio: 1 / 1,
         height: "auto",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
     },
 
 
