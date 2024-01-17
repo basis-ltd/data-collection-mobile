@@ -1,34 +1,32 @@
 import React, { useEffect } from "react";
 import { fonts } from "../utils/fonts";
 import { SafeAreaView, StyleSheet } from "react-native";
-import useIsUSerLoggedIn from "../hooks/useIsUSerLoggedIn";
 import { colors } from "../utils/colors";
 import { useDispatch } from "react-redux";
 import { setLoggedIn } from "../app/login/phoneNumber.slice";
 import { router } from "expo-router";
 import { frontendAPI } from "../api/frontendApi";
+import useIsUSerLoggedIn from "../hooks/useIsUSerLoggedIn";
+import AppLoadingSpin from "./AppLoadingSpin";
 
 const PageGuard = ({ children, ...props }) => {
-    const { token } = useIsUSerLoggedIn();
+    const { token, isLoading } = useIsUSerLoggedIn();
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (!token) {
+        if (!isLoading && !token) {
             router.push(frontendAPI.Login);
             dispatch(setLoggedIn(false));
-        }
-    }, [token])
 
-    const childrenWithProps = React.Children.map(children, child => {
-        return React.isValidElement(child) ? React.cloneElement(child, { token }) : child;
-    });
+        }
+    }, [token, isLoading]);
 
     return (
         <SafeAreaView
             style={styles.guardContainer}
             {...props}
         >
-            {childrenWithProps}
+            {isLoading ? <AppLoadingSpin /> : children}
         </SafeAreaView>
     );
 };

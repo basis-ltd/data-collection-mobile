@@ -12,9 +12,8 @@ import { frontendAPI } from "../api/frontendApi";
 
 const App = () => {
   const [loadFontsFamily, setLoadFontsFamily] = useState(true);
-  const { token } = useIsUSerLoggedIn();
+  const { token, isLoading } = useIsUSerLoggedIn();
   const dispatch = useDispatch();
-
 
   useEffect(() => {
     async function loadFonts() {
@@ -30,12 +29,11 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    if (!loadFontsFamily && token) {
+    if (!loadFontsFamily && token && !isLoading) {
       dispatch(setLoggedIn(true));
-      console.log(loadFontsFamily, token, 'testing');
       router.push(frontendAPI.InstitutionHome);
     }
-  }, [loadFontsFamily]);
+  }, [loadFontsFamily, isLoading, token]);
 
   return (
     <SafeAreaView style={styles.appContainer}>
