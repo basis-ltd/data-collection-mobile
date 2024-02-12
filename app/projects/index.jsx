@@ -5,24 +5,25 @@ import { fonts } from "../../utils/fonts";
 import PageGuard from "../../components/Guards";
 
 
-const Home = () => {
+const Projects = () => {
 
   return (
-    <PageGuard style={styles.containerHome}>
-      <Text>Projects home</Text>
+    <PageGuard style={styles.projects}>
+      <Text>Projects list</Text>
     </PageGuard>
   );
 };
 
 const styles = StyleSheet.create({
-  containerHome: {
+  projects: {
     width: "100%",
     flex: 1,
     backgroundColor: colors.LIGHT,
     padding: 24,
     gap: 10,
     alignItems: "center",
+    fontFamily: fonts.MONTSERRAT_MEDIUM,
   },
 });
 
-export default Home;
+export default Projects;

@@ -31,7 +31,7 @@ const App = () => {
   useEffect(() => {
     if (!loadFontsFamily && token && !isLoading) {
       dispatch(setLoggedIn(true));
-      router.push(frontendAPI.InstitutionHome);
+      router.push(frontendAPI.appContainerNavigator);
     }
   }, [loadFontsFamily, isLoading, token]);
 

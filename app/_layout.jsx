@@ -3,7 +3,6 @@ import { colors } from "../utils/colors";
 import { useState, useEffect } from "react";
 import CustomBackButton from "../components/CustomBackButton";
 import StoreProvider from "./StoreProvider";
-// import { Platform } from "react-native";
 
 const AppLayout = () => {
   const [waitForHomeToLoad, setWaitForHomeToLoad] = useState(true);
@@ -66,9 +65,9 @@ const AppLayout = () => {
             headerLeft: (props) => <CustomBackButton {...props} />,
           }}
         />
-        {/*  projects home */}
+        {/*  app home container */}
         <Stack.Screen
-          name="institutionHome/index"
+          name="appContainerNavigator/index"
           options={{
             headerTitle: "",
             ...generalStyles,
