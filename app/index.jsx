@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { router } from "expo-router";
 import { frontendAPI } from "../api/frontendApi";
 
+
 const App = () => {
   const [loadFontsFamily, setLoadFontsFamily] = useState(true);
   const { token, isLoading } = useIsUSerLoggedIn();

@@ -24,8 +24,6 @@ const verifyOTP = () => {
   const { data, error, loading, handler } = usePostData()
   const dispatch = useDispatch()
 
-
-
   const handleSubmit = () => {
     const otp = otpBoxes.join("");
     const data = { phone: phoneNumber, otp, }
@@ -49,7 +47,6 @@ const verifyOTP = () => {
   };
 
   const handlePasteOtp = (text, index) => {
-    console.log(text, "text pasted")
     const newInputs = [...otpBoxes];
     const numberOfInputs = 5;
     let pastedText = text.split('').slice(0, numberOfInputs);
@@ -68,12 +65,13 @@ const verifyOTP = () => {
   useEffect(() => {
     const saveToken = async () => {
       await AsyncStorage.setItem('accessToken', data?.data?.token);
+      await AsyncStorage.setItem('userProfile', JSON.stringify(data?.data));
     }
 
     if (!loading && data) {
       saveToken()
       dispatch(setLoggedIn(true));
-      router.push(frontendAPI.InstitutionHome)
+      router.push(frontendAPI.appContainerNavigator)
     }
 
   }, [data, loading])
