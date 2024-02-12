@@ -5,6 +5,8 @@ const LoginPageImage = require(`../assets/images/login-svg.png`);
 const RSALogoWhite = require(`../assets/images/RSA_logo-white.png`);
 const CirclesLoginSVG = require(`../assets/images/circles-gray-svg.png`);
 const ArrowBack = require(`../assets/images/ArrowBack.png`);
+const BlueBox = require(`../assets/images/blueBox.png`);
+const AddIcon = require(`../assets/images/addIcon.png`);
 // other images here
 
 // lotties
@@ -18,6 +20,8 @@ export const assets = {
   RSALogoWhite,
   CirclesLoginSVG,
   ArrowBack,
+  BlueBox,
+  AddIcon,
 };
 
 // ANIMATIONS FROM LOTTIE FILERS

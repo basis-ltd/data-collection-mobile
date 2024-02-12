@@ -64,8 +64,12 @@ const verifyOTP = () => {
   // handle save token on login confirmed
   useEffect(() => {
     const saveToken = async () => {
-      await AsyncStorage.setItem('accessToken', data?.data?.token);
-      await AsyncStorage.setItem('userProfile', JSON.stringify(data?.data));
+      try {
+        await AsyncStorage.setItem('accessToken', data?.data?.token);
+        await AsyncStorage.setItem('userProfile', JSON.stringify(data?.data));
+      } catch (error) {
+        console.error('Failed to save data to AsyncStorage:', error);
+      }
     }
 
     if (!loading && data) {
@@ -97,7 +101,6 @@ const verifyOTP = () => {
             />
           ))}
         </View>
-        {/* <Text style={styles.error}>errors with resend</Text> */}
         <View
           style={styles.resendCodeBox}
           className="p-0 m-0 w-full flex"
