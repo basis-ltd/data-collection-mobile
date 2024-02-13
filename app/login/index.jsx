@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, SafeAreaView, Image, View, Text } from "react-native";
 import AppButton from "../../components/AppButton";
 import AppInput from "../../components/AppInput";
@@ -7,11 +7,30 @@ import { colors } from "../../utils/colors";
 import { fonts } from "../../utils/fonts";
 import { Formik } from "formik";
 import { phoneNumberValidationSchema } from "../../validations/phoneValidationSchema";
+import { router } from "expo-router";
+import { frontendAPI } from "../../api/frontendApi";
+import { setPhone } from "./phoneNumber.slice";
+import { useDispatch } from "react-redux";
+import usePostData from "../../hooks/usePostData";
+import { backendAPI } from "../../api/backendApi";
+import AppError from "../../components/AppError";
+import AppLoadingSpin from "../../components/AppLoadingSpin";
 
 const Login = () => {
+  const dispatch = useDispatch()
+  const { data, error, loading, handler } = usePostData()
+
   const handleLoginSubmit = (values) => {
-    console.log(values, "test values");
+    handler(backendAPI.login, values);
+    dispatch(setPhone(values.phone));
   };
+
+  useEffect(() => {
+
+    if (!loading && data) {
+      router.push(frontendAPI.verifyOTP);
+    }
+  }, [data, error, loading]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -29,6 +48,8 @@ const Login = () => {
         <Text style={styles.title}>Data Collection App</Text>
       </View>
       <Text style={styles.labelLogin}>Login, to Start Collecting data</Text>
+      {error && !loading && <AppError message={error} />}
+      {loading && <AppLoadingSpin />}
       {/* Form login and validation */}
       <Formik
         initialValues={{ phone: "" }}

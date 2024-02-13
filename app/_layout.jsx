@@ -1,10 +1,8 @@
 import { Stack } from "expo-router";
 import { colors } from "../utils/colors";
-import { assets } from "../utils/assets";
-import { useNavigation } from "@react-navigation/native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { Image } from "react-native";
 import { useState, useEffect } from "react";
+import CustomBackButton from "../components/CustomBackButton";
+import StoreProvider from "./StoreProvider";
 
 const AppLayout = () => {
   const [waitForHomeToLoad, setWaitForHomeToLoad] = useState(true);
@@ -15,7 +13,13 @@ const AppLayout = () => {
   };
 
   const generalStyles = {
-    headerStyle: { backgroundColor: colors.LIGHT },
+    headerStyle: {
+      backgroundColor: colors.LIGHT,
+      elevation: 0,
+      borderBottomWidth: 0,
+      shadowColor: colors.TRANSPARENT,
+    },
+    headerShadowVisible: false,
     headerTitleAlign: "center",
     headerTitleStyle,
   };
@@ -29,45 +33,52 @@ const AppLayout = () => {
   }, []);
 
   return (
-    <Stack>
-      <Stack.Screen
-        name="index"
-        options={{
-          ...generalStyles,
-          headerShown: false,
-          headerStyle: {
-            backgroundColor: waitForHomeToLoad ? colors.PRIMARY : colors.LIGHT,
-          },
-          headerTitleStyle: {
-            color: waitForHomeToLoad ? colors.LIGHT : colors.PRIMARY,
-          },
-        }}
-      />
-
-      <Stack.Screen
-        name="login/index"
-        options={{
-          headerTitle: "",
-          ...generalStyles,
-          headerShown: false,
-          headerLeft: (props) => <CustomBackButton {...props} />,
-        }}
-      />
-    </Stack>
-  );
-};
-
-const CustomBackButton = (props) => {
-  const navigation = useNavigation();
-
-  const handleGoBack = () => {
-    navigation.goBack();
-  };
-
-  return (
-    <TouchableOpacity onPress={handleGoBack} {...props}>
-      <Image source={assets.ArrowBack} style={{ width: 43, height: 43 }} />
-    </TouchableOpacity>
+    <StoreProvider>
+      <Stack>
+        <Stack.Screen
+          name="index"
+          options={{
+            ...generalStyles,
+            headerShown: false,
+            headerStyle: {
+              backgroundColor: waitForHomeToLoad ? colors.PRIMARY : colors.LIGHT,
+            },
+            headerTitleStyle: {
+              color: waitForHomeToLoad ? colors.LIGHT : colors.PRIMARY,
+            },
+          }}
+        />
+        {/* login */}
+        <Stack.Screen
+          name="login/index"
+          options={{
+            headerTitle: "",
+            ...generalStyles,
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="verifyOTP/index"
+          options={{
+            headerTitle: "",
+            ...generalStyles,
+            headerLeft: (props) => <CustomBackButton {...props} />,
+          }}
+        />
+        {/*  app home container */}
+        <Stack.Screen
+          name="appContainerNavigator/index"
+          options={{
+            headerTitle: "",
+            ...generalStyles,
+            headerShown: false,
+            headerStyle: {
+              backgroundColor: colors.LIGHT,
+            },
+          }}
+        />
+      </Stack>
+    </StoreProvider>
   );
 };
 

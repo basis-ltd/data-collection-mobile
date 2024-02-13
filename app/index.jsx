@@ -4,9 +4,17 @@ import LoadingPage from "../components/LoadingPage";
 import { colors } from "../utils/colors";
 import GettingStarted from "../ui/GettingStarted";
 import { loadAppFonts } from "../utils/fonts";
+import useIsUSerLoggedIn from "../hooks/useIsUSerLoggedIn";
+import { setLoggedIn } from "./login/phoneNumber.slice";
+import { useDispatch } from "react-redux";
+import { router } from "expo-router";
+import { frontendAPI } from "../api/frontendApi";
 
-const Home = () => {
+
+const App = () => {
   const [loadFontsFamily, setLoadFontsFamily] = useState(true);
+  const { token, isLoading } = useIsUSerLoggedIn();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function loadFonts() {
@@ -16,15 +24,22 @@ const Home = () => {
 
     const timer = setTimeout(() => {
       setLoadFontsFamily(false);
-    }, 2000);
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    if (!loadFontsFamily && token && !isLoading) {
+      dispatch(setLoggedIn(true));
+      router.push(frontendAPI.appContainerNavigator);
+    }
+  }, [loadFontsFamily, isLoading, token]);
+
   return (
     <SafeAreaView style={styles.appContainer}>
       {loadFontsFamily && <LoadingPage loading={loadFontsFamily} />}
-      {!loadFontsFamily && <GettingStarted />}
+      {!loadFontsFamily && !token && <GettingStarted />}
     </SafeAreaView>
   );
 };
@@ -42,4 +57,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default App;
