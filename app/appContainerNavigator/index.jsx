@@ -5,6 +5,8 @@ import Projects from '../projects';
 import Profile from '../profile';
 import { colors } from '../../utils/colors';
 import HomeScreen from '../homeScreen';
+import CustomBackButton from '../../components/CustomBackButton';
+import MoreBtn from "../../components/MoreButton"
 
 function AppNavigator() {
     const Tab = createBottomTabNavigator();
@@ -55,9 +57,12 @@ function AppNavigator() {
                 }} />
             <Tab.Screen name="Profile" component={Profile}
                 options={{
-                    headerTitle: "",
+                    headerTitle: "Profile",
+                    headerTintColor: colors.PRIMARY,
+                    headerTitleAlign: 'center',
                     ...generalStyles,
-                    headerShown: false,
+                    headerLeft: (props) => <CustomBackButton {...props} />,
+                    headerRight: (props) => <MoreBtn {...props} />
                 }} />
         </Tab.Navigator>
     )
