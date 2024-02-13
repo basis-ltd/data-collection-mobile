@@ -7,6 +7,11 @@ const CirclesLoginSVG = require(`../assets/images/circles-gray-svg.png`);
 const ArrowBack = require(`../assets/images/ArrowBack.png`);
 const BlueBox = require(`../assets/images/blueBox.png`);
 const AddIcon = require(`../assets/images/addIcon.png`);
+const CamIcon = require(`../assets/images/cam.png`);
+const Docs = require(`../assets/images/docs.png`);
+const Email = require(`../assets/images/email.png`);
+const More = require(`../assets/images/more.png`);
+const PhoneCircle = require(`../assets/images/phone.png`);
 // other images here
 
 // lotties
@@ -22,6 +27,10 @@ export const assets = {
   ArrowBack,
   BlueBox,
   AddIcon,
+  Docs,
+  Email,
+  More,
+  PhoneCircle,
 };
 
 // ANIMATIONS FROM LOTTIE FILERS
