@@ -12,6 +12,7 @@ const Docs = require(`../assets/images/docs.png`);
 const Email = require(`../assets/images/email.png`);
 const More = require(`../assets/images/more.png`);
 const PhoneCircle = require(`../assets/images/phone.png`);
+const DemoImg = require(`../assets/images/demoImg.png`);
 // other images here
 
 // lotties
@@ -31,6 +32,8 @@ export const assets = {
   Email,
   More,
   PhoneCircle,
+  CamIcon,
+  DemoImg,
 };
 
 // ANIMATIONS FROM LOTTIE FILERS
