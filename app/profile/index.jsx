@@ -23,7 +23,7 @@ const Profile = () => {
   return (
     <PageGuard style={styles.profile}>
       <View style={styles.imagesWrapper}>
-        <Image source={selectedImage ? selectedImage : assets.DemoImg} resizeMode="cover" style={styles.preview} />
+        <Image source={selectedImage.localUri ? selectedImage.localUri : assets.DemoImg} resizeMode="cover" style={styles.preview} />
         <TouchableOpacity onPress={handleUpload} style={styles.btnUpload} >
           <Image source={assets.CamIcon} style={{ width: 39, height: 39 }} />
         </TouchableOpacity>

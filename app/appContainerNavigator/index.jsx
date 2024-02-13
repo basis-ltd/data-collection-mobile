@@ -61,8 +61,8 @@ function AppNavigator() {
                     headerTintColor: colors.PRIMARY,
                     headerTitleAlign: 'center',
                     ...generalStyles,
-                    headerLeft: (props) => <CustomBackButton {...props} className="ml-2" />,
-                    headerRight: (props) => <MoreBtn {...props} className="mr-2" />
+                    headerLeft: (props) => <CustomBackButton {...props} />,
+                    headerRight: (props) => <MoreBtn {...props} />
                 }} />
         </Tab.Navigator>
     )
