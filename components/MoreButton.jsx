@@ -1,8 +1,8 @@
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { Image } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import { assets } from "../utils/assets";
 
-const CustomBackButton = (props) => {
+const MoreBtn = (props) => {
   const { handleAction, setHandleAction } = props
 
   const handleMoreAction = () => {
@@ -10,10 +10,15 @@ const CustomBackButton = (props) => {
   };
 
   return (
-    <TouchableOpacity onPress={handleMoreAction} {...props}>
-      <Image source={assets.ArrowBack} style={{ width: 43, height: 43 }} />
+    <TouchableOpacity onPress={handleMoreAction} {...props} style={styles.btn}>
+      <Image source={assets.More} style={{ width: 26, height: 26 }} />
     </TouchableOpacity>
   );
 };
 
-export default CustomBackButton;
+const styles = StyleSheet.create({
+  btn: {
+    marginRight: 15,
+  },
+})
+export default MoreBtn;
