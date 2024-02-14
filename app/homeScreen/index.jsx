@@ -81,7 +81,7 @@ const HomeScreen = () => {
           <Text style={styles.resendCodeText}>See all</Text>
         </Pressable>
       </View>
-      <ProjectCard />
+      <ProjectCard project={""} />
     </PageGuard>
   );
 };

@@ -6,6 +6,7 @@ import PageGuard from "../../components/Guards";
 import { Picker } from '@react-native-picker/picker';
 import { assets } from "../../utils/assets";
 import { borders } from "../../utils/border"
+import ProjectCard from "../../components/ProjectCard";
 
 
 const Projects = () => {
@@ -30,6 +31,12 @@ const Projects = () => {
           </Picker>
         </View>
       </View>
+      <View style={styles.allProjects}>
+        {[1, 2, 3, 4, 5].map((project, index) => {
+          return <ProjectCard key={index} project={project} />
+        })}
+
+      </View>
     </PageGuard>
   );
 };
@@ -43,9 +50,9 @@ const styles = StyleSheet.create({
     gap: 10,
     alignItems: "center",
     fontFamily: fonts.MONTSERRAT_MEDIUM,
-    paddingTop: 33,
     flexDirection: "column",
     gap: 19,
+    overflow: "hidden",
   },
   title: {
     fontFamily: fonts.MONTSERRAT_SEMI_BOLD,
@@ -53,6 +60,7 @@ const styles = StyleSheet.create({
     color: colors.DARK,
     textAlign: "left",
     width: "100%",
+    marginTop: 40,
   },
   filterWrapper: {
     display: "flex",
@@ -80,9 +88,19 @@ const styles = StyleSheet.create({
   select: {
     ...borders("s", colors.ACCENT_LIGHT),
     borderRadius: 5,
-    padding: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
     color: colors.GRAY,
+    width: "30%"
   },
+  allProjects: {
+    flex: 1,
+    gap: 11,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    overflowY: "auto",
+  }
 
 
 });

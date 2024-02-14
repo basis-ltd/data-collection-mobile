@@ -6,6 +6,7 @@ import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import { assets } from "../utils/assets";
 
 const ProjectCard = (props) => {
+  const { project } = props;
 
   const handlePressProject = () => {
     console.log("Press Project");

@@ -60,7 +60,7 @@ const Profile = () => {
           <Image source={assets.Email} style={styles.icon} />
           <View style={styles.box1}>
             <Text style={styles.boxTitle}>Email</Text>
-            <Text style={styles.boxSubTitle}>{defaultUser.email || "N/A"}</Text>
+            <Text style={styles.boxSubTitle}>{defaultUser?.email || "N/A"}</Text>
           </View>
         </View>
         <View style={styles.box}>
