@@ -14,6 +14,7 @@ const More = require(`../assets/images/more.png`);
 const PhoneCircle = require(`../assets/images/phone.png`);
 const Logout = require(`../assets/images/logout.png`);
 const Filter = require(`../assets/images/filter.png`);
+const ArrowDown = require(`../assets/images/arrowDown.png`);
 // other images here
 
 // lotties
@@ -35,7 +36,8 @@ export const assets = {
   PhoneCircle,
   CamIcon,
   Logout,
-  Filter
+  Filter,
+  ArrowDown,
 };
 
 // ANIMATIONS FROM LOTTIE FILERS

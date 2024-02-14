@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
 import { colors } from "../../utils/colors";
 import { fonts } from "../../utils/fonts";
 import PageGuard from "../../components/Guards";
@@ -7,10 +7,18 @@ import { Picker } from '@react-native-picker/picker';
 import { assets } from "../../utils/assets";
 import { borders } from "../../utils/border"
 import ProjectCard from "../../components/ProjectCard";
+import RNPickerSelect from 'react-native-picker-select';
+import AppCustomSelect from "../../components/AppCustomSelect";
 
 
 const Projects = () => {
-  const [selectedValue, setSelectedValue] = useState('');
+  const [selectedValue, setSelectedValue] = useState('Status');
+
+  const options = [
+    { label: 'Active', value: 'active' },
+    { label: 'Inactive', value: 'inactive' },
+    // Add more options as needed
+  ];
 
   return (
     <PageGuard style={styles.projects}>
@@ -21,25 +29,25 @@ const Projects = () => {
           <Text style={styles.filter}>Filter</Text>
         </View>
         <View style={styles.select}>
-          <Picker
-            selectedValue={selectedValue}
-            onValueChange={(itemValue, itemIndex) =>
-              setSelectedValue(itemValue)
-            }>
-            <Picker.Item label="Active" value="active" />
-            <Picker.Item label="Inactive" value="inactive" />
-          </Picker>
+          <AppCustomSelect
+            options={options}
+            onSelect={(value) => setSelectedValue(value)}
+            title="Status"
+          />
         </View>
-      </View>
-      <View style={styles.allProjects}>
-        {[1, 2, 3, 4, 5].map((project, index) => {
-          return <ProjectCard key={index} project={project} />
-        })}
 
       </View>
+      <ScrollView contentContainerStyle={styles.allProjectsScroll}>
+        <View style={styles.allProjects}>
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((project, index) => {
+            return <ProjectCard key={index} project={project} />
+          })}
+        </View>
+      </ScrollView>
     </PageGuard>
   );
 };
+
 
 const styles = StyleSheet.create({
   projects: {
@@ -52,7 +60,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.MONTSERRAT_MEDIUM,
     flexDirection: "column",
     gap: 19,
-    overflow: "hidden",
+    height: "100%",
   },
   title: {
     fontFamily: fonts.MONTSERRAT_SEMI_BOLD,
@@ -86,23 +94,26 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   select: {
-    ...borders("s", colors.ACCENT_LIGHT),
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    color: colors.GRAY,
-    width: "30%"
+    width: "35%",
+    padding: 0,
+  },
+  allProjectsScroll: {
+    width: "100%",
+    padding: 0,
   },
   allProjects: {
     flex: 1,
     gap: 11,
+    padding: 0,
+    paddingTop: 5,
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    overflowY: "auto",
-  }
+  },
 
 
 });
 
 export default Projects;
+
+
