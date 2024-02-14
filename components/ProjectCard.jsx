@@ -1,15 +1,19 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { borders } from "../utils/border";
 import { colors } from "../utils/colors";
 import { fonts } from "../utils/fonts";
-import { View, StyleSheet, TextInput, Text, Image } from "react-native";
+import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import { assets } from "../utils/assets";
 
 const ProjectCard = (props) => {
 
+  const handlePressProject = () => {
+    console.log("Press Project");
+
+  }
+
   return (
-    <View style={styles.projectCardContainer}>
+    <TouchableOpacity style={styles.projectCardContainer} onPress={handlePressProject}>
       <Image style={styles.iconImage} source={assets.BlueBox} alt="Project Icon" />
       <View style={styles.middleBox}>
         <Text style={styles.projectTitle}>Project</Text>
@@ -22,7 +26,7 @@ const ProjectCard = (props) => {
         <Text style={true ? styles.active : styles.inactive}>Active</Text>
       </View>
       <Image style={styles.iconImage} source={assets.AddIcon} alt="Add Icon" />
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -34,11 +38,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 12,
     width: "100%",
-    // justifyContent: "center",
     alignItems: "center",
-    borderRadius: 5,
-    borderColor: colors.ACCENT_LIGHT,
-    borderWidth: 2,
+    ...borders("s", colors.ACCENT_LIGHT),
     paddingHorizontal: 12
   },
   iconImage: {
