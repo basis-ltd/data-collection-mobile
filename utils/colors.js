@@ -11,6 +11,7 @@ const SUCCESS = '#016019';
 const BLUE = '#009DD7';
 const GRAY = '#5E5E5F';
 const GRAY_LIGHT = '#E4E4E5';
+const GRAY_LIGHTEST = '#E7E7E7';
 
 // ACCENTS
 const ACCENT_LIGHT = '#C4D2D0';
@@ -34,4 +35,5 @@ export const colors = {
   ACCENT_DARK,
   TRANSPARENT,
   LIGHT_Opaque,
+  GRAY_LIGHTEST,
 };

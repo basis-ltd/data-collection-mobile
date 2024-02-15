@@ -41,7 +41,8 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     ...borders("s", colors.ACCENT_LIGHT),
-    paddingHorizontal: 12
+    paddingHorizontal: 12,
+    borderRadius: 5,
   },
   iconImage: {
     width: 20,

@@ -81,12 +81,13 @@ const styles = StyleSheet.create({
         position: "absolute",
         padding: 10,
         width: "100%",
-        backgroundColor: colors.ACCENT_DARK,
-        borderRadius: 3,
+        backgroundColor: colors.LIGHT,
+        borderRadius: 5,
         top: 40,
         right: 0,
         zIndex: 100,
-        height: "auto"
+        height: "auto",
+        ...borders("s", colors.ACCENT_LIGHT)
     },
     button: {
         padding: 0,
@@ -96,8 +97,9 @@ const styles = StyleSheet.create({
     option: {
         padding: 5,
         borderBottomWidth: 1,
+        borderBottomColor: colors.GRAY_LIGHTEST,
         fontFamily: fonts.MONTSERRAT_MEDIUM,
-        color: colors.ACCENT_DARK,
+        color: colors.GRAY,
         fontSize: 14,
         width: "100%",
         textAlign: "left",

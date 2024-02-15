@@ -74,8 +74,8 @@ const styles = StyleSheet.create({
     top: "-50%",
     left: "-50%",
     transform: [
-      { translateX: Dimensions.get("window").width / 2.8 },
-      { translateY: Dimensions.get("window").height / 2.2 },
+      { translateX: Dimensions.get("window").width / 2.65 },
+      { translateY: Dimensions.get("window").height / 2.1 },
     ],
     zIndex: 0,
     opacity: 0.5,
