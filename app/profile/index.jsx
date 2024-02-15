@@ -6,30 +6,53 @@ import PageGuard from "../../components/Guards";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { assets } from "../../utils/assets";
 import * as ImagePicker from 'expo-image-picker';
+import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 
 const Profile = () => {
-  const [selectedImage, setSelectedImage] = useState({ localUri: "" });
+  const [uploadedImage, setUploadedImage] = useState(null);
+  const [defaultUser, setDefaultUser] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
 
   const handleUpload = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (permissionResult.granted === false) return;
     const pickerResult = await ImagePicker.launchImageLibraryAsync();
-
     if (pickerResult?.canceled === true) return;
-    setSelectedImage({ localUri: pickerResult.uri });
+    setUploadedImage(pickerResult?.assets[0]?.uri);
   }
+
+  const getUserinfo = async () => {
+    const user = await AsyncStorage.getItem("userProfile");
+    setDefaultUser(user ? JSON.parse(user) : null);
+  }
+
+  useEffect(() => {
+    getUserinfo();
+  }, []);
+
+  useEffect(() => {
+    if (uploadedImage) {
+      setImagePreview(uploadedImage)
+    } else if (defaultUser) {
+      setImagePreview(defaultUser?.image_url)
+    }
+  }, [defaultUser, uploadedImage]);
+
 
   return (
     <PageGuard style={styles.profile}>
       <View style={styles.imagesWrapper}>
-        <Image source={selectedImage.localUri ? selectedImage.localUri : assets.DemoImg} resizeMode="cover" style={styles.preview} />
+        {imagePreview && <Image source={{ uri: imagePreview }} resizeMode="cover" style={styles.preview} />}
+        {!imagePreview && <Ionicons style={styles.preview} name="person" size={200} color="black" />}
         <TouchableOpacity onPress={handleUpload} style={styles.btnUpload} >
           <Image source={assets.CamIcon} style={{ width: 39, height: 39 }} />
         </TouchableOpacity>
       </View>
       <View style={styles.intro}>
-        <Text style={styles.title}>Shema Jolivet Gislain</Text>
+        <Text style={styles.title}>{defaultUser?.firstName} {defaultUser?.lastName}</Text>
         <Text style={styles.subTitle}>Ministry of Sport</Text>
       </View>
       <View style={styles.details}>
@@ -37,24 +60,24 @@ const Profile = () => {
           <Image source={assets.Email} style={styles.icon} />
           <View style={styles.box1}>
             <Text style={styles.boxTitle}>Email</Text>
-            <Text style={styles.boxSubTitle}>shemajolivet@sport.gov.rw</Text>
+            <Text style={styles.boxSubTitle}>{defaultUser?.email || "N/A"}</Text>
           </View>
         </View>
         <View style={styles.box}>
           <Image source={assets.PhoneCircle} style={styles.icon} />
           <View style={styles.box1}>
             <Text style={styles.boxTitle}>Phone</Text>
-            <Text style={styles.boxSubTitle}>+250 786 923 090</Text>
+            <Text style={styles.boxSubTitle}>{defaultUser?.phone || "N/A"}</Text>
           </View>
         </View>
-        <View style={styles.box}>
+        <TouchableOpacity style={styles.box}>
           <Image source={assets.Docs} style={styles.icon} />
           <View style={styles.box1}>
             <Text style={styles.boxTitle}>Active Project</Text>
             <Text style={styles.boxSubTitle}>Stadium survey  </Text>
           </View>
           <Image source={assets.ArrowBack} style={styles.arrowBottomLink} />
-        </View>
+        </TouchableOpacity>
       </View>
     </PageGuard>
   );

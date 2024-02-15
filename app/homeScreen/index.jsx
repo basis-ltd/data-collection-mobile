@@ -1,26 +1,31 @@
 import { useState, useEffect } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View, Image } from "react-native";
 import { colors } from "../../utils/colors";
 import { fonts } from "../../utils/fonts";
 import PageGuard from "../../components/Guards";
 import { Ionicons } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Image } from "react-native-svg";
 import { useNavigation } from "expo-router";
 import { frontendAPI } from "../../api/frontendApi";
 import ProjectCard from "../../components/ProjectCard"
+import useFetchData from "../../hooks/useFetchData";
+import { backendAPI } from "../../api/backendApi";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const HomeScreen = () => {
   const [userProfile, setUserProfile] = useState(null);
   const navigation = useNavigation()
+  const { data, error, loading, handler } = useFetchData()
+
 
   const getUserinfo = async () => {
     const user = await AsyncStorage.getItem("userProfile");
-    setUserProfile(JSON.parse(user));
+    setUserProfile(JSON.parse(user))
   }
 
   useEffect(() => {
-    getUserinfo()
+    getUserinfo();
+    handler(backendAPI.allProjects)
   }, []);
 
   const handleRedirectToProjects = () => {
@@ -33,7 +38,12 @@ const HomeScreen = () => {
         <View style={styles.userIntroBox}>
           <View style={styles.iconImage}>
             {userProfile.image_url ?
-              <Image style={styles.icon} source={userProfile.image_url} alt="User Profile" /> :
+              <Image
+                style={styles.icon}
+                source={{ uri: userProfile.image_url }}
+                accessibilityLabel="User Profile"
+                alt="User Profile"
+              /> :
               <Ionicons style={styles.icon} name="person" size={40} color="black" />
             }
           </View>
@@ -64,14 +74,14 @@ const HomeScreen = () => {
           <Text style={styles.statNumber}>34</Text>
         </View>
       </View>
-      {/* recente projects */}
+      {/* recent projects */}
       <View style={styles.recentWrapper}>
         <Text style={styles.recentTitle}>Recent Assigned Project</Text>
         <Pressable className="p-0 m-0 cursor-pointer" onPress={handleRedirectToProjects}>
           <Text style={styles.resendCodeText}>See all</Text>
         </Pressable>
       </View>
-      <ProjectCard />
+      <ProjectCard project={""} />
     </PageGuard>
   );
 };
@@ -100,9 +110,11 @@ const styles = StyleSheet.create({
     padding: 0,
   },
   icon: {
-    width: "100%",
-    height: "100%",
+    width: "90%",
+    height: "90%",
     borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
   },
   userIntroBox: {
     flexDirection: "row",

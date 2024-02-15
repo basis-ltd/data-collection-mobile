@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const useFetchData = () => {
     const [data, setData] = useState(null);
@@ -10,8 +11,15 @@ const useFetchData = () => {
         setLoading(true);
         setError(null);
         setData(null);
+        const token = await AsyncStorage.getItem("accessToken");
+        const axiosConfig = token ? {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        } : {};
+
         try {
-            const response = await axios.get(url);
+            const response = await axios.get(url, axiosConfig);
             setData(response.data);
             setLoading(false);
         } catch (err) {
