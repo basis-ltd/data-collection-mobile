@@ -41,7 +41,7 @@ const Profile = () => {
     }
   }, [defaultUser, uploadedImage]);
 
-
+  // console.log(defaultUser, "defaultUser")
   return (
     <PageGuard style={styles.profile}>
       <View style={styles.imagesWrapper}>
