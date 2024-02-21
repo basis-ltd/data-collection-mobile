@@ -49,7 +49,6 @@ const Login = () => {
       </View>
       <Text style={styles.labelLogin}>Login, to Start Collecting data</Text>
       {error && !loading && <AppError message={error} />}
-      {loading && <AppLoadingSpin />}
       {/* Form login and validation */}
       <Formik
         initialValues={{ phone: "" }}
@@ -67,11 +66,12 @@ const Login = () => {
                 value={values.phone}
                 onChangeText={handleChange("phone")}
               />
-              <AppButton
+              {!loading && <AppButton
                 fullWidth={true}
                 title="Send OTP"
                 handleOnPress={handleSubmit}
-              />
+              />}
+              {loading && <AppLoadingSpin />}
             </View>
           );
         }}
