@@ -29,7 +29,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     getUserinfo();
-    handler(backendAPI.allProjects);
+    handler(backendAPI.allProjectsCount);
   }, []);
 
   useEffect(() => {
@@ -37,7 +37,6 @@ const HomeScreen = () => {
       handlerDayEntries(backendAPI.entries(userProfile.id, "day"));
       handlerMonthEntries(backendAPI.entries(userProfile.id, "month"));
       handlerWeekEntries(backendAPI.entries(userProfile.id, "week"));
-
     }
   }, [userProfile]);
 
@@ -46,7 +45,6 @@ const HomeScreen = () => {
   }
 
   console.log(dataDayEntries, errorDayEntries, loadingDayEntries, "test data")
-
 
   return (
     <PageGuard style={styles.containerHome}>
