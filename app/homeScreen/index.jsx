@@ -20,6 +20,7 @@ const HomeScreen = () => {
   const { data: dataDayEntries, error: errorDayEntries, loading: loadingDayEntries, handler: handlerDayEntries } = useFetchData()
   const { data: dataMonthEntries, error: errorMonthEntries, loading: loadingMonthEntries, handler: handlerMonthEntries } = useFetchData()
   const { data: dataWeekEntries, error: errorWeekEntries, loading: loadingWeekEntries, handler: handlerWeekEntries } = useFetchData()
+  const { data: recentProjects, error: recentProjectsError, loading: recentProjectsLoading, handler: handleRecentProjects } = useFetchData()
 
 
   const getUserinfo = async () => {
@@ -37,14 +38,14 @@ const HomeScreen = () => {
       handlerDayEntries(backendAPI.entries(userProfile.id, "day"));
       handlerMonthEntries(backendAPI.entries(userProfile.id, "month"));
       handlerWeekEntries(backendAPI.entries(userProfile.id, "week"));
+      handleRecentProjects(backendAPI.allProjectsList(10, 0))
+
     }
   }, [userProfile]);
 
   const handleRedirectToProjects = () => {
     navigation.navigate(frontendAPI.Projects)
   }
-
-  console.log(dataDayEntries, errorDayEntries, loadingDayEntries, "test data")
 
   return (
     <PageGuard style={styles.containerHome}>
@@ -104,7 +105,9 @@ const HomeScreen = () => {
           <Text style={styles.resendCodeText}>See all</Text>
         </Pressable>
       </View>
-      <ProjectCard project={""} />
+      {recentProjectsLoading && <AppLoadingSpin />}
+      {recentProjectsError && !recentProjectsLoading && <Text style={styles.error}>{recentProjectsError?.message || recentProjectsError[0]}</Text>}
+      {!recentProjectsLoading && recentProjects && <ProjectCard project={recentProjects?.data[0]} />}
     </PageGuard>
   );
 };

@@ -4,6 +4,7 @@ import { colors } from "../utils/colors";
 import { fonts } from "../utils/fonts";
 import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import { assets } from "../utils/assets";
+import { formatDate } from "../helpers/formatDate";
 
 const ProjectCard = (props) => {
   const { project } = props;
@@ -18,13 +19,13 @@ const ProjectCard = (props) => {
       <Image style={styles.iconImage} source={assets.BlueBox} alt="Project Icon" />
       <View style={styles.middleBox}>
         <Text style={styles.projectTitle}>Project</Text>
-        <Text style={styles.projectName}>Stadium survey</Text>
+        <Text style={styles.projectName}>{project?.title || "N/A"}</Text>
         <Text style={styles.projectTitle}>Status</Text>
       </View>
       <View style={styles.middleBox}>
         <Text style={styles.projectTitle}>Assigned at</Text>
-        <Text style={styles.date}>Stadium survey</Text>
-        <Text style={true ? styles.active : styles.inactive}>Active</Text>
+        <Text style={styles.date}>{formatDate(project.start_date)}</Text>
+        <Text style={project.isActive ? styles.active : styles.inactive}>{project.isActive ? "Active" : "Inactive"}</Text>
       </View>
       <Image style={styles.iconImage} source={assets.AddIcon} alt="Add Icon" />
     </TouchableOpacity>
