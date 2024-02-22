@@ -16,6 +16,7 @@ const GRAY_LIGHTEST = '#E7E7E7';
 // ACCENTS
 const ACCENT_LIGHT = '#C4D2D0';
 const ACCENT_DARK = '#607C89';
+const ERROR_ACCENT = '#FFE9E9'
 //
 const TRANSPARENT = 'transparent';
 
@@ -36,4 +37,5 @@ export const colors = {
   TRANSPARENT,
   LIGHT_Opaque,
   GRAY_LIGHTEST,
+  ERROR_ACCENT
 };

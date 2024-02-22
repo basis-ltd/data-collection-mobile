@@ -52,6 +52,8 @@ const styles = StyleSheet.create({
   middleBox: {
     display: "flex",
     flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
     gap: 5,
     flex: 1
   },
@@ -59,16 +61,19 @@ const styles = StyleSheet.create({
     color: colors.DARK,
     fontFamily: fonts.MONTSERRAT_SEMI_BOLD,
     fontSize: 14,
+    width: "100%",
   },
   projectName: {
     color: colors.DARK,
     fontFamily: fonts.MONTSERRAT_REGULAR,
     fontSize: 12,
+    width: "100%",
   },
   date: {
     color: colors.SUCCESS,
     fontFamily: fonts.MONTSERRAT_REGULAR,
     fontSize: 12,
+    width: "100%",
   },
   active: {
     color: colors.BLUE,
@@ -76,11 +81,14 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   inactive: {
-    color: colors.DARK,
+    color: colors.ERROR,
     fontFamily: fonts.MONTSERRAT_SEMI_BOLD,
     fontSize: 12,
-    backgroundColor: colors.ERROR,
+    backgroundColor: colors.ERROR_ACCENT,
     padding: 10,
+    borderRadius: 5,
+    width: "fit-content",
+    flex: 0,
   }
 });
 
