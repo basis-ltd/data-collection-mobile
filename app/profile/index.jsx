@@ -51,16 +51,9 @@ const Profile = () => {
 
   useEffect(() => {
     getUserinfo();
-    if (defaultUser) {
-      handleRecentProjects(backendAPI.allProjectsList(10, 0))
-    }
+    handleRecentProjects(backendAPI.allProjectsList(2, 0))
   }, []);
 
-  useEffect(() => {
-    if (defaultUser && !recentProjects && !recentProjectsLoading) {
-      handleRecentProjects(backendAPI.allProjectsList(2, 0))
-    }
-  }, [defaultUser]);
 
   useEffect(() => {
     if (uploadedImage) {

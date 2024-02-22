@@ -2,7 +2,7 @@
 import * as Font from "expo-font";
 
 export async function loadAppFonts() {
-  //this must go intop app, and we load app only when it is loaded
+  //this must go into app, and we load app only when it is loaded
   await Font.loadAsync({
     "Montserrat-Black": require("../assets/fonts/Montserrat-Black.ttf"),
     "Montserrat-Light": require("../assets/fonts/Montserrat-Light.ttf"),
