@@ -79,6 +79,9 @@ const styles = StyleSheet.create({
     color: colors.BLUE,
     fontFamily: fonts.MONTSERRAT_SEMI_BOLD,
     fontSize: 12,
+    backgroundColor: "#F3FCFF",
+    borderRadius: 5,
+    padding: 10,
   },
   inactive: {
     color: colors.ERROR,
