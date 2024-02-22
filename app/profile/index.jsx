@@ -51,11 +51,14 @@ const Profile = () => {
 
   useEffect(() => {
     getUserinfo();
+    if (defaultUser) {
+      handleRecentProjects(backendAPI.allProjectsList(10, 0))
+    }
   }, []);
 
   useEffect(() => {
-    if (defaultUser) {
-      handleRecentProjects(backendAPI.allProjectsList(10, 0))
+    if (defaultUser && !recentProjects && !recentProjectsLoading) {
+      handleRecentProjects(backendAPI.allProjectsList(2, 0))
     }
   }, [defaultUser]);
 
@@ -116,7 +119,7 @@ const Profile = () => {
             {recentProjectsLoading && <AppLoadingSpin />}
             {recentProjectsError && !recentProjectsLoading && <Text style={styles.error}>{recentProjectsError?.message || recentProjectsError[0]}</Text>}
             {!recentProjectsError && !recentProjectsLoading && recentProjects && recentProjects?.data &&
-              <Text style={styles.boxSubTitle}>{recentProjects?.data[0]?.title}</Text>
+              <Text style={styles.boxSubTitle}>{recentProjects?.data?.rows[0]?.title || "N/A"}</Text>
             }
           </View>
           {!recentProjectsLoading && <Image source={assets.ArrowBack} style={styles.arrowBottomLink} />}

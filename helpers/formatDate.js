@@ -1,4 +1,5 @@
 export function formatDate(isoDate) {
+    if (!isoDate) return "";
     const days = ["Sun", "Mon", "Tue", "Wed", "Thurs", "Fri", "Sat"];
     const months = ["Jan", "Feb", "Mar", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
 

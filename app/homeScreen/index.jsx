@@ -38,7 +38,7 @@ const HomeScreen = () => {
       handlerDayEntries(backendAPI.entries(userProfile.id, "day"));
       handlerMonthEntries(backendAPI.entries(userProfile.id, "month"));
       handlerWeekEntries(backendAPI.entries(userProfile.id, "week"));
-      handleRecentProjects(backendAPI.allProjectsList(10, 0))
+      handleRecentProjects(backendAPI.allProjectsList(2, 0))
 
     }
   }, [userProfile]);
@@ -107,7 +107,7 @@ const HomeScreen = () => {
       </View>
       {recentProjectsLoading && <AppLoadingSpin />}
       {recentProjectsError && !recentProjectsLoading && <Text style={styles.error}>{recentProjectsError?.message || recentProjectsError[0]}</Text>}
-      {!recentProjectsLoading && recentProjects && <ProjectCard project={recentProjects?.data[0]} />}
+      {!recentProjectsLoading && recentProjects && recentProjects.data && <ProjectCard project={recentProjects?.data?.rows[0]} />}
     </PageGuard>
   );
 };

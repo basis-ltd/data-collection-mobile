@@ -24,8 +24,8 @@ const ProjectCard = (props) => {
       </View>
       <View style={styles.middleBox}>
         <Text style={styles.projectTitle}>Assigned at</Text>
-        <Text style={styles.date}>{formatDate(project.start_date)}</Text>
-        <Text style={project.isActive ? styles.active : styles.inactive}>{project.isActive ? "Active" : "Inactive"}</Text>
+        <Text style={styles.date}>{formatDate(project?.start_date || project?.createdAt || "wrong Date")}</Text>
+        <Text style={project?.isActive ? styles.active : styles.inactive}>{project?.isActive ? "Active" : "Inactive"}</Text>
       </View>
       <Image style={styles.iconImage} source={assets.AddIcon} alt="Add Icon" />
     </TouchableOpacity>

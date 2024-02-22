@@ -24,6 +24,15 @@ const verifyOTP = () => {
   const { data, error, loading, handler } = usePostData()
   const dispatch = useDispatch()
 
+  // back to login if there is not number
+  useEffect(() => {
+    if (!phoneNumber) {
+      router.push(frontendAPI.Login)
+    }
+
+  }, []);
+
+
   const handleSubmit = () => {
     const otp = otpBoxes.join("");
     const data = { phone: phoneNumber, otp, }
