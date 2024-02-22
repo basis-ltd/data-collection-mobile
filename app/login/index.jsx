@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 import usePostData from "../../hooks/usePostData";
 import { backendAPI } from "../../api/backendApi";
 import AppError from "../../components/AppError";
-import AppLoadingSpin from "../../components/AppLoadingSpin";
+import LoadingLottie from "../../components/LoadingLottie";
 
 const Login = () => {
   const dispatch = useDispatch()
@@ -34,6 +34,7 @@ const Login = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      {loading && <LoadingLottie />}
       <Image
         source={assets.LoginPageImage}
         style={styles.loginImage}
@@ -66,12 +67,12 @@ const Login = () => {
                 value={values.phone}
                 onChangeText={handleChange("phone")}
               />
-              {!loading && <AppButton
+              <AppButton
                 fullWidth={true}
                 title="Send OTP"
                 handleOnPress={handleSubmit}
-              />}
-              {loading && <AppLoadingSpin />}
+              />
+
             </View>
           );
         }}

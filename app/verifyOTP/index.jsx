@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import usePostData from "../../hooks/usePostData";
 import { backendAPI } from "../../api/backendApi";
 import AppError from "../../components/AppError";
-import AppLoadingSpin from "../../components/AppLoadingSpin";
+import LoadingLottie from "../../components/LoadingLottie";
 import { setLoggedIn } from "../login/phoneNumber.slice";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from "expo-router";
@@ -82,12 +82,12 @@ const verifyOTP = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      {loading && <LoadingLottie />}
       <View style={styles.titleBox}>
         <Text style={styles.title}>Verify Code</Text>
         <Text style={styles.labelVerify}>Please Enter OTP we’ve sent you on {phoneNumber}</Text>
       </View>
       {error && !loading && <AppError message={error} />}
-      {loading && <AppLoadingSpin />}
       <View style={styles.formikContainer}>
         <View style={styles.optBox} className="p-0 flex m-0 w-full">
           {optArray.map((_, index) => (
@@ -136,7 +136,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "flex-start",
   },
-
   title: {
     fontSize: 28,
     color: colors.PRIMARY,
