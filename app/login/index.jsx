@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 import usePostData from "../../hooks/usePostData";
 import { backendAPI } from "../../api/backendApi";
 import AppError from "../../components/AppError";
-import AppLoadingSpin from "../../components/AppLoadingSpin";
+import LoadingLottie from "../../components/LoadingLottie";
 
 const Login = () => {
   const dispatch = useDispatch()
@@ -34,6 +34,7 @@ const Login = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      {loading && <LoadingLottie />}
       <Image
         source={assets.LoginPageImage}
         style={styles.loginImage}
@@ -49,7 +50,6 @@ const Login = () => {
       </View>
       <Text style={styles.labelLogin}>Login, to Start Collecting data</Text>
       {error && !loading && <AppError message={error} />}
-      {loading && <AppLoadingSpin />}
       {/* Form login and validation */}
       <Formik
         initialValues={{ phone: "" }}
@@ -72,6 +72,7 @@ const Login = () => {
                 title="Send OTP"
                 handleOnPress={handleSubmit}
               />
+
             </View>
           );
         }}

@@ -10,12 +10,17 @@ import ProjectCard from "../../components/ProjectCard"
 import useFetchData from "../../hooks/useFetchData";
 import { backendAPI } from "../../api/backendApi";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import AppLoadingSpin from "../../components/AppLoadingSpin";
 
 
 const HomeScreen = () => {
   const [userProfile, setUserProfile] = useState(null);
   const navigation = useNavigation()
   const { data, error, loading, handler } = useFetchData()
+  const { data: dataDayEntries, error: errorDayEntries, loading: loadingDayEntries, handler: handlerDayEntries } = useFetchData()
+  const { data: dataMonthEntries, error: errorMonthEntries, loading: loadingMonthEntries, handler: handlerMonthEntries } = useFetchData()
+  const { data: dataWeekEntries, error: errorWeekEntries, loading: loadingWeekEntries, handler: handlerWeekEntries } = useFetchData()
+  const { data: recentProjects, error: recentProjectsError, loading: recentProjectsLoading, handler: handleRecentProjects } = useFetchData()
 
 
   const getUserinfo = async () => {
@@ -25,8 +30,18 @@ const HomeScreen = () => {
 
   useEffect(() => {
     getUserinfo();
-    handler(backendAPI.allProjects)
+    handler(backendAPI.allProjectsCount);
   }, []);
+
+  useEffect(() => {
+    if (userProfile) {
+      handlerDayEntries(backendAPI.entries(userProfile.id, "day"));
+      handlerMonthEntries(backendAPI.entries(userProfile.id, "month"));
+      handlerWeekEntries(backendAPI.entries(userProfile.id, "week"));
+      handleRecentProjects(backendAPI.allProjectsList(2, 0))
+
+    }
+  }, [userProfile]);
 
   const handleRedirectToProjects = () => {
     navigation.navigate(frontendAPI.Projects)
@@ -55,23 +70,32 @@ const HomeScreen = () => {
       }
       <Text style={styles.title}>Your Project’s stats</Text>
       <View style={styles.statusWrapper}>
+
         <View style={styles.statBox}>
           <Text style={styles.statText}>Active Projects</Text>
-          <Text style={styles.statNumber}>3</Text>
+          {data && <Text style={styles.statNumber}>{data.data}</Text>}
+          {!data && error && <Text style={styles.error}>{error?.message || error[0]}</Text>}
+          {loading && <AppLoadingSpin />}
         </View>
         <View style={styles.statBox}>
-          <Text style={styles.statText}>Total Entries</Text>
-          <Text style={styles.statNumber}>450</Text>
+          <Text style={styles.statText}>Monthly Entries</Text>
+          {dataMonthEntries && <Text style={styles.statNumber}>{dataMonthEntries?.data}</Text>}
+          {!dataMonthEntries && errorMonthEntries && <Text style={styles.error}>{errorMonthEntries?.message || errorMonthEntries[0]}</Text>}
+          {loadingMonthEntries && <AppLoadingSpin />}
         </View>
       </View>
       <View style={styles.statusWrapper}>
         <View style={styles.statBox}>
-          <Text style={styles.statText}>Monthly Entries</Text>
-          <Text style={styles.statNumber}>400</Text>
+          <Text style={styles.statText}>Weekly Entries</Text>
+          {dataWeekEntries && <Text style={styles.statNumber}>{dataWeekEntries?.data}</Text>}
+          {!dataWeekEntries && errorWeekEntries && <Text style={styles.error}>{errorWeekEntries?.message || errorWeekEntries[0]}</Text>}
+          {loadingWeekEntries && <AppLoadingSpin />}
         </View>
         <View style={styles.statBox}>
           <Text style={styles.statText}>Today’s Entries</Text>
-          <Text style={styles.statNumber}>34</Text>
+          {dataDayEntries && <Text style={styles.statNumber}>{dataDayEntries?.data}</Text>}
+          {!dataDayEntries && errorDayEntries && <Text style={styles.error}>{errorDayEntries?.message || errorDayEntries[0]}</Text>}
+          {loadingDayEntries && <AppLoadingSpin />}
         </View>
       </View>
       {/* recent projects */}
@@ -81,7 +105,9 @@ const HomeScreen = () => {
           <Text style={styles.resendCodeText}>See all</Text>
         </Pressable>
       </View>
-      <ProjectCard project={""} />
+      {recentProjectsLoading && <AppLoadingSpin />}
+      {recentProjectsError && !recentProjectsLoading && <Text style={styles.error}>{recentProjectsError?.message || recentProjectsError[0]}</Text>}
+      {!recentProjectsLoading && recentProjects && recentProjects.data && <ProjectCard project={recentProjects?.data?.rows[0]} />}
     </PageGuard>
   );
 };
@@ -153,6 +179,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     gap: 40,
+    justifyContent: "center",
   },
   statBox: {
     flex: 1,
@@ -164,11 +191,20 @@ const styles = StyleSheet.create({
     gap: 10,
     padding: 10,
     backgroundColor: colors.PRIMARY_LIGHT,
+    minHeight: 100,
   },
   statNumber: {
     fontFamily: fonts.MONTSERRAT_SEMI_BOLD,
     fontSize: 25,
     color: colors.DARK,
+    textAlign: "center",
+    width: "100%",
+    alignItems: "center",
+  },
+  error: {
+    fontFamily: fonts.MONTSERRAT_REGULAR,
+    fontSize: 14,
+    color: colors.ERROR,
     textAlign: "center",
     width: "100%",
     alignItems: "center",

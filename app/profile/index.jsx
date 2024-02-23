@@ -8,6 +8,10 @@ import { assets } from "../../utils/assets";
 import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import useFetchData from "../../hooks/useFetchData";
+import AppLoadingSpin from "../../components/AppLoadingSpin";
+import { backendAPI } from "../../api/backendApi";
+import useUpdateData from "../../hooks/useUpdateData";
 
 
 
@@ -15,13 +19,29 @@ const Profile = () => {
   const [uploadedImage, setUploadedImage] = useState(null);
   const [defaultUser, setDefaultUser] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+  const { data: recentProjects, error: recentProjectsError, loading: recentProjectsLoading, handler: handleRecentProjects } = useFetchData()
+  const { handler: updateHandler, error, loading, data } = useUpdateData()
 
   const handleUpload = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (permissionResult.granted === false) return;
     const pickerResult = await ImagePicker.launchImageLibraryAsync();
     if (pickerResult?.canceled === true) return;
-    setUploadedImage(pickerResult?.assets[0]?.uri);
+    const uri = pickerResult?.assets[0]?.uri;
+
+    if (!uri) return;
+    // update profile for the user
+    setUploadedImage(uri);
+    const fileType = uri.substring(uri.lastIndexOf(".") + 1);
+    let formData = new FormData();
+    formData.append('file', {
+      uri,
+      type: `image/${fileType}`,
+      name: `image.${fileType}`,
+    });
+
+    updateHandler(backendAPI.updateUserProfile(defaultUser.id), formData, "formData");
+
   }
 
   const getUserinfo = async () => {
@@ -31,7 +51,9 @@ const Profile = () => {
 
   useEffect(() => {
     getUserinfo();
+    handleRecentProjects(backendAPI.allProjectsList(2, 0))
   }, []);
+
 
   useEffect(() => {
     if (uploadedImage) {
@@ -41,6 +63,18 @@ const Profile = () => {
     }
   }, [defaultUser, uploadedImage]);
 
+  // update local storage
+  const handleUpdateUserInLS = async () => {
+    const updatedUser = { ...defaultUser, image_url: imagePreview };
+    setDefaultUser(updatedUser);
+    await AsyncStorage.setItem("userProfile", JSON.stringify(updatedUser))
+  }
+
+  useEffect(() => {
+    if (data && !loading) {
+      handleUpdateUserInLS()
+    }
+  }, [data, loading])
 
   return (
     <PageGuard style={styles.profile}>
@@ -51,6 +85,7 @@ const Profile = () => {
           <Image source={assets.CamIcon} style={{ width: 39, height: 39 }} />
         </TouchableOpacity>
       </View>
+      {error && !loading && <Text style={styles.error}>{error || error[0]}</Text>}
       <View style={styles.intro}>
         <Text style={styles.title}>{defaultUser?.firstName} {defaultUser?.lastName}</Text>
         <Text style={styles.subTitle}>Ministry of Sport</Text>
@@ -74,9 +109,13 @@ const Profile = () => {
           <Image source={assets.Docs} style={styles.icon} />
           <View style={styles.box1}>
             <Text style={styles.boxTitle}>Active Project</Text>
-            <Text style={styles.boxSubTitle}>Stadium survey  </Text>
+            {recentProjectsLoading && <AppLoadingSpin />}
+            {recentProjectsError && !recentProjectsLoading && <Text style={styles.error}>{recentProjectsError?.message || recentProjectsError[0]}</Text>}
+            {!recentProjectsError && !recentProjectsLoading && recentProjects && recentProjects?.data &&
+              <Text style={styles.boxSubTitle}>{recentProjects?.data?.rows[0]?.title || "N/A"}</Text>
+            }
           </View>
-          <Image source={assets.ArrowBack} style={styles.arrowBottomLink} />
+          {!recentProjectsLoading && <Image source={assets.ArrowBack} style={styles.arrowBottomLink} />}
         </TouchableOpacity>
       </View>
     </PageGuard>
@@ -183,9 +222,15 @@ const styles = StyleSheet.create({
     width: 21,
     height: 21,
     transform: [{ rotate: '180deg' }]
-  }
-
-
+  },
+  error: {
+    fontFamily: fonts.MONTSERRAT_REGULAR,
+    fontSize: 14,
+    color: colors.ERROR,
+    textAlign: "center",
+    width: "100%",
+    alignItems: "center",
+  },
 });
 
 export default Profile;

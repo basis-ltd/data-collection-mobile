@@ -1,9 +1,9 @@
+import { loadAppFonts } from "../utils/fonts";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, SafeAreaView } from "react-native";
 import LoadingPage from "../components/LoadingPage";
 import { colors } from "../utils/colors";
 import GettingStarted from "../ui/GettingStarted";
-import { loadAppFonts } from "../utils/fonts";
 import useIsUSerLoggedIn from "../hooks/useIsUSerLoggedIn";
 import { setLoggedIn } from "./login/phoneNumber.slice";
 import { useDispatch } from "react-redux";
