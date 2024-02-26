@@ -4,13 +4,13 @@ import PageGuard from "../../components/Guards";
 import ProjectsHome from "./components/ProjectsHome";
 import SingleProject from "./components/singleProject";
 import { StyleSheet } from "react-native";
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
-
 
 const Projects = () => {
   const { showProjectsList } = useSelector(state => state.projectsReducers);
   const { projectId } = useSelector(state => state.projectsReducers);
+
+
 
   return (
     <PageGuard style={styles.projects}>

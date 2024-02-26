@@ -7,14 +7,19 @@ import { assets } from "../utils/assets";
 import { formatDate } from "../helpers/formatDate";
 import { useDispatch } from "react-redux";
 import { setProjectLists, setProjectId } from "../app/projects/projectSlice";
+import { useNavigation } from "expo-router";
+import { frontendAPI } from "../api/frontendApi";
 
 const ProjectCard = (props) => {
   const { project } = props;
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const navigation = useNavigation()
+
 
   const handlePressProject = () => {
     dispatch(setProjectLists(false));
     dispatch(setProjectId(project.id));
+    navigation.navigate(frontendAPI.Projects)
   }
 
   return (

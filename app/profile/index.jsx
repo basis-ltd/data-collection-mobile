@@ -14,6 +14,8 @@ import { backendAPI } from "../../api/backendApi";
 import useUpdateData from "../../hooks/useUpdateData";
 import { useDispatch } from "react-redux";
 import { setProjectId, setProjectLists } from "../projects/projectSlice";
+import { useNavigation } from "expo-router";
+import { frontendAPI } from "../../api/frontendApi";
 
 
 
@@ -23,8 +25,8 @@ const Profile = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const { data: recentProjects, error: recentProjectsError, loading: recentProjectsLoading, handler: handleRecentProjects } = useFetchData()
   const { handler: updateHandler, error, loading, data } = useUpdateData()
-  const dispatch = useDispatch()
-
+  const dispatch = useDispatch();
+  const navigation = useNavigation()
 
   const handleUpload = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -83,6 +85,7 @@ const Profile = () => {
   const handleShowSingleProject = (projectId) => {
     dispatch(setProjectLists(false));
     dispatch(setProjectId(projectId));
+    navigation.navigate(frontendAPI.Projects)
   }
 
   return (
@@ -114,7 +117,7 @@ const Profile = () => {
             <Text style={styles.boxSubTitle}>{defaultUser?.phone || "N/A"}</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.box}>
+        <TouchableOpacity style={styles.box} onPress={() => recentProjects?.data?.rows[0] ? handleShowSingleProject(recentProjects?.data?.rows[0]?.id) : null}>
           <Image source={assets.Docs} style={styles.icon} />
           <View style={styles.box1}>
             <Text style={styles.boxTitle}>Active Project</Text>
@@ -124,7 +127,7 @@ const Profile = () => {
               <Text style={styles.boxSubTitle}>{recentProjects?.data?.rows[0]?.title || "N/A"}</Text>
             }
           </View>
-          {!recentProjectsLoading && <Image source={assets.ArrowBack} style={styles.arrowBottomLink} onPress={() => handleShowSingleProject(recentProjects?.data?.rows[0]?.id)} />}
+          {!recentProjectsLoading && <Image source={assets.ArrowBack} style={styles.arrowBottomLink} />}
         </TouchableOpacity>
       </View>
     </PageGuard>
