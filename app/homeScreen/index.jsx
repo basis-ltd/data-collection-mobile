@@ -46,6 +46,7 @@ const HomeScreen = () => {
   const handleRedirectToProjects = () => {
     navigation.navigate(frontendAPI.Projects)
   }
+  // console.log(userProfile, "test user")
 
   return (
     <PageGuard style={styles.containerHome}>

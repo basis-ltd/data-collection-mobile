@@ -1,6 +1,6 @@
 import { BASE_URL, BASE_URL_IP } from "@env";
 
-const BaseUri = "http://10.10.0.39:8080";
+const BaseUri = "http://10.10.0.85:8080";
 export const backendAPI = {
     // authentication
     login: `${BaseUri}/api/v1/auth/institution-users/login`,
