@@ -1,18 +1,21 @@
 import { colors } from "../../utils/colors";
 import { fonts } from "../../utils/fonts";
 import PageGuard from "../../components/Guards";
-import { Picker } from '@react-native-picker/picker';
-import RNPickerSelect from 'react-native-picker-select';
 import ProjectsHome from "./components/ProjectsHome";
+import SingleProject from "./components/singleProject";
 import { StyleSheet } from "react-native";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 
 const Projects = () => {
-
+  const { showProjectsList } = useSelector(state => state.projectsReducers);
+  const { projectId } = useSelector(state => state.projectsReducers);
 
   return (
     <PageGuard style={styles.projects}>
-      <ProjectsHome />
+      {showProjectsList && <ProjectsHome />}
+      {!showProjectsList && projectId && <SingleProject />}
     </PageGuard>
   );
 };

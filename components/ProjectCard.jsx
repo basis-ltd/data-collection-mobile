@@ -5,13 +5,16 @@ import { fonts } from "../utils/fonts";
 import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import { assets } from "../utils/assets";
 import { formatDate } from "../helpers/formatDate";
+import { useDispatch } from "react-redux";
+import { setProjectLists, setProjectId } from "../app/projects/projectSlice";
 
 const ProjectCard = (props) => {
   const { project } = props;
+  const dispatch = useDispatch()
 
   const handlePressProject = () => {
-    console.log("Press Project");
-
+    dispatch(setProjectLists(false));
+    dispatch(setProjectId(project.id));
   }
 
   return (

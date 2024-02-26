@@ -12,6 +12,8 @@ import useFetchData from "../../hooks/useFetchData";
 import AppLoadingSpin from "../../components/AppLoadingSpin";
 import { backendAPI } from "../../api/backendApi";
 import useUpdateData from "../../hooks/useUpdateData";
+import { useDispatch } from "react-redux";
+import { setProjectId, setProjectLists } from "../projects/projectSlice";
 
 
 
@@ -21,6 +23,8 @@ const Profile = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const { data: recentProjects, error: recentProjectsError, loading: recentProjectsLoading, handler: handleRecentProjects } = useFetchData()
   const { handler: updateHandler, error, loading, data } = useUpdateData()
+  const dispatch = useDispatch()
+
 
   const handleUpload = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -76,6 +80,11 @@ const Profile = () => {
     }
   }, [data, loading])
 
+  const handleShowSingleProject = (projectId) => {
+    dispatch(setProjectLists(false));
+    dispatch(setProjectId(projectId));
+  }
+
   return (
     <PageGuard style={styles.profile}>
       <View style={styles.imagesWrapper}>
@@ -115,7 +124,7 @@ const Profile = () => {
               <Text style={styles.boxSubTitle}>{recentProjects?.data?.rows[0]?.title || "N/A"}</Text>
             }
           </View>
-          {!recentProjectsLoading && <Image source={assets.ArrowBack} style={styles.arrowBottomLink} />}
+          {!recentProjectsLoading && <Image source={assets.ArrowBack} style={styles.arrowBottomLink} onPress={() => handleShowSingleProject(recentProjects?.data?.rows[0]?.id)} />}
         </TouchableOpacity>
       </View>
     </PageGuard>
