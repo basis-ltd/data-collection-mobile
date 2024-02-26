@@ -10,13 +10,12 @@ import { useDispatch, useSelector } from "react-redux";
 import AppError from "../../../components/AppError";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { setProjectId, setProjectLists } from "../projectSlice";
-import AppInput from "../../../components/AppInput";
+import SingleField from "../../../components/SingleField";
 
 
 const SingleProject = () => {
     const { projectId } = useSelector(state => state.projectsReducers);
     const [singleProjectId, setSingleProjectId] = useState(projectId || null)
-    const [change, setChange] = useState("")
     const { data, error, loading, handler } = useFetchData();
     const { data: dataForm, error: errorForm, loading: loadingForm, handler: fetchForm } = useFetchData();
     const dispatch = useDispatch();
@@ -60,34 +59,20 @@ const SingleProject = () => {
                         <ScrollView contentContainerStyle={styles.formData}>
                             {dataForm.data.sections?.map(section => {
                                 return (
-                                    <View key={section.id}>
+                                    <View key={section.id} style={styles.singleSection}>
                                         <Text style={styles.sectionTitle}>{section.name} Section</Text>
                                         {section.fields && section.fields?.length > 0 &&
                                             section.fields.map(field => {
-                                                return (
-                                                    <View key={field.id}>
-                                                        <AppInput
-                                                            iconUrl={null}
-                                                            labelText={field.label}
-                                                            placeholder={field.placeholder}
-                                                            keyboardType={"default"}
-                                                            onChangeText={setChange}
-                                                            error={null}
-                                                            value={change}
-                                                        />
-                                                    </View>
-                                                )
+                                                return <SingleField key={field.id} field={field} />
                                             })
                                         }
                                     </View>
                                 )
                             })}
-
                         </ScrollView>
                     }
                 </View>
             }
-
         </SafeAreaView>
     );
 };
@@ -135,8 +120,12 @@ const styles = StyleSheet.create({
         width: "100%",
     },
     formData: {
-        flex: 1,
         marginTop: 10,
+        gap: 10,
+        width: "100%",
+        padding: 0,
+        paddingBottom: 20
+
     },
     loadingFormData: {
         flex: 1,
@@ -158,9 +147,10 @@ const styles = StyleSheet.create({
         textAlign: "left",
         width: "100%",
         textTransform: "capitalize",
+    },
+    singleSection: {
+        gap: 10,
     }
-
-
 });
 
 export default SingleProject;
