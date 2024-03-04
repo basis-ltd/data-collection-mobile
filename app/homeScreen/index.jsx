@@ -11,6 +11,8 @@ import useFetchData from "../../hooks/useFetchData";
 import { backendAPI } from "../../api/backendApi";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppLoadingSpin from "../../components/AppLoadingSpin";
+import { useDispatch } from "react-redux";
+import { setProjectLists } from "../projects/projectSlice";
 
 
 const HomeScreen = () => {
@@ -21,7 +23,7 @@ const HomeScreen = () => {
   const { data: dataMonthEntries, error: errorMonthEntries, loading: loadingMonthEntries, handler: handlerMonthEntries } = useFetchData()
   const { data: dataWeekEntries, error: errorWeekEntries, loading: loadingWeekEntries, handler: handlerWeekEntries } = useFetchData()
   const { data: recentProjects, error: recentProjectsError, loading: recentProjectsLoading, handler: handleRecentProjects } = useFetchData()
-
+  const dispatch = useDispatch()
 
   const getUserinfo = async () => {
     const user = await AsyncStorage.getItem("userProfile");
@@ -44,9 +46,9 @@ const HomeScreen = () => {
   }, [userProfile]);
 
   const handleRedirectToProjects = () => {
+    dispatch(setProjectLists(true));
     navigation.navigate(frontendAPI.Projects)
   }
-  // console.log(userProfile, "test user")
 
   return (
     <PageGuard style={styles.containerHome}>

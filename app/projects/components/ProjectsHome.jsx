@@ -13,8 +13,6 @@ import AppLoadingSpin from "../../../components/AppLoadingSpin";
 const ProjectsHome = () => {
     const [selectedValue, setSelectedValue] = useState('Status');
     const [projectList, setProjectList] = useState([]);
-
-
     const { data, error, loading, handler } = useFetchData()
 
     useEffect(() => {

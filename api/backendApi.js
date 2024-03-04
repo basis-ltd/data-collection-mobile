@@ -15,4 +15,5 @@ export const backendAPI = {
     singleProject: (projectId) => `${BaseUri}/api/v1/projects/${projectId}`,
     // form
     viewForm: (projectId, take = 2, skip = 0) => `${BaseUri}/api/v1/forms?project_id=${projectId}&take=${take}&skip=${skip}`,
+    singleFrom: (formId) => `${BaseUri}/api/v1/forms/${formId}`,
 };
