@@ -1,44 +1,45 @@
 import { TextInput } from "react-native-gesture-handler";
+import { inputTypes } from "./inputTypes";
 
 export const FieldtypesWithTypes = [
     {
-        type: 'text',
+        type: inputTypes.tel,
         FieldInput: <TextInput />
     },
     {
-        type: 'textarea',
+        type: inputTypes.textarea,
         FieldInput: <TextInput />
     },
     {
-        type: 'number',
+        type: inputTypes.number,
         FieldInput: <TextInput />
     },
     {
-        type: 'date',
+        type: inputTypes.number,
         FieldInput: <TextInput />
     },
     {
-        type: 'email',
+        type: inputTypes.email,
         FieldInput: <TextInput />
     },
     {
-        type: 'url',
+        type: inputTypes.url,
         FieldInput: <TextInput />
     },
     {
-        type: 'tel',
+        type: inputTypes.url,
         FieldInput: <TextInput />
     },
     {
-        type: 'file',
+        type: inputTypes.file,
         FieldInput: <TextInput />
     },
     {
-        type: 'select',
+        type: inputTypes.select,
         FieldInput: <TextInput />
     },
     {
-        type: 'radio',
+        type: inputTypes.radio,
         FieldInput: <TextInput />
     },
 ]
