@@ -13,7 +13,7 @@ const DateInputType = ({ field }) => {
     }
 
     const validationSchema = Yup.object({
-        value: field.field_type ? Yup.date()
+        value: field.is_required ? Yup.date()
             .required("Date is required") : Yup.date(),
     });
 
