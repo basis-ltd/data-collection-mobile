@@ -5,6 +5,8 @@ import { inputTypes } from "../../../../constants/inputTypes";
 import { inputValidationSchema } from "../../../../utils/validationchemas";
 import { returnKeyBoardtype } from "../../../../utils/returnKeyBoardType"
 import AppTextarea from "../../../../components/AppTextarea";
+import { colors } from "../../../../utils/colors";
+import { fonts } from "../../../../utils/fonts";
 
 
 const TextInputType = ({ field }) => {
@@ -60,6 +62,14 @@ const styles = StyleSheet.create({
         margin: 0,
         flexDirection: "column",
         gap: 10,
+    },
+    error: {
+        color: colors.ERROR,
+        fontFamily: fonts.MONTSERRAT_BOLD,
+        fontSize: 12,
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
+        marginTop: -2,
     },
 });
 

@@ -15,6 +15,7 @@ const AppInput = (props) => {
     error,
     value,
   } = props;
+
   return (
     <View style={styles.container}>
       {labelText && <Text style={styles.label}>{labelText}</Text>}
