@@ -36,7 +36,7 @@ const AppTextarea = (props) => {
 };
 
 // propTypes:
-AppInput.propTypes = {
+AppTextarea.propTypes = {
   onChangeText: PropTypes.func,
   placeholder: PropTypes.string.isRequired,
   defaultValue: PropTypes.string,
