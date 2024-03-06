@@ -143,6 +143,7 @@ const styles = StyleSheet.create({
         backgroundColor: "transparent",
         width: "100%",
     },
+<<<<<<< HEAD
     introFiles: {
         flexDirection: 'row',
         padding: 0,
@@ -164,6 +165,8 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: 'transparent'
     },
+=======
+>>>>>>> 55d59d9bd889ed75a81449d38ae38c711d7a64ef
     filesWrapper: {
         width: '100%',
         gap: 10,
@@ -173,6 +176,7 @@ const styles = StyleSheet.create({
         ...borders("s", colors.ACCENT_DARK),
         borderRadius: 5,
         backgroundColor: colors.LIGHT,
+<<<<<<< HEAD
     },
     uploadedFile: {
         flexDirection: 'row',
@@ -196,6 +200,8 @@ const styles = StyleSheet.create({
         color: colors.DARK,
         fontSize: 15,
         fontFamily: fonts.MONTSERRAT_BOLD,
+=======
+>>>>>>> 55d59d9bd889ed75a81449d38ae38c711d7a64ef
     }
 });
 
