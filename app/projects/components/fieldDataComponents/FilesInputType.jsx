@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
         padding: 0,
         flex: 1,
         width: "100%",
-        height: "100%",
         margin: 0,
         flexDirection: "column",
         gap: 10,

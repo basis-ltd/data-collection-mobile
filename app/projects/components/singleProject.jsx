@@ -40,7 +40,7 @@ const SingleProject = () => {
     }
 
     return (
-        <SafeAreaView style={styles.singleProject}>
+        <View style={styles.singleProject}>
             {loading && <AppLoadingSpin />}
             {error && !loading && <AppError message={error || "Error with fetch single Project"} />}
             {!loading &&
@@ -57,23 +57,25 @@ const SingleProject = () => {
                     {loadingForm && <View style={styles.loadingFormData}><Text style={styles.loadingTitle}>Loading from Data...</Text></View>}
                     {!loadingForm && dataForm &&
                         <ScrollView contentContainerStyle={styles.formData}>
-                            {dataForm.data.sections?.map(section => {
-                                return (
-                                    <View key={section.id} style={styles.singleSection}>
-                                        <Text style={styles.sectionTitle}>{section.name} Section</Text>
-                                        {section.fields && section.fields?.length > 0 &&
-                                            section.fields.map(field => {
-                                                return <SingleField key={field.id} field={field} />
-                                            })
-                                        }
-                                    </View>
-                                )
-                            })}
+                            <View style={styles.formDataWrapper}>
+                                {dataForm.data.sections?.map(section => {
+                                    return (
+                                        <View key={section.id} style={styles.singleSection}>
+                                            <Text style={styles.sectionTitle}>{section.name} Section</Text>
+                                            {section.fields && section.fields?.length > 0 &&
+                                                section.fields?.map(field => {
+                                                    return <SingleField key={field.id} field={field} />
+                                                })
+                                            }
+                                        </View>
+                                    )
+                                })}
+                            </View>
                         </ScrollView>
                     }
                 </View>
             }
-        </SafeAreaView>
+        </View>
     );
 };
 
@@ -90,7 +92,6 @@ const styles = StyleSheet.create({
         fontFamily: fonts.MONTSERRAT_MEDIUM,
         flexDirection: "column",
         gap: 19,
-        height: "100%",
     },
     bodyContent: {
         flex: 1,
@@ -120,12 +121,13 @@ const styles = StyleSheet.create({
         width: "100%",
     },
     formData: {
-        marginTop: 10,
-        gap: 10,
         width: "100%",
         padding: 0,
-        paddingBottom: 20
-
+    },
+    formDataWrapper: {
+        padding: 0,
+        gap: 10,
+        width: "100%",
     },
     loadingFormData: {
         flex: 1,
@@ -150,6 +152,8 @@ const styles = StyleSheet.create({
     },
     singleSection: {
         gap: 10,
+        padding: 0,
+        marginBottom: 10,
     }
 });
 
