@@ -5,13 +5,42 @@ import { fonts } from "../../../../utils/fonts";
 import { borders } from "../../../../utils/border";
 import * as Yup from "yup";
 import { assets } from "../../../../utils/assets";
-import * as ImagePicker from 'expo-image-picker';
 import { useState } from "react";
+import * as ImagePicker from 'expo-image-picker';
+import * as DocumentPicker from 'expo-document-picker';
 
 
 const FilesInputType = ({ field }) => {
     const [uploadedFiles, setUploadedFiles] = useState([]);
 
+    // const handleUpload = async () => {
+    //     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    //     if (permissionResult.granted === false) {
+    //         alert("Permission to access media library is required!");
+    //         return;
+    //     }
+
+    //     const pickerResult = await ImagePicker.launchImageLibraryAsync({
+    //         mediaTypes: ImagePicker.MediaTypeOptions.All,
+    //         allowsMultipleSelection: true,
+    //     });
+
+    //     if (pickerResult?.canceled === true) return;
+
+    //     const newFiles = pickerResult.selected ? pickerResult.selected : (pickerResult.assets ? pickerResult.assets : []);
+    //     setUploadedFiles([...uploadedFiles, ...newFiles]);
+
+    //     newFiles.forEach(file => {
+    //         const uri = file.uri;
+    //         const fileType = uri.substring(uri.lastIndexOf(".") + 1);
+    //         const formData = new FormData();
+    //         formData.append('files', {
+    //             uri,
+    //             type: `application/${fileType}`,
+    //             name: `file.${fileType}`,
+    //         });
+    //     });
+    // };
     const handleUpload = async () => {
         const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (permissionResult.granted === false) {
@@ -19,27 +48,14 @@ const FilesInputType = ({ field }) => {
             return;
         }
 
-        const pickerResult = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All, // Allows all media types
-            allowsMultipleSelection: true, // Allow multiple selection if supported
+        const pickerResult = await DocumentPicker.getDocumentAsync({
+            type: "*/*",
+            multiple: true,
         });
+        const newFiles = !pickerResult.canceled ? pickerResult.assets : [];
 
-        if (pickerResult?.canceled === true) return;
-
-        const newFiles = pickerResult.selected ? pickerResult.selected : (pickerResult.assets ? pickerResult.assets : []);
-        setUploadedFiles([...uploadedFiles, ...newFiles.map(f => f.uri)]);
-
-        newFiles.forEach(file => {
-            const uri = file.uri;
-            const fileType = uri.substring(uri.lastIndexOf(".") + 1);
-            const formData = new FormData();
-            formData.append('files', {
-                uri,
-                type: `application/${fileType}`,
-                name: `file.${fileType}`,
-            });
-        });
-    }; 4
+        setUploadedFiles((currentFiles) => [...currentFiles, ...newFiles]);
+    };
 
     const validationSchema = Yup.object({
         value: field.is_required ? Yup.array()
@@ -52,7 +68,12 @@ const FilesInputType = ({ field }) => {
         console.log('Submitting form...', values);
     };
 
-    console.log('files: ', uploadedFiles)
+    // console.log('files: ', uploadedFiles)
+
+    const handleRemoveFile = (file) => {
+        const recentlyUploadedFiles = uploadedFiles.filter(singleFile => singleFile !== file);
+        setUploadedFiles(recentlyUploadedFiles);
+    }
 
     return (
         <Formik
@@ -64,15 +85,30 @@ const FilesInputType = ({ field }) => {
                 return (
                     <View style={styles.formikContainer}>
                         {field.label && <Text style={styles.label}>{field.label}</Text>}
-                        <TouchableOpacity onPress={handleUpload}>
-                            <Image source={assets.CamIcon} style={{ width: 39, height: 39 }} />
-                        </TouchableOpacity>
+                        <View style={styles.introFiles}>
+                            <TouchableOpacity onPress={handleUpload} style={styles.uploadBtn}>
+                                <Image source={assets.FileIcon} style={{ width: 15, height: 30 }} />
+                            </TouchableOpacity>
+                            <Text style={styles.placeholder}>{field.placeholder || 'Upload your file'}</Text>
+                        </View>
                         {uploadedFiles && uploadedFiles.length > 0 &&
                             <View style={styles.filesWrapper}>
+                                <Text style={styles.titleUploaded}>Uploaded Files: </Text>
                                 {uploadedFiles.map((file, index) => {
-                                    return <Text key={index}>test file</Text>
+                                    return (
+                                        <View style={styles.uploadedFile} key={index}>
+                                            {file.name &&
+                                                <Text key={index} style={styles.fileName}>
+                                                    {file.name.length > 35 ? file.name.substring(0, 30) + '...' : file.name}
+                                                </Text>
+                                            }
+                                            {!file.name && <Text key={index} style={styles.fileName}> Unknown File</Text>}
+                                            <TouchableOpacity style={styles.removeFile} onPress={() => handleRemoveFile(file)}>
+                                                <Image source={assets.CloseIcon} style={{ width: 24, height: 24 }} />
+                                            </TouchableOpacity>
+                                        </View>
+                                    )
                                 })}
-
                             </View>
                         }
                         {errors.value && <Text style={styles.error}>{errors.value}</Text>}
@@ -107,6 +143,27 @@ const styles = StyleSheet.create({
         backgroundColor: "transparent",
         width: "100%",
     },
+    introFiles: {
+        flexDirection: 'row',
+        padding: 0,
+        gap: 10,
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        width: '100%',
+        ...borders("s", colors.ACCENT_DARK),
+        borderRadius: 5,
+    },
+    placeholder: {
+        color: colors.ACCENT_DARK,
+        fontFamily: fonts.MONTSERRAT_MEDIUM,
+        fontSize: 13,
+        backgroundColor: "transparent",
+        width: "100%",
+    },
+    uploadBtn: {
+        padding: 10,
+        backgroundColor: 'transparent'
+    },
     filesWrapper: {
         width: '100%',
         gap: 10,
@@ -116,6 +173,29 @@ const styles = StyleSheet.create({
         ...borders("s", colors.ACCENT_DARK),
         borderRadius: 5,
         backgroundColor: colors.LIGHT,
+    },
+    uploadedFile: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '100%',
+        flexWrap: 'nowrap',
+        gap: 20,
+    },
+    fileName: {
+        color: colors.SUCCESS,
+        fontSize: 13,
+        fontFamily: fonts.MONTSERRAT_MEDIUM,
+    },
+    removeFile: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 0
+    },
+    titleUploaded: {
+        color: colors.DARK,
+        fontSize: 15,
+        fontFamily: fonts.MONTSERRAT_BOLD,
     }
 });
 
