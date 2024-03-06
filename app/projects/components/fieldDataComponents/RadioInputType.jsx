@@ -40,8 +40,8 @@ const RadioInputType = ({ field }) => {
                                 <TouchableOpacity
                                     key={option.value}
                                     onPress={() => {
-                                        setSelected(option.value);
-                                        onSelect(option.value);
+                                        setSelected(option);
+                                        onSelect(option);
                                     }}
                                     style={{
                                         flexDirection: 'row',
@@ -50,13 +50,13 @@ const RadioInputType = ({ field }) => {
                                     }}>
                                     <View
                                         style={styles.radioBox}>
-                                        {selected === option.value && (
+                                        {selected === option && (
                                             <View
                                                 style={styles.radionSelected}
                                             />
                                         )}
                                     </View>
-                                    <Text>{option.label}</Text>
+                                    <Text>{option}</Text>
                                 </TouchableOpacity>
                             ))}
                         </View>
