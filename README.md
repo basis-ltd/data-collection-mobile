@@ -5,7 +5,8 @@ We are using React-native with expo
 
 # Notes on the app structure
 
-![image](https://github.com/Rwanda-Space-Agency-Dev/Data-collection-Mobile/assets/91186046/686c990b-54d0-4b19-b638-2ac93088e319)
+<img width="286" alt="image" src="https://github.com/Rwanda-Space-Agency-Dev/Data-collection-Mobile/assets/91186046/6f4a6a69-96ce-4964-8061-2a5e01d1a2e1">
+
 
 
 As you see on the image above,
