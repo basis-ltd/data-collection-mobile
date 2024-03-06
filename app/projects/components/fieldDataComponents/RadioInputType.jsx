@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Formik } from "formik";
-import { inputValidationSchema } from "../../../../utils/validationchemas";
 import { colors } from "../../../../utils/colors";
 import { fonts } from "../../../../utils/fonts";
 import { useState } from "react";
@@ -8,7 +7,7 @@ import * as Yup from "yup";
 
 
 
-const RadioInputType = ({ field, onSelect }) => {
+const RadioInputType = ({ field }) => {
 
     const [selected, setSelected] = useState(null);
 
@@ -16,6 +15,15 @@ const RadioInputType = ({ field, onSelect }) => {
         value: field.is_required ? Yup.string()
             .required("You must select one") : Yup.string(),
     });
+
+    const onSelect = valueSelected => {
+        console.log(valueSelected, 'Selected values')
+
+    }
+
+    const handleSubmit = (values) => {
+        console.log('radios selected values', values)
+    }
 
     return (
         <Formik
@@ -28,7 +36,7 @@ const RadioInputType = ({ field, onSelect }) => {
                     <View style={styles.formikContainer}>
                         {field.label && <Text style={styles.label}>{field.label}</Text>}
                         <View>
-                            {options.options.split('').map((option) => (
+                            {field.options?.split(',').map((option) => (
                                 <TouchableOpacity
                                     key={option.value}
                                     onPress={() => {

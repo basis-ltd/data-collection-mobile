@@ -4,16 +4,19 @@ import { colors } from "../../../../utils/colors";
 import { fonts } from "../../../../utils/fonts";
 import { Picker } from "@react-native-picker/picker";
 import * as Yup from "yup";
+import { useState } from "react";
 
 
 
 const SelectInputType = (props) => {
-    const { selectedValue, onValueChange, field } = props;
+    const { field } = props;
 
     const validationSchema = Yup.object({
         value: field.is_required ? Yup.string()
             .required("You must select one") : Yup.string(),
     });
+
+    const [selectedValue, setSelectedValue] = useState('')
 
     return (
         <Formik
@@ -27,8 +30,8 @@ const SelectInputType = (props) => {
                         {field.label && <Text style={styles.label}>{field.label}</Text>}
                         <Picker
                             selectedValue={selectedValue}
-                            onValueChange={(itemValue, itemIndex) => onValueChange(itemValue)}>
-                            {field.options?.split('').map((item, index) => (
+                            onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}>
+                            {field.options?.split(',').map((item, index) => (
                                 <Picker.Item label={item} value={item} key={index} />
                             ))}
                         </Picker>
