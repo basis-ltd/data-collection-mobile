@@ -13,6 +13,7 @@ import { setProjectId, setProjectLists } from "../projectSlice";
 import SingleField from "./fieldDataComponents/SingleField";
 import AppButton from '../../../components/AppButton';
 import { dummyData } from "./dummyData";
+import FormDisplay from "./FormDisplay";
 
 
 const SingleProject = () => {
@@ -41,6 +42,14 @@ const SingleProject = () => {
         dispatch(setProjectId(null));
     }
 
+    // form nex - back functions
+    const handleNextPage = () => {
+
+    }
+    const handleBackPage = () => {
+
+    }
+
     return (
         <View style={styles.singleProject}>
             {loading && <AppLoadingSpin />}
@@ -57,41 +66,13 @@ const SingleProject = () => {
                     <Text style={styles.title}>{data.data.form[0]?.name}</Text>
                     <Text style={styles.description}>{data.data.form[0]?.description}</Text>
                     {loadingForm && <View style={styles.loadingFormData}><Text style={styles.loadingTitle}>Loading from Data...</Text></View>}
-                    {!loadingForm && dataForm &&
-                        <ScrollView contentContainerStyle={styles.formData}>
-                            <View style={styles.formDataWrapper}>
-                                {dataForm.data.sections?.map(section => {
-                                    return (
-                                        <View key={section.id} style={styles.singleSection}>
-                                            <Text style={styles.sectionTitle}>{section.name} Section</Text>
-                                            {section.fields && section.fields?.length > 0 &&
-                                                [...section.fields, ...dummyData]?.map(field => {
-                                                    return <SingleField key={field.id} field={field} />
-                                                })
-                                            }
-                                        </View>
-                                    )
-                                })}
-                                <View style={styles.formActions}>
-                                    <AppButton
-                                        fullWidth={false}
-                                        title='Preview'
-                                        handleOnPress={null}
-                                    />
-                                    <AppButton
-                                        fullWidth={false}
-                                        title='Back'
-                                        handleOnPress={null}
-                                    />
-                                    <AppButton
-                                        fullWidth={false}
-                                        title='Next'
-                                        handleOnPress={null}
-                                    />
-                                </View>
-                            </View>
-                        </ScrollView>
-                    }
+                    {!loadingForm && errorForm && <AppError message={errorForm.message || 'Error with fetching form Data'} />}
+                    {!loadingForm && dataForm && !errorForm &&
+                        <FormDisplay
+                            dataForm={dataForm}
+                            handleBackPage={handleBackPage}
+                            handleNextPage={handleNextPage}
+                        />}
                 </View>
             }
         </View>
@@ -139,15 +120,6 @@ const styles = StyleSheet.create({
         textAlign: "left",
         width: "100%",
     },
-    formData: {
-        width: "100%",
-        padding: 0,
-    },
-    formDataWrapper: {
-        padding: 0,
-        gap: 10,
-        width: "100%",
-    },
     loadingFormData: {
         flex: 1,
         justifyContent: "center",
@@ -161,25 +133,6 @@ const styles = StyleSheet.create({
         textAlign: "center",
         alignItems: "flex-start",
     },
-    sectionTitle: {
-        fontFamily: fonts.MONTSERRAT_SEMI_BOLD,
-        fontSize: 16,
-        color: colors.DARK,
-        textAlign: "left",
-        width: "100%",
-        textTransform: "capitalize",
-    },
-    singleSection: {
-        gap: 10,
-        padding: 0,
-        marginBottom: 10,
-    },
-    formActions: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        gap: 30,
-    }
 });
 
 export default SingleProject;
