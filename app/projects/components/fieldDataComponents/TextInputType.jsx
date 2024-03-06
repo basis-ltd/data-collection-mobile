@@ -26,7 +26,7 @@ const TextInputType = ({ field }) => {
             {({ errors, values, handleChange }) => {
                 return (
                     <View style={styles.formikContainer}>
-                        {!field.field_type === inputTypes.textarea &&
+                        {field.field_type !== inputTypes.textarea &&
                             <AppInput
                                 iconUrl={null}
                                 placeholder={field.placeholder}
@@ -59,8 +59,9 @@ const styles = StyleSheet.create({
         flex: 1,
         width: "100%",
         margin: 0,
-        flexDirection: "column",
         gap: 10,
+        height: 'auto',
+        backgroundColor: 'transparent'
     },
     error: {
         color: colors.ERROR,
