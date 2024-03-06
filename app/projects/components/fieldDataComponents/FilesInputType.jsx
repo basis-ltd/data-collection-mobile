@@ -67,7 +67,7 @@ const FilesInputType = ({ field }) => {
                         <TouchableOpacity onPress={handleUpload}>
                             <Image source={assets.CamIcon} style={{ width: 39, height: 39 }} />
                         </TouchableOpacity>
-                        {uploadedFiles &&
+                        {uploadedFiles && uploadedFiles.length > 0 &&
                             <View style={styles.filesWrapper}>
                                 {uploadedFiles.map((file, index) => {
                                     return <Text key={index}>test file</Text>

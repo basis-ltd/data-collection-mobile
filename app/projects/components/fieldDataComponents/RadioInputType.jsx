@@ -29,9 +29,9 @@ const RadioInputType = ({ field }) => {
                     <View style={styles.formikContainer}>
                         {field.label && <Text style={styles.label}>{field.label}</Text>}
                         <View>
-                            {field.options?.split(',').map((option) => (
+                            {field.options?.split(',').map((option, index) => (
                                 <TouchableOpacity
-                                    key={option.value}
+                                    key={`${option}_${index}`}
                                     onPress={() => {
                                         setFieldValue('value', option)
                                     }}
