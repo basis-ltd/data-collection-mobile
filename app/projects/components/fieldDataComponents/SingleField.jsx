@@ -4,7 +4,7 @@ import FieldtypesWithTypes from "./AllFieldTypes";
 const SingleField = ({ field }) => {
 
     return (
-        <View style={{ minHeight: 50, backgroundColor: 'green' }}>
+        <View style={{ minHeight: 50, backgroundColor: 'transparent' }}>
             <FieldtypesWithTypes field={field} />
         </View>
     );
