@@ -11,6 +11,8 @@ import AppError from "../../../components/AppError";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { setProjectId, setProjectLists } from "../projectSlice";
 import SingleField from "./fieldDataComponents/SingleField";
+import AppButton from '../../../components/AppButton';
+import { dummyData } from "./dummyData";
 
 
 const SingleProject = () => {
@@ -63,13 +65,30 @@ const SingleProject = () => {
                                         <View key={section.id} style={styles.singleSection}>
                                             <Text style={styles.sectionTitle}>{section.name} Section</Text>
                                             {section.fields && section.fields?.length > 0 &&
-                                                section.fields?.map(field => {
+                                                [...section.fields, ...dummyData]?.map(field => {
                                                     return <SingleField key={field.id} field={field} />
                                                 })
                                             }
                                         </View>
                                     )
                                 })}
+                                <View style={styles.formActions}>
+                                    <AppButton
+                                        fullWidth={false}
+                                        title='Preview'
+                                        handleOnPress={null}
+                                    />
+                                    <AppButton
+                                        fullWidth={false}
+                                        title='Back'
+                                        handleOnPress={null}
+                                    />
+                                    <AppButton
+                                        fullWidth={false}
+                                        title='Next'
+                                        handleOnPress={null}
+                                    />
+                                </View>
                             </View>
                         </ScrollView>
                     }
@@ -154,6 +173,12 @@ const styles = StyleSheet.create({
         gap: 10,
         padding: 0,
         marginBottom: 10,
+    },
+    formActions: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        gap: 30,
     }
 });
 
