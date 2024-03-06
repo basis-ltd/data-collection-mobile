@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import { Formik } from "formik";
 import { colors } from "../../../../utils/colors";
 import { fonts } from "../../../../utils/fonts";
+import { borders } from "../../../../utils/border";
 import * as Yup from "yup";
 import { assets } from "../../../../utils/assets";
 import * as ImagePicker from 'expo-image-picker';
@@ -63,9 +64,17 @@ const FilesInputType = ({ field }) => {
                 return (
                     <View style={styles.formikContainer}>
                         {field.label && <Text style={styles.label}>{field.label}</Text>}
-                        <TouchableOpacity onPress={handleUpload} style={styles.btnUpload}>
+                        <TouchableOpacity onPress={handleUpload}>
                             <Image source={assets.CamIcon} style={{ width: 39, height: 39 }} />
                         </TouchableOpacity>
+                        {uploadedFiles &&
+                            <View style={styles.filesWrapper}>
+                                {uploadedFiles.map((file, index) => {
+                                    return <Text key={index}>test file</Text>
+                                })}
+
+                            </View>
+                        }
                         {errors.value && <Text style={styles.error}>{errors.value}</Text>}
                     </View>
                 );
@@ -81,7 +90,7 @@ const styles = StyleSheet.create({
         width: "100%",
         margin: 0,
         flexDirection: "column",
-        gap: 10,
+        gap: 11,
     },
     error: {
         color: colors.ERROR,
@@ -98,8 +107,15 @@ const styles = StyleSheet.create({
         backgroundColor: "transparent",
         width: "100%",
     },
-    btnUpload: {
-
+    filesWrapper: {
+        width: '100%',
+        gap: 10,
+        padding: 10,
+        padding: 10,
+        margin: 0,
+        ...borders("s", colors.ACCENT_DARK),
+        borderRadius: 5,
+        backgroundColor: colors.LIGHT,
     }
 });
 

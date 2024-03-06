@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { View, Button, Platform, StyleSheet, Text } from 'react-native';
+import { View, Button, Platform, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as Yup from "yup";
 import { colors } from '../../../../utils/colors';
 import { fonts } from '../../../../utils/fonts';
 import { borders } from '../../../../utils/border';
+import { assets } from '../../../../utils/assets';
+
 import { Formik } from "formik";
+import { formatDate } from '../../../../helpers/formatDate';
 
 const DateInputType = ({ field }) => {
 
@@ -39,18 +42,23 @@ const DateInputType = ({ field }) => {
 
                 return (
                     <View style={styles.formikContainer}>
-                        <Button onPress={showDatepicker} title="Select a date" />
                         {field.label && <Text style={styles.label}>{field.label}</Text>}
-                        {show && (
-                            <DateTimePicker
-                                testID="dateTimePicker"
-                                value={values.value}
-                                mode="date"
-                                is24Hour={true}
-                                display="default"
-                                onChange={onChange}
-                            />
-                        )}
+                        <View style={styles.dateWrapper}>
+                            <TouchableOpacity onPress={showDatepicker}>
+                                <Image style={styles.iconImage} source={assets.DateIcon} alt="Date Icon" />
+                            </TouchableOpacity>
+                            {show && (
+                                <DateTimePicker
+                                    testID="dateTimePicker"
+                                    value={values.value}
+                                    mode="date"
+                                    is24Hour={true}
+                                    display="default"
+                                    onChange={onChange}
+                                />
+                            )}
+                            <Text style={styles.selectedDate}>{formatDate(values.value)}</Text>
+                        </View>
                         {errors.value && <Text style={styles.error}> {errors.value}</Text>}
                     </View>
                 );
@@ -62,16 +70,11 @@ const DateInputType = ({ field }) => {
 const styles = StyleSheet.create({
     formikContainer: {
         padding: 0,
-        flex: 1,
         width: "100%",
         margin: 0,
         flexDirection: "column",
-        gap: 10,
-        ...borders("s", colors.ACCENT_DARK),
-        borderRadius: 5,
+        gap: 11,
         backgroundColor: colors.LIGHT,
-        alignItems: "center",
-        justifyContent: "flex-start",
     },
     error: {
         color: colors.ERROR,
@@ -88,6 +91,29 @@ const styles = StyleSheet.create({
         backgroundColor: "transparent",
         width: "100%",
     },
+    selectedDate: {
+        color: colors.ACCENT_DARK,
+        fontFamily: fonts.MONTSERRAT_MEDIUM,
+        fontSize: 14,
+    },
+    dateWrapper: {
+        padding: 10,
+        paddingHorizontal: 15,
+        width: "100%",
+        margin: 0,
+        flexDirection: "row",
+        gap: 10,
+        flexWrap: "wrap",
+        ...borders("s", colors.ACCENT_DARK),
+        borderRadius: 5,
+        backgroundColor: colors.LIGHT,
+        alignItems: "center",
+        justifyContent: "flex-start",
+    },
+    iconImage: {
+        width: 30,
+        height: 30,
+    }
 });
 
 export default DateInputType;
