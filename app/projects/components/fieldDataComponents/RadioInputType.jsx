@@ -2,24 +2,16 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Formik } from "formik";
 import { colors } from "../../../../utils/colors";
 import { fonts } from "../../../../utils/fonts";
-import { useState } from "react";
 import * as Yup from "yup";
 
 
 
 const RadioInputType = ({ field }) => {
 
-    const [selected, setSelected] = useState(null);
-
     const validationSchema = Yup.object({
         value: field.is_required ? Yup.string()
             .required("You must select one") : Yup.string(),
     });
-
-    const onSelect = valueSelected => {
-        console.log(valueSelected, 'Selected values')
-
-    }
 
     const handleSubmit = (values) => {
         console.log('radios selected values', values)
@@ -27,11 +19,12 @@ const RadioInputType = ({ field }) => {
 
     return (
         <Formik
-            initialValues={{ value: "" }}
+            initialValues={{ value: !field.default_value || field.default_value !== '' ? field.default_value : field.options?.split(',')[0] }}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
         >
-            {({ errors, values, handleChange }) => {
+            {({ errors, values, handleChange, setFieldValue }) => {
+                console.log(values, 'test Radio values')
                 return (
                     <View style={styles.formikContainer}>
                         {field.label && <Text style={styles.label}>{field.label}</Text>}
@@ -40,8 +33,7 @@ const RadioInputType = ({ field }) => {
                                 <TouchableOpacity
                                     key={option.value}
                                     onPress={() => {
-                                        setSelected(option);
-                                        onSelect(option);
+                                        setFieldValue('value', option)
                                     }}
                                     style={{
                                         flexDirection: 'row',
@@ -50,7 +42,7 @@ const RadioInputType = ({ field }) => {
                                     }}>
                                     <View
                                         style={styles.radioBox}>
-                                        {selected === option && (
+                                        {values.value === option && (
                                             <View
                                                 style={styles.radionSelected}
                                             />
