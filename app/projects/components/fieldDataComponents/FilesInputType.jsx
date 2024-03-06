@@ -13,34 +13,6 @@ import * as DocumentPicker from 'expo-document-picker';
 const FilesInputType = ({ field }) => {
     const [uploadedFiles, setUploadedFiles] = useState([]);
 
-    // const handleUpload = async () => {
-    //     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    //     if (permissionResult.granted === false) {
-    //         alert("Permission to access media library is required!");
-    //         return;
-    //     }
-
-    //     const pickerResult = await ImagePicker.launchImageLibraryAsync({
-    //         mediaTypes: ImagePicker.MediaTypeOptions.All,
-    //         allowsMultipleSelection: true,
-    //     });
-
-    //     if (pickerResult?.canceled === true) return;
-
-    //     const newFiles = pickerResult.selected ? pickerResult.selected : (pickerResult.assets ? pickerResult.assets : []);
-    //     setUploadedFiles([...uploadedFiles, ...newFiles]);
-
-    //     newFiles.forEach(file => {
-    //         const uri = file.uri;
-    //         const fileType = uri.substring(uri.lastIndexOf(".") + 1);
-    //         const formData = new FormData();
-    //         formData.append('files', {
-    //             uri,
-    //             type: `application/${fileType}`,
-    //             name: `file.${fileType}`,
-    //         });
-    //     });
-    // };
     const handleUpload = async () => {
         const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (permissionResult.granted === false) {
@@ -143,7 +115,6 @@ const styles = StyleSheet.create({
         backgroundColor: "transparent",
         width: "100%",
     },
-<<<<<<< HEAD
     introFiles: {
         flexDirection: 'row',
         padding: 0,
@@ -165,8 +136,6 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: 'transparent'
     },
-=======
->>>>>>> 55d59d9bd889ed75a81449d38ae38c711d7a64ef
     filesWrapper: {
         width: '100%',
         gap: 10,
@@ -176,7 +145,6 @@ const styles = StyleSheet.create({
         ...borders("s", colors.ACCENT_DARK),
         borderRadius: 5,
         backgroundColor: colors.LIGHT,
-<<<<<<< HEAD
     },
     uploadedFile: {
         flexDirection: 'row',
@@ -200,8 +168,6 @@ const styles = StyleSheet.create({
         color: colors.DARK,
         fontSize: 15,
         fontFamily: fonts.MONTSERRAT_BOLD,
-=======
->>>>>>> 55d59d9bd889ed75a81449d38ae38c711d7a64ef
     }
 });
 
