@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AppError from "../../../components/AppError";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { setProjectId, setProjectLists } from "../projectSlice";
-import SingleField from "../../../components/SingleField";
+import SingleField from "./fieldDataComponents/SingleField";
 
 
 const SingleProject = () => {

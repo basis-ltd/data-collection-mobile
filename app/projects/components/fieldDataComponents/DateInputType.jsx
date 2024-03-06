@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, Button, Platform, StyleSheet } from 'react-native';
+import { View, Button, Platform, StyleSheet, Text } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as Yup from "yup";
 import { colors } from '../../../../utils/colors';
 import { fonts } from '../../../../utils/fonts';
 import { borders } from '../../../../utils/border';
+import { Formik } from "formik";
 
 const DateInputType = ({ field }) => {
 
