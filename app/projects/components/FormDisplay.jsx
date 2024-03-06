@@ -35,7 +35,9 @@ const FormDisplay = (props) => {
                         title='Preview'
                         handleOnPress={handlePreviewForm}
                     />
-                    <AppButton
+                    {/* This is for Demo if  we make a paginated api for form fields. but this is working well for now  too */}
+
+                    {/* <AppButton
                         fullWidth={false}
                         title='Back'
                         handleOnPress={handleBackPage}
@@ -44,7 +46,7 @@ const FormDisplay = (props) => {
                         fullWidth={false}
                         title='Next'
                         handleOnPress={handleNextPage}
-                    />
+                    /> */}
                 </View>
             </View>
         </ScrollView>

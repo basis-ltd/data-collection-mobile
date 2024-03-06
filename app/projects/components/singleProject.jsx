@@ -46,6 +46,7 @@ const SingleProject = () => {
     const handleNextPage = () => {
 
     }
+
     const handleBackPage = () => {
 
     }
@@ -136,5 +137,3 @@ const styles = StyleSheet.create({
 });
 
 export default SingleProject;
-
-
