@@ -44,7 +44,7 @@ const DateInputType = ({ field }) => {
                     <View style={styles.formikContainer}>
                         {field.label && <Text style={styles.label}>{field.label}</Text>}
                         <View style={styles.dateWrapper}>
-                            <TouchableOpacity onPress={showDatepicker}>
+                            <TouchableOpacity onPress={showDatepicker} style={styles.launchDateBtn}>
                                 <Image style={styles.iconImage} source={assets.DateIcon} alt="Date Icon" />
                             </TouchableOpacity>
                             {show && (
@@ -97,8 +97,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
     },
     dateWrapper: {
-        padding: 10,
-        paddingHorizontal: 15,
+        padding: 0,
         width: "100%",
         margin: 0,
         flexDirection: "row",
@@ -109,6 +108,10 @@ const styles = StyleSheet.create({
         backgroundColor: colors.LIGHT,
         alignItems: "center",
         justifyContent: "flex-start",
+    },
+    launchDateBtn: {
+        padding: 10,
+        backgroundColor: 'transparent'
     },
     iconImage: {
         width: 30,
