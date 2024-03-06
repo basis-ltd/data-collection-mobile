@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { View } from "react-native";
 import FieldtypesWithTypes from "./AllFieldTypes";
 
 const SingleField = ({ field }) => {
 
     return (
-        <FieldtypesWithTypes field={field} />
+        <View style={{ minHeight: 50, backgroundColor: 'green' }}>
+            <FieldtypesWithTypes field={field} />
+        </View>
     );
 };
 
