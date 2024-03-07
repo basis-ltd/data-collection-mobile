@@ -3,10 +3,13 @@ import { Formik } from "formik";
 import { colors } from "../../../../utils/colors";
 import { fonts } from "../../../../utils/fonts";
 import * as Yup from "yup";
+import { useContext } from "react";
+import { FormikSubmitContext } from "../FormDisplay";
 
 
 
 const RadioInputType = ({ field }) => {
+    const { formSubmitRef, isFormSubmited } = useContext(FormikSubmitContext);
 
     const validationSchema = Yup.object({
         value: field.is_required ? Yup.string()
@@ -23,8 +26,14 @@ const RadioInputType = ({ field }) => {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
         >
-            {({ errors, values, handleChange, setFieldValue }) => {
-                console.log(values, 'test Radio values')
+            {({ errors, values, setFieldValue, resetForm }) => {
+                //clear form
+                useEffect(() => {
+                    if (isFormSubmited) {
+                        resetForm();
+                    }
+                }, [isFormSubmited]);
+
                 return (
                     <View style={styles.formikContainer}>
                         {field.label && <Text style={styles.label}>{field.label}</Text>}
@@ -52,6 +61,8 @@ const RadioInputType = ({ field }) => {
                                 </TouchableOpacity>
                             ))}
                         </View>
+                        <Button type='submit' ref={formSubmitRef} hidden onPress={handleSubmit}>Bubmit</Button>
+                        {errors.value && <Text style={styles.error}>{errors.value}</Text>}
                     </View>
                 );
             }}

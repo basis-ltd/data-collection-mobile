@@ -7,12 +7,13 @@ import { returnKeyBoardtype } from "../../../../utils/returnKeyBoardType"
 import AppTextarea from "../../../../components/AppTextarea";
 import { colors } from "../../../../utils/colors";
 import { fonts } from "../../../../utils/fonts";
-import { useSelector } from "react-redux";
+import { useContext } from "react";
+import { FormikSubmitContext } from "../FormDisplay";
 
 
 const TextInputType = ({ field }) => {
 
-    const formSubmitRef = useSelector((state) => state.formDataReducers.formSubmitRef);
+    const { formSubmitRef, isFormSubmited } = useContext(FormikSubmitContext);
 
     const handleSubmit = (values) => {
         console.log(values, 'test values')
@@ -26,7 +27,14 @@ const TextInputType = ({ field }) => {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
         >
-            {({ errors, values, handleChange }) => {
+            {({ errors, values, resetForm, handleChange }) => {
+
+                useEffect(() => {
+                    if (isFormSubmited) {
+                        resetForm()
+                    }
+                }, [isFormSubmited]);
+
                 return (
                     <View style={styles.formikContainer}>
                         {field.field_type !== inputTypes.textarea &&

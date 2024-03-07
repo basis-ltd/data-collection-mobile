@@ -1,13 +1,16 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Button } from "react-native";
 import { Formik } from "formik";
 import { colors } from "../../../../utils/colors";
 import { fonts } from "../../../../utils/fonts";
 import { borders } from "../../../../utils/border";
 import { Picker } from "@react-native-picker/picker";
 import * as Yup from "yup";
+import { useContext } from "react";
+import { FormikSubmitContext } from "../FormDisplay";
 
 const SelectInputType = (props) => {
     const { field } = props;
+    const { formSubmitRef, isFormSubmited } = useContext(FormikSubmitContext);
 
     const validationSchema = Yup.object({
         value: field.is_required ? Yup.string()
@@ -15,7 +18,7 @@ const SelectInputType = (props) => {
     });
 
     const handleSubmit = (values) => {
-        console.log(values, 'selected values')
+        console.log(values, 'selected values on select')
     }
 
     return (
@@ -24,8 +27,14 @@ const SelectInputType = (props) => {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
         >
-            {({ errors, values, setFieldValue }) => {
-                console.log(values, ': values in select has been changed')
+            {({ errors, values, setFieldValue, resetForm }) => {
+                //clear form
+                useEffect(() => {
+                    if (isFormSubmited) {
+                        resetForm();
+                    }
+                }, [isFormSubmited]);
+
                 return (
                     <View style={styles.formikContainer}>
                         {field.label && <Text style={styles.label}>{field.label}</Text>}
@@ -40,6 +49,8 @@ const SelectInputType = (props) => {
                                 ))}
                             </Picker>
                         </View>
+                        <Button type='submit' ref={formSubmitRef} hidden onPress={handleSubmit}>Bubmit</Button>
+                        {errors.value && <Text style={styles.error}>{errors.value}</Text>}
                     </View>
                 );
             }}

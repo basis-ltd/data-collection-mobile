@@ -1,16 +1,18 @@
-import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Image, Button } from "react-native";
 import { Formik } from "formik";
 import { colors } from "../../../../utils/colors";
 import { fonts } from "../../../../utils/fonts";
 import { borders } from "../../../../utils/border";
 import * as Yup from "yup";
 import { assets } from "../../../../utils/assets";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import * as ImagePicker from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
+import { FormikSubmitContext } from "../FormDisplay";
 
 
 const FilesInputType = ({ field }) => {
+    const { formSubmitRef, isFormSubmited } = useContext(FormikSubmitContext);
     const [uploadedFiles, setUploadedFiles] = useState([]);
 
     const handleUpload = async () => {
@@ -35,12 +37,9 @@ const FilesInputType = ({ field }) => {
             .required("Files are required") : Yup.array(),
     });
 
-    // Dummy submit handler
     const handleSubmit = (values) => {
-        console.log('Submitting form...', values);
+        console.log('Submitting files...', values);
     };
-
-    // console.log('files: ', uploadedFiles)
 
     const handleRemoveFile = (file) => {
         const recentlyUploadedFiles = uploadedFiles.filter(singleFile => singleFile !== file);
@@ -53,7 +52,21 @@ const FilesInputType = ({ field }) => {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
         >
-            {({ errors, values, setFieldValue }) => {
+            {({ errors, resetForm, setFieldValue }) => {
+
+                //update files
+                useEffect(() => {
+                    setFieldValue('value', uploadedFiles);
+                }, [uploadedFiles]);
+
+                //clear form
+                useEffect(() => {
+                    if (isFormSubmited) {
+                        resetForm();
+                        setUploadedFiles([]);
+                    }
+                }, [isFormSubmited]);
+
                 return (
                     <View style={styles.formikContainer}>
                         {field.label && <Text style={styles.label}>{field.label}</Text>}
@@ -83,6 +96,7 @@ const FilesInputType = ({ field }) => {
                                 })}
                             </View>
                         }
+                        <Button type='submit' ref={formSubmitRef} hidden onPress={handleSubmit}>Bubmit</Button>
                         {errors.value && <Text style={styles.error}>{errors.value}</Text>}
                     </View>
                 );

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Button, Platform, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as Yup from "yup";
@@ -6,14 +6,15 @@ import { colors } from '../../../../utils/colors';
 import { fonts } from '../../../../utils/fonts';
 import { borders } from '../../../../utils/border';
 import { assets } from '../../../../utils/assets';
-
 import { Formik } from "formik";
 import { formatDate } from '../../../../helpers/formatDate';
+import { FormikSubmitContext } from '../FormDisplay';
 
 const DateInputType = ({ field }) => {
+    const { formSubmitRef, isFormSubmited } = useContext(FormikSubmitContext);
 
     const handleSubmit = (values) => {
-        console.log(values)
+        console.log('Date values sbmited:', values)
     }
 
     const validationSchema = Yup.object({
@@ -27,7 +28,7 @@ const DateInputType = ({ field }) => {
             validationSchema={validationSchema}
             onSubmit={(values) => handleSubmit(values)}
         >
-            {({ setFieldValue, values, errors }) => {
+            {({ setFieldValue, values, errors, resetForm }) => {
                 const [show, setShow] = useState(false);
 
                 const showDatepicker = () => {
@@ -39,6 +40,13 @@ const DateInputType = ({ field }) => {
                     setShow(Platform.OS === 'ios');
                     setFieldValue('value', currentDate);
                 };
+
+                //clear form
+                useEffect(() => {
+                    if (isFormSubmited) {
+                        resetForm();
+                    }
+                }, [isFormSubmited]);
 
                 return (
                     <View style={styles.formikContainer}>
@@ -60,6 +68,7 @@ const DateInputType = ({ field }) => {
                             <Text style={styles.selectedDate}>{formatDate(values.value)}</Text>
                         </View>
                         {errors.value && <Text style={styles.error}> {errors.value}</Text>}
+                        <Button type='submit' ref={formSubmitRef} hidden onPress={handleSubmit}>Bubmit</Button>
                     </View>
                 );
             }}

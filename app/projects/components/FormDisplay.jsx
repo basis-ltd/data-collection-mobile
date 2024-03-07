@@ -4,51 +4,47 @@ import { fonts } from "../../../utils/fonts";
 import SingleField from "./fieldDataComponents/SingleField";
 import AppButton from '../../../components/AppButton';
 import { dummyData } from "./dummyData";
-import { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
-import { setFormSubmitRef } from './fieldDataComponents/formDataSlice'
+import { useRef, createContext, useState } from "react";
 
+// form comtext
+export const FormikSubmitContext = createContext(null)
 
 const FormDisplay = (props) => {
     const { dataForm, handleNextPage, handleBackPage } = props;
     const formSubmitRef = useRef(null);
-    const dispatch = useDispatch();
-
-    useState(() => {
-        dispatch(setFormSubmitRef)
-    }, [])
+    const [isFormSubmited, setIsFormSubmited] = useState(false)
 
 
     // manage form actions functions
     const handlePreviewForm = () => {
-        // formSubmitRef
-
+        formSubmitRef.current?.click()
     }
 
     return (
         <ScrollView contentContainerStyle={styles.formData}>
-            <View style={styles.formDataWrapper}>
-                {dataForm.data.sections?.map(section => {
-                    return (
-                        <View key={section.id} style={styles.singleSection}>
-                            <Text style={styles.sectionTitle}>{section.name} Section</Text>
-                            {section.fields && section.fields?.length > 0 &&
-                                [...section.fields, ...dummyData]?.map(field => {
-                                    return <SingleField key={field.id} field={field} />
-                                })
-                            }
-                        </View>
-                    )
-                })}
-                <View style={styles.formActions}>
-                    <AppButton
-                        fullWidth={false}
-                        title='Preview'
-                        handleOnPress={handlePreviewForm}
-                    />
-                    {/* This is for Demo if  we make a paginated api for form fields. but this is working well for now  too */}
+            <FormikSubmitContext.Provider value={{ formSubmitRef, isFormSubmited, setIsFormSubmited }}>
+                <View style={styles.formDataWrapper}>
+                    {dataForm.data.sections?.map(section => {
+                        return (
+                            <View key={section.id} style={styles.singleSection}>
+                                <Text style={styles.sectionTitle}>{section.name} Section</Text>
+                                {section.fields && section.fields?.length > 0 &&
+                                    [...section.fields, ...dummyData]?.map(field => {
+                                        return <SingleField key={field.id} field={field} />
+                                    })
+                                }
+                            </View>
+                        )
+                    })}
+                    <View style={styles.formActions}>
+                        <AppButton
+                            fullWidth={false}
+                            title='Preview'
+                            handleOnPress={handlePreviewForm}
+                        />
+                        {/* This is for Demo if  we make a paginated api for form fields. but this is working well for now  too */}
 
-                    {/* <AppButton
+                        {/* <AppButton
                         fullWidth={false}
                         title='Back'
                         handleOnPress={handleBackPage}
@@ -58,8 +54,9 @@ const FormDisplay = (props) => {
                         title='Next'
                         handleOnPress={handleNextPage}
                     /> */}
+                    </View>
                 </View>
-            </View>
+            </FormikSubmitContext.Provider>
         </ScrollView>
     )
 }
