@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
         padding: 10,
         padding: 10,
         margin: 0,
-        ...borders("s", colors.ACCENT_DARK),
+        ...borders("d", colors.ACCENT_DARK),
         borderRadius: 5,
         backgroundColor: colors.LIGHT,
     },

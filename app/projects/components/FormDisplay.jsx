@@ -4,13 +4,24 @@ import { fonts } from "../../../utils/fonts";
 import SingleField from "./fieldDataComponents/SingleField";
 import AppButton from '../../../components/AppButton';
 import { dummyData } from "./dummyData";
+import { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setFormSubmitRef } from './fieldDataComponents/formDataSlice'
 
 
 const FormDisplay = (props) => {
     const { dataForm, handleNextPage, handleBackPage } = props;
+    const formSubmitRef = useRef(null);
+    const dispatch = useDispatch();
+
+    useState(() => {
+        dispatch(setFormSubmitRef)
+    }, [])
+
 
     // manage form actions functions
     const handlePreviewForm = () => {
+        // formSubmitRef
 
     }
 

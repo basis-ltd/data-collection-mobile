@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Button } from "react-native";
 import AppInput from "../../../../components/AppInput";
 import { Formik } from "formik";
 import { inputTypes } from "../../../../constants/inputTypes";
@@ -7,9 +7,12 @@ import { returnKeyBoardtype } from "../../../../utils/returnKeyBoardType"
 import AppTextarea from "../../../../components/AppTextarea";
 import { colors } from "../../../../utils/colors";
 import { fonts } from "../../../../utils/fonts";
+import { useSelector } from "react-redux";
 
 
 const TextInputType = ({ field }) => {
+
+    const formSubmitRef = useSelector((state) => state.formDataReducers.formSubmitRef);
 
     const handleSubmit = (values) => {
         console.log(values, 'test values')
@@ -46,6 +49,7 @@ const TextInputType = ({ field }) => {
                                 labelText={field.label}
                             />
                         }
+                        <Button type='submit' ref={formSubmitRef} hidden onPress={handleSubmit}>Bubmit</Button>
                     </View>
                 );
             }}
