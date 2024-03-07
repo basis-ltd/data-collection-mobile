@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Image, ScrollView, SafeAreaView } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import { colors } from "../../../utils/colors";
 import { fonts } from "../../../utils/fonts";
 import { assets } from "../../../utils/assets";
@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AppError from "../../../components/AppError";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { setProjectId, setProjectLists } from "../projectSlice";
-import SingleField from "../../../components/SingleField";
+import FormDisplay from "./FormDisplay";
 
 
 const SingleProject = () => {
@@ -39,8 +39,17 @@ const SingleProject = () => {
         dispatch(setProjectId(null));
     }
 
+    // form nex - back functions
+    const handleNextPage = () => {
+
+    }
+
+    const handleBackPage = () => {
+
+    }
+
     return (
-        <SafeAreaView style={styles.singleProject}>
+        <View style={styles.singleProject}>
             {loading && <AppLoadingSpin />}
             {error && !loading && <AppError message={error || "Error with fetch single Project"} />}
             {!loading &&
@@ -54,26 +63,17 @@ const SingleProject = () => {
                 <View style={styles.bodyContent}>
                     <Text style={styles.title}>{data.data.form[0]?.name}</Text>
                     <Text style={styles.description}>{data.data.form[0]?.description}</Text>
-                    {loadingForm && <View style={styles.loadingFormData}><Text style={styles.loadingTitle}>Loading from Data...</Text></View>}
-                    {!loadingForm && dataForm &&
-                        <ScrollView contentContainerStyle={styles.formData}>
-                            {dataForm.data.sections?.map(section => {
-                                return (
-                                    <View key={section.id} style={styles.singleSection}>
-                                        <Text style={styles.sectionTitle}>{section.name} Section</Text>
-                                        {section.fields && section.fields?.length > 0 &&
-                                            section.fields.map(field => {
-                                                return <SingleField key={field.id} field={field} />
-                                            })
-                                        }
-                                    </View>
-                                )
-                            })}
-                        </ScrollView>
-                    }
+                    {loadingForm && <View style={styles.loadingFormData}><Text style={styles.loadingTitle}>Loading Form Data...</Text></View>}
+                    {!loadingForm && errorForm && <AppError message={errorForm.message || 'Error with fetching form Data'} />}
+                    {!loadingForm && dataForm && !errorForm &&
+                        <FormDisplay
+                            dataForm={dataForm}
+                            handleBackPage={handleBackPage}
+                            handleNextPage={handleNextPage}
+                        />}
                 </View>
             }
-        </SafeAreaView>
+        </View>
     );
 };
 
@@ -90,7 +90,6 @@ const styles = StyleSheet.create({
         fontFamily: fonts.MONTSERRAT_MEDIUM,
         flexDirection: "column",
         gap: 19,
-        height: "100%",
     },
     bodyContent: {
         flex: 1,
@@ -119,14 +118,6 @@ const styles = StyleSheet.create({
         textAlign: "left",
         width: "100%",
     },
-    formData: {
-        marginTop: 10,
-        gap: 10,
-        width: "100%",
-        padding: 0,
-        paddingBottom: 20
-
-    },
     loadingFormData: {
         flex: 1,
         justifyContent: "center",
@@ -140,19 +131,6 @@ const styles = StyleSheet.create({
         textAlign: "center",
         alignItems: "flex-start",
     },
-    sectionTitle: {
-        fontFamily: fonts.MONTSERRAT_SEMI_BOLD,
-        fontSize: 16,
-        color: colors.DARK,
-        textAlign: "left",
-        width: "100%",
-        textTransform: "capitalize",
-    },
-    singleSection: {
-        gap: 10,
-    }
 });
 
 export default SingleProject;
-
-

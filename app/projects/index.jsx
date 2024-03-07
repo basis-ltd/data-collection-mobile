@@ -10,8 +10,6 @@ const Projects = () => {
   const { showProjectsList } = useSelector(state => state.projectsReducers);
   const { projectId } = useSelector(state => state.projectsReducers);
 
-
-
   return (
     <PageGuard style={styles.projects}>
       {showProjectsList && <ProjectsHome />}
@@ -19,7 +17,6 @@ const Projects = () => {
     </PageGuard>
   );
 };
-
 
 const styles = StyleSheet.create({
   projects: {

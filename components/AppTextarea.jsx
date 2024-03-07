@@ -3,35 +3,31 @@ import PropTypes from "prop-types";
 import { borders } from "../utils/border";
 import { colors } from "../utils/colors";
 import { fonts } from "../utils/fonts";
-import { View, StyleSheet, TextInput, Text, Image } from "react-native";
+import { View, StyleSheet, TextInput, Text } from "react-native";
 
-const AppInput = (props) => {
+const AppTextarea = (props) => {
   const {
-    iconUrl,
     labelText,
     placeholder,
-    keyboardType,
     onChangeText,
     error,
     value,
   } = props;
 
-
   return (
     <View style={styles.container}>
       {labelText && <Text style={styles.label}>{labelText}</Text>}
       <View style={styles.inputBox}>
-        {iconUrl && (
-          <Image style={styles.iconImage} source={iconUrl} alt="Input Icon" />
-        )}
         <TextInput
           {...props}
           placeholder={placeholder}
-          keyboardType={keyboardType}
+          keyboardType="default"
           style={[styles.input, props.style]}
           placeholderTextColor={colors.ACCENT_DARK}
           onChangeText={onChangeText}
           value={value}
+          multiline
+          numberOfLines={5}
         />
       </View>
       {error && <Text style={styles.error}> {error}</Text>}
@@ -40,7 +36,7 @@ const AppInput = (props) => {
 };
 
 // propTypes:
-AppInput.propTypes = {
+AppTextarea.propTypes = {
   onChangeText: PropTypes.func,
   placeholder: PropTypes.string.isRequired,
   defaultValue: PropTypes.string,
@@ -49,11 +45,6 @@ AppInput.propTypes = {
   value: PropTypes.string,
   keyboardType: PropTypes.oneOf([
     "default",
-    "number-pad",
-    "decimal-pad",
-    "numeric",
-    "email-address",
-    "phone-pad",
   ]),
 };
 
@@ -76,7 +67,6 @@ const styles = StyleSheet.create({
   input: {
     padding: 0,
     flex: 1,
-    height: "100%",
     alignItems: "flex-start",
     justifyContent: "center",
     color: colors.PRIMARY,
@@ -87,7 +77,7 @@ const styles = StyleSheet.create({
   inputBox: {
     ...borders("s", colors.ACCENT_DARK),
     borderRadius: 5,
-    height: 46,
+    height: "auto",
     backgroundColor: colors.LIGHT,
     paddingHorizontal: 15,
     alignItems: "center",
@@ -95,11 +85,6 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     gap: 15,
-  },
-  iconImage: {
-    height: 24,
-    aspectRatio: 1 / 1,
-    width: "auto",
   },
   error: {
     color: colors.ERROR,
@@ -111,4 +96,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AppInput;
+export default AppTextarea;
