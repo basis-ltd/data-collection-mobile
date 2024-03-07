@@ -11,10 +11,10 @@ import { formatDate } from '../../../../helpers/formatDate';
 import { FormikSubmitContext } from "./SingleField";
 
 
-const DateInputType = ({ field }) => {
+const DateInputType = ({ field, inputIndex }) => {
     const { formSubmitRef, isFormSubmited } = useContext(FormikSubmitContext);
 
-    const handleSubmit = (values) => {
+    const handleSubmitForm = (values) => {
         console.log('Date values sbmited:', values)
     }
 
@@ -27,9 +27,9 @@ const DateInputType = ({ field }) => {
         <Formik
             initialValues={{ value: new Date() }}
             validationSchema={validationSchema}
-            onSubmit={(values) => handleSubmit(values)}
+            onSubmit={handleSubmitForm}
         >
-            {({ setFieldValue, values, errors, resetForm }) => {
+            {({ setFieldValue, values, errors, resetForm, handleSubmit }) => {
                 const [show, setShow] = useState(false);
 
                 const showDatepicker = () => {
@@ -70,7 +70,7 @@ const DateInputType = ({ field }) => {
                         </View>
                         {errors.value && <Text style={styles.error}> {errors.value}</Text>}
                         <Pressable
-                            ref={formSubmitRef}
+                            ref={(el) => (formSubmitRef.current[inputIndex] = { onPress: () => { handleSubmit() } })}
                             onPress={handleSubmit}
                             style={styles.submitBtnInvisible}>
                             <Text>Submit</Text>

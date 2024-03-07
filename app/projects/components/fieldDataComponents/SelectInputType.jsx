@@ -10,7 +10,7 @@ import { FormikSubmitContext } from "./SingleField";
 
 
 const SelectInputType = (props) => {
-    const { field } = props;
+    const { field, inputIndex } = props;
     const { formSubmitRef, isFormSubmited } = useContext(FormikSubmitContext);
 
     const validationSchema = Yup.object({
@@ -18,7 +18,7 @@ const SelectInputType = (props) => {
             .required("You must select one") : Yup.string(),
     });
 
-    const handleSubmit = (values) => {
+    const handleSubmitForm = (values) => {
         console.log(values, 'selected values on select')
     }
 
@@ -26,9 +26,9 @@ const SelectInputType = (props) => {
         <Formik
             initialValues={{ value: !field.default_value || field.default_value !== '' ? field.default_value : field.options?.split(',')[0] }}
             validationSchema={validationSchema}
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmitForm}
         >
-            {({ errors, values, setFieldValue, resetForm }) => {
+            {({ errors, values, setFieldValue, resetForm, handleSubmit }) => {
                 //clear form
                 useEffect(() => {
                     if (isFormSubmited) {
@@ -51,7 +51,7 @@ const SelectInputType = (props) => {
                             </Picker>
                         </View>
                         <Pressable
-                            ref={formSubmitRef}
+                            ref={(el) => (formSubmitRef.current[inputIndex] = { onPress: () => { handleSubmit() } })}
                             onPress={handleSubmit}
                             style={styles.submitBtnInvisible}>
                             <Text>Submit</Text>

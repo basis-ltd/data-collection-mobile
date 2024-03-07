@@ -11,7 +11,7 @@ import * as DocumentPicker from 'expo-document-picker';
 import { FormikSubmitContext } from "./SingleField";
 
 
-const FilesInputType = ({ field }) => {
+const FilesInputType = ({ field, inputIndex }) => {
     const { formSubmitRef, isFormSubmited } = useContext(FormikSubmitContext);
     const [uploadedFiles, setUploadedFiles] = useState([]);
 
@@ -37,7 +37,7 @@ const FilesInputType = ({ field }) => {
             .required("Files are required") : Yup.array(),
     });
 
-    const handleSubmit = (values) => {
+    const handleSubmitForm = (values) => {
         console.log('Submitting files...', values);
     };
 
@@ -50,9 +50,9 @@ const FilesInputType = ({ field }) => {
         <Formik
             initialValues={{ value: [] }}
             validationSchema={validationSchema}
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmitForm}
         >
-            {({ errors, resetForm, setFieldValue }) => {
+            {({ errors, resetForm, setFieldValue, handleSubmit }) => {
 
                 //update files
                 useEffect(() => {
@@ -97,13 +97,13 @@ const FilesInputType = ({ field }) => {
                             </View>
                         }
                         <Pressable
-                            ref={formSubmitRef}
+                            ref={(el) => (formSubmitRef.current[inputIndex] = { onPress: () => { handleSubmit() } })}
                             onPress={handleSubmit}
                             style={styles.submitBtnInvisible}
                         >
                             <Text>Submit</Text>
                         </Pressable>
-                        {errors.value && errors.touched && <Text style={styles.error}>{errors.value}</Text>}
+                        {errors.value && <Text style={styles.error}>{errors.value}</Text>}
                     </View>
                 );
             }}

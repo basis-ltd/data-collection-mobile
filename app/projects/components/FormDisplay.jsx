@@ -9,13 +9,13 @@ import FieldtypesWithTypes from "./fieldDataComponents/AllFieldTypes";
 
 const FormDisplay = (props) => {
     const { dataForm, handleNextPage, handleBackPage } = props;
-    const formSubmitRef = useRef(null);
+    const formSubmitRef = useRef([]);
     const [isFormSubmited, setIsFormSubmited] = useState(false)
 
 
     // manage form actions functions
     const handlePreviewForm = () => {
-        formSubmitRef.current?.click()
+        formSubmitRef.current?.forEach(element => element ? element.onPress() : null)
     }
 
     return (
@@ -26,10 +26,10 @@ const FormDisplay = (props) => {
                         <View key={section.id} style={styles.singleSection}>
                             <Text style={styles.sectionTitle}>{section.name} Section</Text>
                             {section.fields && section.fields?.length > 0 &&
-                                [...section.fields, ...dummyData]?.map(field => {
+                                [...section.fields, ...dummyData]?.map((field, index) => {
                                     return (
                                         <SingleField key={field.id} formSubmitRef={formSubmitRef} isFormSubmited={isFormSubmited}>
-                                            <FieldtypesWithTypes field={field} />
+                                            <FieldtypesWithTypes field={field} inputIndex={index} />
                                         </SingleField>
                                     )
                                 })

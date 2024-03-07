@@ -9,11 +9,11 @@ import { useContext, useEffect } from "react";
 import { FormikSubmitContext } from "./SingleField";
 
 
-const TextInputType = ({ field }) => {
+const TextInputType = ({ field, inputIndex }) => {
 
     const { formSubmitRef, isFormSubmited } = useContext(FormikSubmitContext);
 
-    const handleSubmit = (values) => {
+    const handleSubmitForm = (values) => {
         console.log(values, 'test values')
     };
 
@@ -23,9 +23,9 @@ const TextInputType = ({ field }) => {
         <Formik
             initialValues={{ value: "" }}
             validationSchema={validationSchema}
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmitForm}
         >
-            {({ errors, values, resetForm, handleChange }) => {
+            {({ errors, values, resetForm, handleChange, handleSubmit }) => {
 
                 useEffect(() => {
                     if (isFormSubmited) {
@@ -56,7 +56,7 @@ const TextInputType = ({ field }) => {
                             />
                         }
                         <Pressable
-                            ref={formSubmitRef}
+                            ref={(el) => (formSubmitRef.current[inputIndex] = { onPress: () => { handleSubmit() } })}
                             onPress={handleSubmit}
                             style={styles.submitBtnInvisible}>
                             <Text>Submit</Text>

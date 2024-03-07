@@ -7,7 +7,7 @@ import { useContext, useEffect } from "react";
 import { FormikSubmitContext } from "./SingleField";
 
 
-const RadioInputType = ({ field }) => {
+const RadioInputType = ({ field, inputIndex }) => {
     const { formSubmitRef, isFormSubmited } = useContext(FormikSubmitContext);
 
     const validationSchema = Yup.object({
@@ -15,7 +15,7 @@ const RadioInputType = ({ field }) => {
             .required("You must select one") : Yup.string(),
     });
 
-    const handleSubmit = (values) => {
+    const handleSubmitForm = (values) => {
         console.log('radios selected values', values)
     }
 
@@ -23,9 +23,9 @@ const RadioInputType = ({ field }) => {
         <Formik
             initialValues={{ value: !field.default_value || field.default_value !== '' ? field.default_value : field.options?.split(',')[0] }}
             validationSchema={validationSchema}
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmitForm}
         >
-            {({ errors, values, setFieldValue, resetForm }) => {
+            {({ errors, values, setFieldValue, resetForm, handleSubmit }) => {
                 //clear form
                 useEffect(() => {
                     if (isFormSubmited) {
@@ -61,7 +61,7 @@ const RadioInputType = ({ field }) => {
                             ))}
                         </View>
                         <Pressable
-                            ref={formSubmitRef}
+                            ref={(el) => (formSubmitRef.current[inputIndex] = { onPress: () => { handleSubmit() } })}
                             onPress={handleSubmit}
                             style={styles.submitBtnInvisible}>
                             <Text>Submit</Text>
