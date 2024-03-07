@@ -19,7 +19,10 @@ const AppCustomSelect = ({ options, onSelect, title }) => {
                 </View>
             </TouchableOpacity>
             {isVisible && (
-                <ScrollView style={styles.optionsContainer}>
+                <ScrollView style={styles.optionsContainer}
+                    showsVerticalScrollIndicator={false}
+                    showsHorizontalScrollIndicator={false}
+                >
                     {options.map((option) => (
                         <TouchableOpacity
                             key={option.value}

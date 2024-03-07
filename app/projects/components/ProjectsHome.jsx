@@ -58,7 +58,11 @@ const ProjectsHome = () => {
                 </View>
 
             </View>
-            <ScrollView contentContainerStyle={styles.allProjectsScroll}>
+            <ScrollView
+                contentContainerStyle={styles.allProjectsScroll}
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+            >
                 <View style={styles.allProjects}>
                     {loading && <AppLoadingSpin />}
                     {error && !loading && <Text style={styles.error}>{error?.message || error[0]}</Text>}

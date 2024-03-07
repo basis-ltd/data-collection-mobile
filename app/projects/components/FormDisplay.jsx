@@ -19,7 +19,11 @@ const FormDisplay = (props) => {
     }
 
     return (
-        <ScrollView contentContainerStyle={styles.formData}>
+        <ScrollView
+            contentContainerStyle={styles.formData}
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
+        >
             <View style={styles.formDataWrapper}>
                 {dataForm.data.sections?.map(section => {
                     return (
