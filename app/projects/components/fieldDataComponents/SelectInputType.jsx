@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View, Pressable } from "react-native";
 import { Formik } from "formik";
 import { colors } from "../../../../utils/colors";
 import { fonts } from "../../../../utils/fonts";
@@ -50,7 +50,12 @@ const SelectInputType = (props) => {
                                 ))}
                             </Picker>
                         </View>
-                        <Button type='submit' ref={formSubmitRef} hidden onPress={handleSubmit}>Submit</Button>
+                        <Pressable
+                            ref={formSubmitRef}
+                            onPress={handleSubmit}
+                            style={styles.submitBtnInvisible}>
+                            <Text>Submit</Text>
+                        </Pressable>
                         {errors.value && <Text style={styles.error}>{errors.value}</Text>}
                     </View>
                 );
@@ -99,6 +104,11 @@ const styles = StyleSheet.create({
         backgroundColor: "transparent",
         width: "100%",
     },
+    submitBtnInvisible: {
+        opacity: 0,
+        width: 0,
+        height: 0,
+    }
 });
 
 export default SelectInputType;

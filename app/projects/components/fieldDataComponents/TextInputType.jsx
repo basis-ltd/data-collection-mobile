@@ -1,12 +1,10 @@
-import { StyleSheet, View, Button } from "react-native";
+import { StyleSheet, View, Pressable, Text } from "react-native";
 import AppInput from "../../../../components/AppInput";
 import { Formik } from "formik";
 import { inputTypes } from "../../../../constants/inputTypes";
 import { inputValidationSchema } from "../../../../utils/validationchemas";
 import { returnKeyBoardtype } from "../../../../utils/returnKeyBoardType"
 import AppTextarea from "../../../../components/AppTextarea";
-import { colors } from "../../../../utils/colors";
-import { fonts } from "../../../../utils/fonts";
 import { useContext, useEffect } from "react";
 import { FormikSubmitContext } from "./SingleField";
 
@@ -57,7 +55,12 @@ const TextInputType = ({ field }) => {
                                 labelText={field.label}
                             />
                         }
-                        <Button type='submit' ref={formSubmitRef} hidden onPress={handleSubmit}>Submit</Button>
+                        <Pressable
+                            ref={formSubmitRef}
+                            onPress={handleSubmit}
+                            style={styles.submitBtnInvisible}>
+                            <Text>Submit</Text>
+                        </Pressable>
                     </View>
                 );
             }}
@@ -75,14 +78,11 @@ const styles = StyleSheet.create({
         height: 'auto',
         backgroundColor: 'transparent'
     },
-    error: {
-        color: colors.ERROR,
-        fontFamily: fonts.MONTSERRAT_BOLD,
-        fontSize: 12,
-        justifyContent: "flex-start",
-        alignItems: "flex-start",
-        marginTop: -2,
-    },
+    submitBtnInvisible: {
+        opacity: 0,
+        width: 0,
+        height: 0,
+    }
 });
 
 export default TextInputType;

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Image, Button } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Image, Pressable } from "react-native";
 import { Formik } from "formik";
 import { colors } from "../../../../utils/colors";
 import { fonts } from "../../../../utils/fonts";
@@ -96,8 +96,14 @@ const FilesInputType = ({ field }) => {
                                 })}
                             </View>
                         }
-                        <Button type='submit' ref={formSubmitRef} hidden onPress={handleSubmit}>Submit</Button>
-                        {errors.value && <Text style={styles.error}>{errors.value}</Text>}
+                        <Pressable
+                            ref={formSubmitRef}
+                            onPress={handleSubmit}
+                            style={styles.submitBtnInvisible}
+                        >
+                            <Text>Submit</Text>
+                        </Pressable>
+                        {errors.value && errors.touched && <Text style={styles.error}>{errors.value}</Text>}
                     </View>
                 );
             }}
@@ -182,6 +188,11 @@ const styles = StyleSheet.create({
         color: colors.DARK,
         fontSize: 15,
         fontFamily: fonts.MONTSERRAT_BOLD,
+    },
+    submitBtnInvisible: {
+        opacity: 0,
+        width: 0,
+        height: 0,
     }
 });
 

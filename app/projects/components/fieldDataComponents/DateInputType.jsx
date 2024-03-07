@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { View, Button, Platform, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Pressable, Platform, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as Yup from "yup";
 import { colors } from '../../../../utils/colors';
@@ -69,7 +69,12 @@ const DateInputType = ({ field }) => {
                             <Text style={styles.selectedDate}>{formatDate(values.value)}</Text>
                         </View>
                         {errors.value && <Text style={styles.error}> {errors.value}</Text>}
-                        <Button type='submit' ref={formSubmitRef} hidden onPress={handleSubmit}>Submit</Button>
+                        <Pressable
+                            ref={formSubmitRef}
+                            onPress={handleSubmit}
+                            style={styles.submitBtnInvisible}>
+                            <Text>Submit</Text>
+                        </Pressable>
                     </View>
                 );
             }}
@@ -126,6 +131,11 @@ const styles = StyleSheet.create({
     iconImage: {
         width: 30,
         height: 30,
+    },
+    submitBtnInvisible: {
+        opacity: 0,
+        width: 0,
+        height: 0,
     }
 });
 
