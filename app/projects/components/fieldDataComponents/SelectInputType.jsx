@@ -5,7 +5,7 @@ import { fonts } from "../../../../utils/fonts";
 import { borders } from "../../../../utils/border";
 import { Picker } from "@react-native-picker/picker";
 import * as Yup from "yup";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { FormikSubmitContext } from "../FormDisplay";
 
 const SelectInputType = (props) => {

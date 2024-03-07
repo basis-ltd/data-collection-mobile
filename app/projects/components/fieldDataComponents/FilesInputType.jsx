@@ -1,3 +1,4 @@
+import { useContext, useEffect, useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Image, Button } from "react-native";
 import { Formik } from "formik";
 import { colors } from "../../../../utils/colors";
@@ -5,7 +6,6 @@ import { fonts } from "../../../../utils/fonts";
 import { borders } from "../../../../utils/border";
 import * as Yup from "yup";
 import { assets } from "../../../../utils/assets";
-import { useContext, useEffect, useState } from "react";
 import * as ImagePicker from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
 import { FormikSubmitContext } from "../FormDisplay";

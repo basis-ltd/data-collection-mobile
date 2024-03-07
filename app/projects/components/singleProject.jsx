@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Image, ScrollView, SafeAreaView } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import { colors } from "../../../utils/colors";
 import { fonts } from "../../../utils/fonts";
 import { assets } from "../../../utils/assets";
@@ -10,9 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import AppError from "../../../components/AppError";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { setProjectId, setProjectLists } from "../projectSlice";
-import SingleField from "./fieldDataComponents/SingleField";
-import AppButton from '../../../components/AppButton';
-import { dummyData } from "./dummyData";
 import FormDisplay from "./FormDisplay";
 
 
