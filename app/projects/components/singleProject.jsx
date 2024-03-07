@@ -63,7 +63,7 @@ const SingleProject = () => {
                 <View style={styles.bodyContent}>
                     <Text style={styles.title}>{data.data.form[0]?.name}</Text>
                     <Text style={styles.description}>{data.data.form[0]?.description}</Text>
-                    {loadingForm && <View style={styles.loadingFormData}><Text style={styles.loadingTitle}>Loading from Data...</Text></View>}
+                    {loadingForm && <View style={styles.loadingFormData}><Text style={styles.loadingTitle}>Loading Form Data...</Text></View>}
                     {!loadingForm && errorForm && <AppError message={errorForm.message || 'Error with fetching form Data'} />}
                     {!loadingForm && dataForm && !errorForm &&
                         <FormDisplay

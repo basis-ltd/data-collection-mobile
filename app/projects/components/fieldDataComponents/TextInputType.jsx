@@ -57,7 +57,7 @@ const TextInputType = ({ field }) => {
                                 labelText={field.label}
                             />
                         }
-                        <Button type='submit' ref={formSubmitRef} hidden onPress={handleSubmit}>Bubmit</Button>
+                        <Button type='submit' ref={formSubmitRef} hidden onPress={handleSubmit}>Submit</Button>
                     </View>
                 );
             }}

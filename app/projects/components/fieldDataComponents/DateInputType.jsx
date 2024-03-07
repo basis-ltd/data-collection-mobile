@@ -69,7 +69,7 @@ const DateInputType = ({ field }) => {
                             <Text style={styles.selectedDate}>{formatDate(values.value)}</Text>
                         </View>
                         {errors.value && <Text style={styles.error}> {errors.value}</Text>}
-                        <Button type='submit' ref={formSubmitRef} hidden onPress={handleSubmit}>Bubmit</Button>
+                        <Button type='submit' ref={formSubmitRef} hidden onPress={handleSubmit}>Submit</Button>
                     </View>
                 );
             }}
