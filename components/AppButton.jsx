@@ -2,18 +2,18 @@ import React, { FC } from "react";
 import PropTypes from "prop-types";
 import { colors } from "../utils/colors";
 import { fonts } from "../utils/fonts";
-import { StyleSheet, Text, Pressable } from "react-native";
+import { StyleSheet, Text, Pressable, TouchableOpacity } from "react-native";
 
 const AppButton = (props) => {
   const { fullWidth, title, handleOnPress } = props;
   return (
-    <Pressable
+    <TouchableOpacity
       style={fullWidth ? styles.button : styles.buttonShort}
       onPress={handleOnPress}
       {...props}
     >
       <Text style={styles.buttonText}>{title}</Text>
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 

@@ -9,6 +9,7 @@ import FieldtypesWithTypes from "./fieldDataComponents/AllFieldTypes";
 import { useDispatch, useSelector } from "react-redux";
 import { setShowPreview } from "./fieldDataComponents/formDataSlice";
 import FormPreview from './FormPreview'
+import AppPopUp from "../../../components/AppPopUp";
 
 const FormDisplay = (props) => {
     const { dataForm, handleNextPage, handleBackPage } = props;
@@ -25,6 +26,11 @@ const FormDisplay = (props) => {
         if (formValues.length === allFields.length) {
             dispatch(setShowPreview(true))
         }
+    }
+
+    //close Modal
+    const hidePreview = () => {
+        dispatch(setShowPreview(false))
     }
 
     return (
@@ -75,7 +81,11 @@ const FormDisplay = (props) => {
                     /> */}
                 </View>
                 {/* HOW PREVIEW FORM */}
-                {showPreview && <FormPreview setIsFormSubmited={setIsFormSubmited} />}
+                {showPreview &&
+                    <AppPopUp handleClose={hidePreview}>
+                        <FormPreview setIsFormSubmited={setIsFormSubmited} handleClose={hidePreview} />
+                    </AppPopUp>
+                }
             </View>
         </ScrollView>
     )
@@ -91,7 +101,6 @@ const styles = StyleSheet.create({
         padding: 0,
         gap: 10,
         width: "100%",
-        position: 'relative'
     },
     sectionTitle: {
         fontFamily: fonts.MONTSERRAT_SEMI_BOLD,

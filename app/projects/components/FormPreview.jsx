@@ -2,15 +2,18 @@ import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
 import { colors } from "../../../utils/colors";
 import { fonts } from "../../../utils/fonts";
 import AppButton from '../../../components/AppButton';
-import { useDispatch, useSelector } from "react-redux";
-import { setShowPreview } from "./fieldDataComponents/formDataSlice";
+import { useSelector } from "react-redux";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { assets } from "../../../utils/assets";
+import { useEffect, useState } from "react";
+import { groupArrayByKey } from "../../../helpers/groupArrayByKey";
+import AppLoadingSpin from "../../../components/AppLoadingSpin";
 
 const FormPreview = (props) => {
-    const { setIsFormSubmited } = props;
+    const { setIsFormSubmited, handleClose: hidePreview } = props;
     const { formValues } = useSelector(state => state.formDataReducers);
-    const dispatch = useDispatch()
+    const [dataTopreview, setDataToPreview] = useState([]);
+    const [loadingPreview, setLoadingpreview] = useState(true);
 
     const handlePostData = () => {
 
@@ -19,15 +22,17 @@ const FormPreview = (props) => {
         hidePreview();
     }
 
-    const hidePreview = () => {
-        dispatch(setShowPreview(false))
-    }
     //structure form values
     useEffect(() => {
-        console.log(formValues, 'formValues');
+        const timer = setTimeout(() => {
+            const result = groupArrayByKey(formValues, 'sectionName');
+            setDataToPreview(result);
+            setLoadingpreview(false);
+        }, 2000);
 
+        return () => clearTimeout(timer);
+    }, []);
 
-    }, [])
 
 
     return (
@@ -44,9 +49,36 @@ const FormPreview = (props) => {
             <View style={styles.dataPreview}>
                 <Text style={styles.titlePreview}>Entries Preview</Text>
                 <Text style={styles.details}>Please do review as possible as you can before you submit your entries !!</Text>
+                <View style={styles.dataWrapper}>
+                    {loadingPreview && <AppLoadingSpin />}
+                    {!loadingPreview && dataTopreview &&
+                        dataTopreview.map((result, index) => {
+
+                            return (
+                                <View key={index} style={styles.sectionWrapper}>
+                                    <Text style={styles.titleSection}>{`${result[0]?.sectionName} Section` || 'N/A'}</Text>
+                                    <View style={{ width: '100%', gap: 10 }}>
+                                        {result?.map((fieldData, idx) => {
+                                            return (
+                                                <View key={idx} style={styles.fieldDataWrapper} >
+                                                    <Text style={styles.fieldLabel}>{fieldData?.label || 'N/A'}</Text>
+                                                    <Text style={styles.value}>
+                                                        {typeof fieldData.value === 'string' ? fieldData.value :
+                                                            `${fieldData.value.length} Attached file${fieldData.value.length > 1 && "s"}`
+                                                        }
+                                                    </Text>
+                                                </View>
+                                            )
+                                        })}
+                                    </View>
+
+                                </View>
+                            )
+                        })}
+
+                </View>
             </View>
             <View style={styles.formActions}>
-
                 <AppButton
                     fullWidth={false}
                     title='Submit'
@@ -64,12 +96,10 @@ const FormPreview = (props) => {
 
 const styles = StyleSheet.create({
     formDataPreview: {
-        position: 'absolute',
         width: "100%",
-        padding: 20,
+        padding: 5,
         backgroundColor: colors.LIGHT,
         gap: 17,
-        zIndex: 100,
         fontFamily: fonts.MONTSERRAT_MEDIUM,
         minHeight: '100%'
     },
@@ -93,6 +123,37 @@ const styles = StyleSheet.create({
     details: {
         color: colors.ACCENT_DARK,
         fontFamily: fonts.MONTSERRAT_REGULAR,
+        fontSize: 13,
+    },
+    dataWrapper: {
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 20,
+    },
+    sectionWrapper: {
+        gap: 15,
+        width: '100%',
+    },
+    titleSection: {
+        color: colors.DARK,
+        fontFamily: fonts.MONTSERRAT_BOLD,
+        fontSize: 14,
+    },
+    fieldDataWrapper: {
+        gap: 2,
+        backgroundColor: colors.LIGHTEST_WHITE,
+        padding: 5,
+        borderRadius: 3,
+    },
+    fieldLabel: {
+        color: colors.ACCENT_DARK,
+        fontFamily: fonts.MONTSERRAT_SEMI_BOLD,
+        fontSize: 13,
+    },
+    value: {
+        color: colors.SUCCESS,
+        fontFamily: fonts.MONTSERRAT_MEDIUM,
         fontSize: 13,
     },
     formActions: {
