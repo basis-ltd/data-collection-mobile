@@ -1,18 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    formSubmitRef: null,
+    formValues: [],
+    showPreview: false,
 }
 const formSataSlices = createSlice({
     name: "formDataStates",
     initialState,
     reducers: {
-        setFormSubmitRef: (state, action) => {
-            state.formSubmitRef = action.payload;
+        setFormValues: (state, action) => {
+            state.formValues = action.payload;
+        },
+        setShowPreview: (state, action) => {
+            state.showPreview = action.payload;
         },
     }
 })
-export const { setFormSubmitRef, } = formSataSlices.actions;
+export const { setFormValues, setShowPreview } = formSataSlices.actions;
 
 const formDataReducers = formSataSlices.reducer;
 export default formDataReducers;
