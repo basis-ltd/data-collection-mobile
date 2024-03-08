@@ -6,16 +6,25 @@ import AppButton from '../../../components/AppButton';
 import { dummyData } from "./dummyData";
 import { useRef, useState } from "react";
 import FieldtypesWithTypes from "./fieldDataComponents/AllFieldTypes";
+import { useDispatch, useSelector } from "react-redux";
+import { setShowPreview } from "./fieldDataComponents/formDataSlice";
+import FormPreview from './FormPreview'
 
 const FormDisplay = (props) => {
     const { dataForm, handleNextPage, handleBackPage } = props;
     const formSubmitRef = useRef([]);
-    const [isFormSubmited, setIsFormSubmited] = useState(false)
-
+    const [isFormSubmited, setIsFormSubmited] = useState(false);
+    const [allFields, setAllFields] = useState([]);
+    const { formValues, showPreview } = useSelector(state => state.formDataReducers);
+    const dispatch = useDispatch()
 
     // manage form actions functions
     const handlePreviewForm = () => {
-        formSubmitRef.current?.forEach(element => element ? element.onPress() : null)
+        formSubmitRef.current?.forEach(element => element ? element.onPress() : null);
+        //if all fields are filled, then we can launch Preview
+        if (formValues.length === allFields.length) {
+            dispatch(setShowPreview(true))
+        }
     }
 
     return (
@@ -31,6 +40,9 @@ const FormDisplay = (props) => {
                             <Text style={styles.sectionTitle}>{section.name} Section</Text>
                             {section.fields && section.fields?.length > 0 &&
                                 [...section.fields, ...dummyData]?.map((field, index) => {
+                                    //count fields that are mandatory to be filled
+                                    setAllFields(prevField => [...prevField, field]);
+
                                     return (
                                         <SingleField key={field.id} formSubmitRef={formSubmitRef} isFormSubmited={isFormSubmited}>
                                             <FieldtypesWithTypes field={field} inputIndex={index} />
@@ -60,6 +72,8 @@ const FormDisplay = (props) => {
                         handleOnPress={handleNextPage}
                     /> */}
                 </View>
+                {/* HOW PREVIEW FORM */}
+                {showPreview && <FormPreview setIsFormSubmited={setIsFormSubmited} />}
             </View>
         </ScrollView>
     )

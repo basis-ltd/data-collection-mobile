@@ -9,14 +9,25 @@ import { assets } from '../../../../utils/assets';
 import { Formik } from "formik";
 import { formatDate } from '../../../../helpers/formatDate';
 import { FormikSubmitContext } from "./SingleField";
+import { useDispatch, useSelector } from 'react-redux';
+import { setFormValues } from './formDataSlice';
 
 
 const DateInputType = ({ field, inputIndex }) => {
     const { formSubmitRef, isFormSubmited } = useContext(FormikSubmitContext);
+    const { formValues } = useSelector(state => state.formDataReducers);
+    const dispatch = useDispatch()
 
     const handleSubmitForm = (values) => {
-        console.log('Date values sbmited:', values)
-    }
+        //first remove the value with these fields
+        const previousValues = formValues?.filter(item => item.field_id !== field.id);
+        const fieldValues = {
+            field_id: field.id,
+            value: values.value,
+            label: field.label,
+        }
+        dispatch(setFormValues([...previousValues, fieldValues]))
+    };
 
     const validationSchema = Yup.object({
         value: field.is_required ? Yup.date()

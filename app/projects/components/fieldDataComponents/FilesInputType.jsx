@@ -9,11 +9,15 @@ import { assets } from "../../../../utils/assets";
 import * as ImagePicker from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
 import { FormikSubmitContext } from "./SingleField";
+import { useDispatch, useSelector } from "react-redux";
+import { setFormValues } from "./formDataSlice";
 
 
 const FilesInputType = ({ field, inputIndex }) => {
     const { formSubmitRef, isFormSubmited } = useContext(FormikSubmitContext);
     const [uploadedFiles, setUploadedFiles] = useState([]);
+    const { formValues } = useSelector(state => state.formDataReducers);
+    const dispatch = useDispatch()
 
     const handleUpload = async () => {
         const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -38,7 +42,14 @@ const FilesInputType = ({ field, inputIndex }) => {
     });
 
     const handleSubmitForm = (values) => {
-        console.log('Submitting files...', values);
+        //first remove the value with these fields
+        const previousValues = formValues?.filter(item => item.field_id !== field.id);
+        const fieldValues = {
+            field_id: field.id,
+            value: values.value,
+            label: field.label,
+        }
+        dispatch(setFormValues([...previousValues, fieldValues]))
     };
 
     const handleRemoveFile = (file) => {
