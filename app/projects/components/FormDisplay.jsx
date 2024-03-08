@@ -3,11 +3,9 @@ import { colors } from "../../../utils/colors";
 import { fonts } from "../../../utils/fonts";
 import SingleField from "./fieldDataComponents/SingleField";
 import AppButton from '../../../components/AppButton';
-import { dummyData } from "./dummyData";
 import { useEffect, useRef, useState } from "react";
 import FieldtypesWithTypes from "./fieldDataComponents/AllFieldTypes";
-import { useDispatch, useSelector } from "react-redux";
-import { setShowPreview } from "./fieldDataComponents/formDataSlice";
+import { useSelector } from "react-redux";
 import FormPreview from './FormPreview'
 import AppPopUp from "../../../components/AppPopUp";
 
@@ -15,22 +13,22 @@ const FormDisplay = (props) => {
     const { dataForm, handleNextPage, handleBackPage } = props;
     const formSubmitRef = useRef([]);
     const [isFormSubmited, setIsFormSubmited] = useState(false);
+    const [showPreview, setShowPreview] = useState(false);
     const [allFields, setAllFields] = useState([]);
-    const { formValues, showPreview } = useSelector(state => state.formDataReducers);
-    const dispatch = useDispatch()
+    const { formValues } = useSelector(state => state.formDataReducers);
 
     // manage form actions functions
     const handlePreviewForm = () => {
         formSubmitRef.current?.forEach(element => element ? element.onPress() : null);
         //if all fields are filled, then we can launch Preview
         if (formValues.length === allFields.length) {
-            dispatch(setShowPreview(true))
+            setShowPreview(true)
         }
     }
 
     //close Modal
     const hidePreview = () => {
-        dispatch(setShowPreview(false))
+        setShowPreview(false)
     }
 
     return (
@@ -45,7 +43,7 @@ const FormDisplay = (props) => {
                         <View key={section.id} style={styles.singleSection}>
                             <Text style={styles.sectionTitle}>{section.name} Section</Text>
                             {section.fields && section.fields?.length > 0 &&
-                                [...section.fields, ...dummyData]?.map((field, index) => {
+                                section.fields?.map((field, index) => {
                                     //count fields that are mandatory to be filled
                                     useEffect(() => {
                                         setAllFields(prevField => [...prevField, field])
@@ -82,7 +80,7 @@ const FormDisplay = (props) => {
                 </View>
                 {/* HOW PREVIEW FORM */}
                 {showPreview &&
-                    <AppPopUp handleClose={hidePreview}>
+                    <AppPopUp handleClose={hidePreview} showPreview={showPreview}>
                         <FormPreview setIsFormSubmited={setIsFormSubmited} handleClose={hidePreview} />
                     </AppPopUp>
                 }

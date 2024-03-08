@@ -1,18 +1,14 @@
 import React from "react";
 import { colors } from "../utils/colors";
 import { Modal, SafeAreaView, StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
-
 
 const AppPopUp = (props) => {
-    const { children, handleClose } = props;
-    const { showPreview } = useSelector(state => state.formDataReducers);
+    const { children, handleClose, showPreview } = props;
 
     return (
         <Modal
             style={styles.containerPopUp}
             animationType="slide"
-            // transparent={true}
             visible={showPreview}
             onRequestClose={handleClose}
         >

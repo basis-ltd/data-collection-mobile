@@ -10,7 +10,7 @@ import { groupArrayByKey } from "../../../helpers/groupArrayByKey";
 import AppLoadingSpin from "../../../components/AppLoadingSpin";
 
 const FormPreview = (props) => {
-    const { setIsFormSubmited, handleClose: hidePreview } = props;
+    const { setIsFormSubmited, handleClose } = props;
     const { formValues } = useSelector(state => state.formDataReducers);
     const [dataTopreview, setDataToPreview] = useState([]);
     const [loadingPreview, setLoadingpreview] = useState(true);
@@ -19,7 +19,7 @@ const FormPreview = (props) => {
 
         // hide preview after posting data to the server
         setIsFormSubmited(true); //will trigger to clear form
-        hidePreview();
+        handleClose();
     }
 
     //structure form values
@@ -42,7 +42,7 @@ const FormPreview = (props) => {
             showsHorizontalScrollIndicator={false}
         >
             <View style={styles.goBackSection}>
-                <TouchableOpacity onPress={hidePreview}>
+                <TouchableOpacity onPress={handleClose}>
                     <Image source={assets.CloseIcon} alt="Close btn" width={25} height={25} />
                 </TouchableOpacity>
             </View>
@@ -87,7 +87,7 @@ const FormPreview = (props) => {
                 <AppButton
                     fullWidth={false}
                     title='Back'
-                    handleOnPress={hidePreview}
+                    handleOnPress={handleClose}
                 />
             </View>
         </ScrollView>
