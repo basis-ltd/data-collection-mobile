@@ -47,7 +47,7 @@ const FormDisplay = (props) => {
 
                                     return (
                                         <SingleField key={field.id} formSubmitRef={formSubmitRef} isFormSubmited={isFormSubmited}>
-                                            <FieldtypesWithTypes field={field} inputIndex={index} />
+                                            <FieldtypesWithTypes field={{ ...field, sectionName: section.name }} inputIndex={index} />
                                         </SingleField>
                                     )
                                 })
@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
         padding: 0,
         gap: 10,
         width: "100%",
+        position: 'relative'
     },
     sectionTitle: {
         fontFamily: fonts.MONTSERRAT_SEMI_BOLD,

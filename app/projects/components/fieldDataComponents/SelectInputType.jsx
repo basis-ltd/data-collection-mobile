@@ -30,6 +30,7 @@ const SelectInputType = (props) => {
             field_id: field.id,
             value: values.value,
             label: field.label,
+            sectionName: field.sectionName,
         }
         dispatch(setFormValues([...previousValues, fieldValues]))
     };

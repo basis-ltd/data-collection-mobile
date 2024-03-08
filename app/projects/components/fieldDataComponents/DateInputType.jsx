@@ -25,6 +25,7 @@ const DateInputType = ({ field, inputIndex }) => {
             field_id: field.id,
             value: values.value.toISOString(),
             label: field.label,
+            sectionName: field.sectionName,
         }
         dispatch(setFormValues([...previousValues, fieldValues]))
     };
