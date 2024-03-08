@@ -23,7 +23,7 @@ const DateInputType = ({ field, inputIndex }) => {
         const previousValues = formValues?.filter(item => item.field_id !== field.id);
         const fieldValues = {
             field_id: field.id,
-            value: values.value,
+            value: values.value.toISOString(),
             label: field.label,
         }
         dispatch(setFormValues([...previousValues, fieldValues]))

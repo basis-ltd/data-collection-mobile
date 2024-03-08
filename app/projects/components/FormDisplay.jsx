@@ -4,7 +4,7 @@ import { fonts } from "../../../utils/fonts";
 import SingleField from "./fieldDataComponents/SingleField";
 import AppButton from '../../../components/AppButton';
 import { dummyData } from "./dummyData";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import FieldtypesWithTypes from "./fieldDataComponents/AllFieldTypes";
 import { useDispatch, useSelector } from "react-redux";
 import { setShowPreview } from "./fieldDataComponents/formDataSlice";
@@ -41,7 +41,9 @@ const FormDisplay = (props) => {
                             {section.fields && section.fields?.length > 0 &&
                                 [...section.fields, ...dummyData]?.map((field, index) => {
                                     //count fields that are mandatory to be filled
-                                    setAllFields(prevField => [...prevField, field]);
+                                    useEffect(() => {
+                                        setAllFields(prevField => [...prevField, field])
+                                    }, [field]);
 
                                     return (
                                         <SingleField key={field.id} formSubmitRef={formSubmitRef} isFormSubmited={isFormSubmited}>

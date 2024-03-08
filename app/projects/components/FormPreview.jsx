@@ -29,7 +29,10 @@ const FormPreview = (props) => {
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
         >
-
+            <View style={styles.dataPreview}>
+                <Text style={styles.titlePreview}>Entries Preview</Text>
+                <Text style={styles.details}>Please do review as possible as you can before you submit your entries !!</Text>
+            </View>
             <AppButton
                 fullWidth={false}
                 title='Submit'
@@ -41,11 +44,13 @@ const FormPreview = (props) => {
 
 const styles = StyleSheet.create({
     formDataPreview: {
-        position: 'fixed',
+        position: 'absolute',
         width: "100%",
         padding: 20,
         backgroundColor: colors.LIGHT,
         gap: 10,
+        zIndex: '100',
+        fontFamily: fonts.MONTSERRAT_MEDIUM,
     },
 
 });
