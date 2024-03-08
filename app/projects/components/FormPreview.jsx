@@ -8,18 +8,31 @@ import { assets } from "../../../utils/assets";
 import { useEffect, useState } from "react";
 import { groupArrayByKey } from "../../../helpers/groupArrayByKey";
 import AppLoadingSpin from "../../../components/AppLoadingSpin";
+import usePostDataFormData from "../../../hooks/userPostFormData";
+import { backendAPI } from '../../../api/backendApi'
+import AppError from "../../../components/AppError";
+import LoadingLottie from "../../../components/LoadingLottie";
 
 const FormPreview = (props) => {
     const { setIsFormSubmited, handleClose } = props;
-    const { formValues } = useSelector(state => state.formDataReducers);
+    const { formValues, formId } = useSelector(state => state.formDataReducers);
     const [dataTopreview, setDataToPreview] = useState([]);
     const [loadingPreview, setLoadingpreview] = useState(true);
 
-    const handlePostData = () => {
+    const { data, error, loading, handler } = usePostDataFormData()
 
-        // hide preview after posting data to the server
-        setIsFormSubmited(true); //will trigger to clear form
-        handleClose();
+    const handlePostData = () => {
+        //sctructure needed data
+        const formData = new FormData();
+        formData.append('form_id', formId);
+
+        formValues.forEach(eachValue => {
+            formData.append('values', JSON.stringify({ value: eachValue.value, field_id: eachValue.field_id }));
+        });
+
+        handler(backendAPI.addFieldsData, dataNeeded)
+
+
     }
 
     //structure form values
@@ -33,6 +46,13 @@ const FormPreview = (props) => {
         return () => clearTimeout(timer);
     }, []);
 
+    useEffect(() => {
+        //means we have got the result, now we can clean the form, and close Modal
+        if (data && !loading && !error) {
+            setIsFormSubmited(true); //will trigger to clear form
+            handleClose();
+        }
+    }, [data, loading, error])
 
 
     return (
@@ -46,6 +66,10 @@ const FormPreview = (props) => {
                     <Image source={assets.CloseIcon} alt="Close btn" width={25} height={25} />
                 </TouchableOpacity>
             </View>
+
+            {error && !loading && <AppError message={error.message} />}
+            {loading && <LoadingLottie loading={loading} />}
+
             <View style={styles.dataPreview}>
                 <Text style={styles.titlePreview}>Entries Preview</Text>
                 <Text style={styles.details}>Please do review as possible as you can before you submit your entries !!</Text>

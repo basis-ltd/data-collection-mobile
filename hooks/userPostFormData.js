@@ -14,6 +14,7 @@ const usePostDataFormData = () => {
         const token = await AsyncStorage.getItem("accessToken");
         const axiosConfig = token ? {
             headers: {
+                'Content-Type': 'multipart/form-data',
                 Authorization: `Bearer ${token}`,
             },
         } : {};

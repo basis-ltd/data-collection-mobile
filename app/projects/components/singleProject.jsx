@@ -11,6 +11,7 @@ import AppError from "../../../components/AppError";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { setProjectId, setProjectLists } from "../projectSlice";
 import FormDisplay from "./FormDisplay";
+import { setFormId } from "./fieldDataComponents/formDataSlice";
 
 
 const SingleProject = () => {
@@ -23,6 +24,7 @@ const SingleProject = () => {
     useEffect(() => {
         if (!loading && data) {
             fetchForm(backendAPI.singleFrom(data.data.form[0]?.id));
+            dispatch(setFormId(data.data.form[0]?.id));
         }
     }, [data, loading]);
 

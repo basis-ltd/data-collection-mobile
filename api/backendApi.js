@@ -19,4 +19,6 @@ export const backendAPI = {
     singleFrom: (formId) => `${BaseUri}/api/v1/forms/${formId}`,
     // form Fields
     // listFormfields: (form_id, take, skip) => `${BaseUri}/api/v1/fields/?form_id=${form_id}&take=${take}&skip=${skip}` // This is not matching the needed payload on the Mobile || I chosed to use $$$$$$$ this.viewForm $$
+    //Fields Data
+    addFieldsData: `${BaseUri}/api/v1/field-data`,
 };
