@@ -25,14 +25,41 @@ const FormPreview = (props) => {
         //sctructure needed data
         const formData = new FormData();
         formData.append('form_id', formId);
+        const fileValues = formValues.filter(fieldData => Array.isArray(fieldData.value));
+        const otherValues = formValues.filter(fieldData => !Array.isArray(fieldData.value));
 
-        formValues.forEach(eachValue => {
-            formData.append('values', JSON.stringify({ value: eachValue.value, field_id: eachValue.field_id }));
+        //add data to from data
+        otherValues?.forEach(otherValue => {
+            formData.append('values', JSON.stringify({ value: otherValue.value, field_id: otherValue.field_id }));
         });
 
-        handler(backendAPI.addFieldsData, dataNeeded)
 
+        fileValues?.forEach(fileValue => {
+            // formData.append("field_id", fileValue.field_id);
+            fileValue.value.forEach((file, index) => {
+                formData.append(`file-${fileValue.field_id}-${index}`, {
+                    uri: file.uri,
+                    type: file.mimeType,
+                    name: file.name,
+                });
+            });
+        });
 
+        fileValues?.forEach((fileValue, fieldValueIndex) => {
+            const fieldIdKey = `field_${fieldValueIndex}_id`;
+            formData.append(fieldIdKey, fileValue.field_id);
+
+            fileValue.value.forEach((file, fileIndex) => {
+                const fileKey = `field_${fieldValueIndex}_file_${fileIndex}`;
+                formData.append(fileKey, {
+                    uri: file.uri,
+                    type: file.mimeType,
+                    name: file.name,
+                });
+            });
+        });
+
+        handler(backendAPI.addFieldsData, formData)
     }
 
     //structure form values
@@ -49,6 +76,7 @@ const FormPreview = (props) => {
     useEffect(() => {
         //means we have got the result, now we can clean the form, and close Modal
         if (data && !loading && !error) {
+            console.log(data, 'tests data')
             setIsFormSubmited(true); //will trigger to clear form
             handleClose();
         }
@@ -88,7 +116,7 @@ const FormPreview = (props) => {
                                                     <Text style={styles.fieldLabel}>{fieldData?.label || 'N/A'}</Text>
                                                     <Text style={styles.value}>
                                                         {typeof fieldData.value === 'string' ? fieldData.value :
-                                                            `${fieldData.value.length} Attached file${fieldData.value.length > 1 && "s"}`
+                                                            `${fieldData.value.length} Attached file${fieldData.value.length > 1 ? "s" : ''}`
                                                         }
                                                     </Text>
                                                 </View>

@@ -1,6 +1,6 @@
 import { BASE_URL, BASE_URL_IP } from "@env";
 
-const BaseUri = "http://10.10.0.38:8000";
+const BaseUri = "http://10.10.0.73:8000";
 // const BaseUri = "https://rsa-data-hub.onrender.com"
 export const backendAPI = {
     // authentication
