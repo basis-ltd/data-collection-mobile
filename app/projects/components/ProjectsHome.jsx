@@ -34,12 +34,13 @@ const ProjectsHome = () => {
     // handle filter projects
     useEffect(() => {
         if (selectedValue === 'active') {
-            setProjectList(projectList.filter(project => project.isActive))
+            setProjectList(data?.data?.rows?.filter(project => project.isActive))
         }
         else if (selectedValue === 'inactive') {
-            setProjectList(projectList.filter(project => !project.status))
+            setProjectList(data?.data?.rows?.filter(project => !project.isActive))
         }
     }, [selectedValue]);
+
 
     return (
         <View style={styles.projectsHome}>
@@ -66,10 +67,12 @@ const ProjectsHome = () => {
                 <View style={styles.allProjects}>
                     {loading && <AppLoadingSpin />}
                     {error && !loading && <Text style={styles.error}>{error?.message || error[0]}</Text>}
-                    {!error && !loading && data && data?.data &&
+                    {!error && !loading && data && data?.data && projectList.length > 0 &&
                         projectList?.map((project, index) => {
                             return <ProjectCard key={index} project={project} />
-                        })}
+                        })
+                    }
+                    {!error && !loading && data && data?.data && projectList.length === 0 && <Text style={styles.noProjects}>Empty Projects List</Text>}
                 </View>
             </ScrollView>
         </View>
@@ -89,6 +92,13 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         gap: 19,
         height: "100%",
+    },
+    noProjects: {
+        fontFamily: fonts.MONTSERRAT_MEDIUM,
+        fontSize: 14,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%'
     },
     title: {
         fontFamily: fonts.MONTSERRAT_SEMI_BOLD,

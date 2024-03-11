@@ -7,14 +7,26 @@ import { returnKeyBoardtype } from "../../../../utils/returnKeyBoardType"
 import AppTextarea from "../../../../components/AppTextarea";
 import { useContext, useEffect } from "react";
 import { FormikSubmitContext } from "./SingleField";
+import { setFormValues } from "./formDataSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 
 const TextInputType = ({ field, inputIndex }) => {
 
     const { formSubmitRef, isFormSubmited } = useContext(FormikSubmitContext);
+    const { formValues } = useSelector(state => state.formDataReducers);
+    const dispatch = useDispatch()
 
     const handleSubmitForm = (values) => {
-        console.log(values, 'test values')
+        //first remove the value with these fields
+        const previousValues = formValues?.filter(item => item.field_id !== field.id);
+        const fieldValues = {
+            field_id: field.id,
+            value: values.value,
+            label: field.label,
+            sectionName: field.sectionName,
+        }
+        dispatch(setFormValues([...previousValues, fieldValues]))
     };
 
     const validationSchema = inputValidationSchema(field);

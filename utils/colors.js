@@ -9,6 +9,7 @@ const DANGER = '#FFE9E9';
 const ERROR = '#AF0000';
 const SUCCESS = '#016019';
 const BLUE = '#009DD7';
+const LIGHTEST_WHITE = '#E8F8FF';
 const GRAY = '#5E5E5F';
 const GRAY_LIGHT = '#E4E4E5';
 const GRAY_LIGHTEST = '#E7E7E7';
@@ -37,5 +38,6 @@ export const colors = {
   TRANSPARENT,
   LIGHT_Opaque,
   GRAY_LIGHTEST,
-  ERROR_ACCENT
+  ERROR_ACCENT,
+  LIGHTEST_WHITE
 };

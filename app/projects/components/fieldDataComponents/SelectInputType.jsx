@@ -7,20 +7,33 @@ import { Picker } from "@react-native-picker/picker";
 import * as Yup from "yup";
 import { useContext, useEffect } from "react";
 import { FormikSubmitContext } from "./SingleField";
+import { useDispatch, useSelector } from "react-redux";
+import { setFormValues } from "./formDataSlice";
 
 
 const SelectInputType = (props) => {
     const { field, inputIndex } = props;
     const { formSubmitRef, isFormSubmited } = useContext(FormikSubmitContext);
+    const { formValues } = useSelector(state => state.formDataReducers);
+    const dispatch = useDispatch()
 
     const validationSchema = Yup.object({
         value: field.is_required ? Yup.string()
             .required("You must select one") : Yup.string(),
     });
 
+
     const handleSubmitForm = (values) => {
-        console.log(values, 'selected values on select')
-    }
+        //first remove the value with these fields
+        const previousValues = formValues?.filter(item => item.field_id !== field.id);
+        const fieldValues = {
+            field_id: field.id,
+            value: values.value,
+            label: field.label,
+            sectionName: field.sectionName,
+        }
+        dispatch(setFormValues([...previousValues, fieldValues]))
+    };
 
     return (
         <Formik
