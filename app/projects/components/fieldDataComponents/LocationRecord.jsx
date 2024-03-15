@@ -44,6 +44,7 @@ const LocationRecord = ({ field }) => {
             field_id: field.id,
             value: JSON.stringify(location),
             label: field.label,
+            is_required: field.is_required,
             sectionName: field.sectionName,
         }
         dispatch(setFormValues([...previousValues, fieldValues]))
@@ -60,7 +61,6 @@ const LocationRecord = ({ field }) => {
             {locationErrors && <Text style={styles.error}>{locationErrors}</Text>}
             <Pressable
                 ref={(el) => (formSubmitRef.current[field.id] = { handleSubmit: handleSubmitForm, })}
-                // onPress={handleSubmitForm}
                 style={styles.submitBtnInvisible}>
                 <Text>Submit</Text>
             </Pressable>

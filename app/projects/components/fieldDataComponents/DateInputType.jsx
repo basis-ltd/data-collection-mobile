@@ -23,6 +23,7 @@ const DateInputType = ({ field }) => {
         const previousValues = formValues?.filter(item => item.field_id !== field.id);
         const fieldValues = {
             field_id: field.id,
+            is_required: field.is_required,
             value: values.value.toISOString(),
             label: field.label,
             sectionName: field.sectionName,
@@ -83,7 +84,6 @@ const DateInputType = ({ field }) => {
                         {errors.value && <Text style={styles.error}> {errors.value}</Text>}
                         <Pressable
                             ref={(el) => (formSubmitRef.current[field.id] = { handleSubmit })}
-                            // onPress={handleSubmit}
                             style={styles.submitBtnInvisible}>
                             <Text>Submit</Text>
                         </Pressable>

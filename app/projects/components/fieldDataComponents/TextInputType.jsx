@@ -24,6 +24,7 @@ const TextInputType = ({ field }) => {
             field_id: field.id,
             value: values.value,
             label: field.label,
+            is_required: field.is_required,
             sectionName: field.sectionName,
         }
         dispatch(setFormValues([...previousValues, fieldValues]))
@@ -69,7 +70,6 @@ const TextInputType = ({ field }) => {
                         }
                         <Pressable
                             ref={(el) => (formSubmitRef.current[field.id] = { handleSubmit, })}
-                            // onPress={handleSubmit}
                             style={styles.submitBtnInvisible}>
                             <Text>Submit</Text>
                         </Pressable>

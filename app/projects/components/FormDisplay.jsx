@@ -21,15 +21,15 @@ const FormDisplay = (props) => {
     const handlePreviewForm = () => {
         Object.keys(formSubmitRef.current).forEach(key => {
             const pressableComponent = formSubmitRef.current[key];
-            console.log(pressableComponent, 'pressableComponent')
             pressableComponent.handleSubmit();
-
-            // pressableComponent.props.onPress?.();
         });
-        //if all fields are filled, then we can launch Preview
-        // if (formValues.length === allFields.length) {
-        setShowPreview(true)
-        // }
+        //get all required form values;
+        const requiredFormValues = formValues.filter(formVal => formVal.is_required);
+        //if all  required fields are filled, then we can launch Preview
+
+        if (requiredFormValues.length >= allFields.length) {
+            setShowPreview(true)
+        }
     }
 
     //close Modal
@@ -37,7 +37,6 @@ const FormDisplay = (props) => {
         setShowPreview(false)
     }
 
-    console.log(showPreview, 'showPreview')
 
     const handleCountFields = (field) => {
         const previousFields = allFields?.filter(item => item.id !== field.id);

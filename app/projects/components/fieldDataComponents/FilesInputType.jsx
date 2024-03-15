@@ -47,6 +47,7 @@ const FilesInputType = ({ field }) => {
         const fieldValues = {
             field_id: field.id,
             value: values.value,
+            is_required: field.is_required,
             label: field.label,
             sectionName: field.sectionName,
         }
@@ -110,7 +111,6 @@ const FilesInputType = ({ field }) => {
                         }
                         <Pressable
                             ref={(el) => (formSubmitRef.current[field.id] = { handleSubmit })}
-                            // onPress={handleSubmit}
                             style={styles.submitBtnInvisible}
                         >
                             <Text>Submit</Text>
