@@ -4,6 +4,7 @@ import RadioInputType from "../fieldDataComponents/RadioInputType";
 import SelectInputType from "../fieldDataComponents/SelectInputType";
 import DateInputType from "../fieldDataComponents/DateInputType";
 import FilesInputType from "../fieldDataComponents/FilesInputType";
+import LocationRecord from "./LocationRecord";
 
 const FieldtypesWithTypes = ({ field, inputIndex }) => {
     const typesComponent = [
@@ -46,6 +47,10 @@ const FieldtypesWithTypes = ({ field, inputIndex }) => {
         {
             type: inputTypes.date,
             FieldInput: <DateInputType field={field} inputIndex={inputIndex} />
+        },
+        {
+            type: inputTypes.location,
+            FieldInput: <LocationRecord field={field} inputIndex={inputIndex} />
         },
     ]
     const FieldType = typesComponent.filter(typeItem => typeItem.type === field.field_type)

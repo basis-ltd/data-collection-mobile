@@ -9,4 +9,5 @@ export const inputTypes = {
     file: 'file',
     select: 'select',
     radio: 'radio',
+    location: 'location',
 }
