@@ -21,8 +21,9 @@ const verifyOTP = () => {
   const [activeOptInput, setActiveOptInput] = useState(0);
   const [otpBoxes, setOtpBoxes] = useState([...optArray]);
   const phoneNumber = useSelector(state => state.authReducer.phone);
+  const dispatch = useDispatch();
   const { data, error, loading, handler } = usePostData()
-  const dispatch = useDispatch()
+  const { data: resendData, error: resendError, loading: resendLoading, handler: resendHandler } = usePostData()
 
   // back to login if there is not number
   useEffect(() => {
@@ -87,16 +88,24 @@ const verifyOTP = () => {
       router.push(frontendAPI.appContainerNavigator)
     }
 
-  }, [data, loading])
+  }, [data, loading]);
+
+  // resent otp 
+
+  const handleLoginSubmit = () => {
+    resendHandler(backendAPI.login, phoneNumber);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-      {loading && <LoadingLottie />}
+      {loading && <LoadingLottie loading={loading} />}
+      {resendLoading && <LoadingLottie loading={resendLoading} />}
       <View style={styles.titleBox}>
         <Text style={styles.title}>Verify Code</Text>
         <Text style={styles.labelVerify}>Please Enter OTP we’ve sent you on {phoneNumber}</Text>
       </View>
       {error && !loading && <AppError message={error} />}
+      {resendError && !resendLoading && !resendData && <AppError message={resendError} />}
       <View style={styles.formikContainer}>
         <View style={styles.optBox} className="p-0 flex m-0 w-full">
           {optArray.map((_, index) => (
@@ -114,7 +123,7 @@ const verifyOTP = () => {
           style={styles.resendCodeBox}
           className="p-0 m-0 w-full flex"
         >
-          <Pressable className="p-0 m-0 cursor-pointer">
+          <Pressable className="p-0 m-0 cursor-pointer" onPress={handleLoginSubmit}>
             <Text style={styles.resendCodeText}>Resend Code</Text>
           </Pressable>
         </View>

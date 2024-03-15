@@ -11,7 +11,7 @@ import AppPopUp from "../../../components/AppPopUp";
 
 const FormDisplay = (props) => {
     const { dataForm, handleNextPage, handleBackPage } = props;
-    const formSubmitRef = useRef([]);
+    const formSubmitRef = useRef({});
     const [isFormSubmited, setIsFormSubmited] = useState(false);
     const [showPreview, setShowPreview] = useState(false);
     const [allFields, setAllFields] = useState([]);
@@ -19,9 +19,15 @@ const FormDisplay = (props) => {
 
     // manage form actions functions
     const handlePreviewForm = () => {
-        formSubmitRef.current?.forEach(element => element ? element.onPress() : null);
-        //if all fields are filled, then we can launch Preview
-        if (formValues.length === allFields.length) {
+        Object.keys(formSubmitRef.current).forEach(key => {
+            const pressableComponent = formSubmitRef.current[key];
+            pressableComponent.handleSubmit();
+        });
+        //get all required form values;
+        const requiredFormValues = formValues.filter(formVal => formVal.is_required);
+        //if all  required fields are filled, then we can launch Preview
+
+        if (requiredFormValues.length >= allFields.length) {
             setShowPreview(true)
         }
     }
@@ -31,6 +37,12 @@ const FormDisplay = (props) => {
         setShowPreview(false)
     }
 
+
+    const handleCountFields = (field) => {
+        const previousFields = allFields?.filter(item => item.id !== field.id);
+        setAllFields([...previousFields, field])
+    }
+
     return (
         <ScrollView
             contentContainerStyle={styles.formData}
@@ -38,20 +50,22 @@ const FormDisplay = (props) => {
             showsHorizontalScrollIndicator={false}
         >
             <View style={styles.formDataWrapper}>
-                {dataForm.data.sections?.map(section => {
+                {dataForm.data?.map(section => {
                     return (
                         <View key={section.id} style={styles.singleSection}>
                             <Text style={styles.sectionTitle}>{section.name} Section</Text>
                             {section.fields && section.fields?.length > 0 &&
-                                section.fields?.map((field, index) => {
+                                section.fields?.map((field) => {
                                     //count fields that are mandatory to be filled
                                     useEffect(() => {
-                                        setAllFields(prevField => [...prevField, field])
+                                        if (field.is_required) {
+                                            handleCountFields(field)
+                                        }
                                     }, [field]);
 
                                     return (
                                         <SingleField key={field.id} formSubmitRef={formSubmitRef} isFormSubmited={isFormSubmited}>
-                                            <FieldtypesWithTypes field={{ ...field, sectionName: section.name }} inputIndex={index} />
+                                            <FieldtypesWithTypes key={field.id} field={{ ...field, sectionName: section.name }} />
                                         </SingleField>
                                     )
                                 })

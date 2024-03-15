@@ -11,7 +11,7 @@ import { setFormValues } from "./formDataSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 
-const TextInputType = ({ field, inputIndex }) => {
+const TextInputType = ({ field }) => {
 
     const { formSubmitRef, isFormSubmited } = useContext(FormikSubmitContext);
     const { formValues } = useSelector(state => state.formDataReducers);
@@ -24,6 +24,7 @@ const TextInputType = ({ field, inputIndex }) => {
             field_id: field.id,
             value: values.value,
             label: field.label,
+            is_required: field.is_required,
             sectionName: field.sectionName,
         }
         dispatch(setFormValues([...previousValues, fieldValues]))
@@ -68,8 +69,7 @@ const TextInputType = ({ field, inputIndex }) => {
                             />
                         }
                         <Pressable
-                            ref={(el) => (formSubmitRef.current[inputIndex] = { onPress: () => { handleSubmit() } })}
-                            onPress={handleSubmit}
+                            ref={(el) => (formSubmitRef.current[field.id] = { handleSubmit, })}
                             style={styles.submitBtnInvisible}>
                             <Text>Submit</Text>
                         </Pressable>

@@ -27,6 +27,7 @@ const RadioInputType = ({ field, inputIndex }) => {
             field_id: field.id,
             value: values.value,
             label: field.label,
+            is_required: field.is_required,
             sectionName: field.sectionName,
         }
         dispatch(setFormValues([...previousValues, fieldValues]))
@@ -74,8 +75,7 @@ const RadioInputType = ({ field, inputIndex }) => {
                             ))}
                         </View>
                         <Pressable
-                            ref={(el) => (formSubmitRef.current[inputIndex] = { onPress: () => { handleSubmit() } })}
-                            onPress={handleSubmit}
+                            ref={(el) => (formSubmitRef.current[field.id] = { handleSubmit, })}
                             style={styles.submitBtnInvisible}>
                             <Text>Submit</Text>
                         </Pressable>

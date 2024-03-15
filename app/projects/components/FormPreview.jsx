@@ -17,7 +17,6 @@ const FormPreview = (props) => {
     const { setIsFormSubmited, handleClose } = props;
     const { formValues, formId } = useSelector(state => state.formDataReducers);
     const [dataTopreview, setDataToPreview] = useState([]);
-    const [loadingPreview, setLoadingpreview] = useState(true);
 
     const { data, error, loading, handler } = usePostDataFormData()
 
@@ -64,19 +63,14 @@ const FormPreview = (props) => {
 
     //structure form values
     useEffect(() => {
-        const timer = setTimeout(() => {
-            const result = groupArrayByKey(formValues, 'sectionName');
-            setDataToPreview(result);
-            setLoadingpreview(false);
-        }, 2000);
+        const result = groupArrayByKey(formValues, 'sectionName');
+        setDataToPreview(result);
 
-        return () => clearTimeout(timer);
     }, []);
 
     useEffect(() => {
         //means we have got the result, now we can clean the form, and close Modal
         if (data && !loading && !error) {
-            console.log(data, 'tests data')
             setIsFormSubmited(true); //will trigger to clear form
             handleClose();
         }
@@ -95,15 +89,14 @@ const FormPreview = (props) => {
                 </TouchableOpacity>
             </View>
 
-            {error && !loading && <AppError message={error.message} />}
+            {error && !loading && <AppError message={error.message || JSON.stringify(error)} />}
             {loading && <LoadingLottie loading={loading} />}
 
             <View style={styles.dataPreview}>
                 <Text style={styles.titlePreview}>Entries Preview</Text>
                 <Text style={styles.details}>Please do review as possible as you can before you submit your entries !!</Text>
                 <View style={styles.dataWrapper}>
-                    {loadingPreview && <AppLoadingSpin />}
-                    {!loadingPreview && dataTopreview &&
+                    {dataTopreview &&
                         dataTopreview.map((result, index) => {
 
                             return (

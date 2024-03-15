@@ -24,11 +24,13 @@ const SelectInputType = (props) => {
 
 
     const handleSubmitForm = (values) => {
+        console.log(values, 'valuesss')
         //first remove the value with these fields
         const previousValues = formValues?.filter(item => item.field_id !== field.id);
         const fieldValues = {
             field_id: field.id,
             value: values.value,
+            is_required: field.is_required,
             label: field.label,
             sectionName: field.sectionName,
         }
@@ -64,8 +66,7 @@ const SelectInputType = (props) => {
                             </Picker>
                         </View>
                         <Pressable
-                            ref={(el) => (formSubmitRef.current[inputIndex] = { onPress: () => { handleSubmit() } })}
-                            onPress={handleSubmit}
+                            ref={(el) => (formSubmitRef.current[field.id] = { handleSubmit, })}
                             style={styles.submitBtnInvisible}>
                             <Text>Submit</Text>
                         </Pressable>

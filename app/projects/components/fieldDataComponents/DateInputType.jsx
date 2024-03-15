@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setFormValues } from './formDataSlice';
 
 
-const DateInputType = ({ field, inputIndex }) => {
+const DateInputType = ({ field }) => {
     const { formSubmitRef, isFormSubmited } = useContext(FormikSubmitContext);
     const { formValues } = useSelector(state => state.formDataReducers);
     const dispatch = useDispatch()
@@ -23,6 +23,7 @@ const DateInputType = ({ field, inputIndex }) => {
         const previousValues = formValues?.filter(item => item.field_id !== field.id);
         const fieldValues = {
             field_id: field.id,
+            is_required: field.is_required,
             value: values.value.toISOString(),
             label: field.label,
             sectionName: field.sectionName,
@@ -82,8 +83,7 @@ const DateInputType = ({ field, inputIndex }) => {
                         </View>
                         {errors.value && <Text style={styles.error}> {errors.value}</Text>}
                         <Pressable
-                            ref={(el) => (formSubmitRef.current[inputIndex] = { onPress: () => { handleSubmit() } })}
-                            onPress={handleSubmit}
+                            ref={(el) => (formSubmitRef.current[field.id] = { handleSubmit })}
                             style={styles.submitBtnInvisible}>
                             <Text>Submit</Text>
                         </Pressable>

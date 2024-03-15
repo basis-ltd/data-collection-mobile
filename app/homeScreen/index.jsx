@@ -33,6 +33,7 @@ const HomeScreen = () => {
   useEffect(() => {
     getUserinfo();
     handler(backendAPI.allProjectsCount);
+    handleRecentProjects(backendAPI.allProjectsList(2, 0))
   }, []);
 
   useEffect(() => {
@@ -40,8 +41,6 @@ const HomeScreen = () => {
       handlerDayEntries(backendAPI.entries(userProfile.id, "day"));
       handlerMonthEntries(backendAPI.entries(userProfile.id, "month"));
       handlerWeekEntries(backendAPI.entries(userProfile.id, "week"));
-      handleRecentProjects(backendAPI.allProjectsList(2, 0))
-
     }
   }, [userProfile]);
 
