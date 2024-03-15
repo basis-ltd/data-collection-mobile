@@ -59,7 +59,7 @@ const LocationRecord = ({ field }) => {
             {!location && <AppButton title="Record Location" handleOnPress={requestPermission} fullWidth={true} />}
             {locationErrors && <Text style={styles.error}>{locationErrors}</Text>}
             <Pressable
-                ref={(el) => (formSubmitRef.current[field.id] = { onPress: () => { handleSubmitForm() } })}
+                ref={(el) => (formSubmitRef.current[field.id] = { handleSubmit: handleSubmitForm, })}
                 // onPress={handleSubmitForm}
                 style={styles.submitBtnInvisible}>
                 <Text>Submit</Text>

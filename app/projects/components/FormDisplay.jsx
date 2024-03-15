@@ -11,7 +11,7 @@ import AppPopUp from "../../../components/AppPopUp";
 
 const FormDisplay = (props) => {
     const { dataForm, handleNextPage, handleBackPage } = props;
-    const formSubmitRef = useRef([]);
+    const formSubmitRef = useRef({});
     const [isFormSubmited, setIsFormSubmited] = useState(false);
     const [showPreview, setShowPreview] = useState(false);
     const [allFields, setAllFields] = useState([]);
@@ -19,7 +19,13 @@ const FormDisplay = (props) => {
 
     // manage form actions functions
     const handlePreviewForm = () => {
-        formSubmitRef.current?.forEach(element => element ? element.onPress() : null);
+        Object.keys(formSubmitRef.current).forEach(key => {
+            const pressableComponent = formSubmitRef.current[key];
+            console.log(pressableComponent, 'pressableComponent')
+            pressableComponent.handleSubmit();
+
+            // pressableComponent.props.onPress?.();
+        });
         //if all fields are filled, then we can launch Preview
         // if (formValues.length === allFields.length) {
         setShowPreview(true)

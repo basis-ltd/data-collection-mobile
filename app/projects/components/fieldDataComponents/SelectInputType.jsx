@@ -65,7 +65,7 @@ const SelectInputType = (props) => {
                             </Picker>
                         </View>
                         <Pressable
-                            ref={(el) => (formSubmitRef.current[field.id] = { onPress: () => { handleSubmit() } })}
+                            ref={(el) => (formSubmitRef.current[field.id] = { handleSubmit, })}
                             // onPress={handleSubmit}
                             style={styles.submitBtnInvisible}>
                             <Text>Submit</Text>
