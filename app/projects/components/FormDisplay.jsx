@@ -31,6 +31,13 @@ const FormDisplay = (props) => {
         setShowPreview(false)
     }
 
+    console.log(allFields.length, formValues.length, 'showPreview')
+
+    const handleCountFields = (field) => {
+        const previousFields = allFields?.filter(item => item.id !== field.id);
+        setAllFields([...previousFields, field])
+    }
+
     return (
         <ScrollView
             contentContainerStyle={styles.formData}
@@ -38,7 +45,7 @@ const FormDisplay = (props) => {
             showsHorizontalScrollIndicator={false}
         >
             <View style={styles.formDataWrapper}>
-                {dataForm.data.sections?.map(section => {
+                {dataForm.data?.map(section => {
                     return (
                         <View key={section.id} style={styles.singleSection}>
                             <Text style={styles.sectionTitle}>{section.name} Section</Text>
@@ -46,7 +53,7 @@ const FormDisplay = (props) => {
                                 section.fields?.map((field, index) => {
                                     //count fields that are mandatory to be filled
                                     useEffect(() => {
-                                        setAllFields(prevField => [...prevField, field])
+                                        handleCountFields(field)
                                     }, [field]);
 
                                     return (

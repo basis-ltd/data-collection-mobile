@@ -1,11 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { Button, View, StyleSheet } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { View, StyleSheet, Text, Pressable } from 'react-native';
 import * as Location from 'expo-location';
 import { colors } from '../../../../utils/colors';
+import AppButton from '../../../../components/AppButton';
+import { fonts } from '../../../../utils/fonts';
+import { useDispatch, useSelector } from 'react-redux';
+import { FormikSubmitContext } from './SingleField';
+import { setFormValues } from './formDataSlice';
 
 const LocationRecord = ({ field, inputIndex }) => {
     const [location, setLocation] = useState(null);
-    const [locationErrors, setLocationErros] = useState(null);
+    const { formSubmitRef } = useContext(FormikSubmitContext);
+    const { formValues } = useSelector(state => state.formDataReducers);
+    const dispatch = useDispatch()
+    const [locationErrors, setLocationErros] = useState('');
 
 
     const askPermissionLocation = async () => {
@@ -15,33 +23,47 @@ const LocationRecord = ({ field, inputIndex }) => {
             return;
         }
 
-        let locations = await Location.getCurrentPositionAsync({});
-        setLocation(locations);
+        let { coords } = await Location.getCurrentPositionAsync({});
+        setLocation(coords);
 
     }
     useEffect(() => {
         askPermissionLocation();
     }, []);
 
-    const shareLocation = async () => {
-        let { coords } = await Location.getCurrentPositionAsync({});
-        setLocation(coords);
-    };
 
     const requestPermission = () => {
         askPermissionLocation();
     }
 
+    // submit form locations
+    const handleSubmitForm = () => {
+        //first remove the value with these fields
+        const previousValues = formValues?.filter(item => item.field_id !== field.id);
+        const fieldValues = {
+            field_id: field.id,
+            value: JSON.stringify(location),
+            label: field.label,
+            sectionName: field.sectionName,
+        }
+        dispatch(setFormValues([...previousValues, fieldValues]))
+    };
 
-    console.log(location, 'tests  location');
 
     return (
         <View style={styles.container}>
-            {location ? (
-                <Button title="Share My Location" onPress={shareLocation} />
-            ) : (
-                <Button title="Request Permission" onPress={requestPermission} />
-            )}
+            <Text style={styles.label}>{field.label}</Text>
+            {location &&
+                <Text style={styles.location}>{JSON.stringify(location)}</Text>
+            }
+            {!location && <AppButton title="Record Location" handleOnPress={requestPermission} fullWidth={true} />}
+            {locationErrors && <Text style={styles.error}>{locationErrors}</Text>}
+            <Pressable
+                ref={(el) => (formSubmitRef.current[inputIndex] = { onPress: () => { handleSubmitForm() } })}
+                onPress={handleSubmitForm}
+                style={styles.submitBtnInvisible}>
+                <Text>Submit</Text>
+            </Pressable>
         </View>
     );
 }
@@ -54,6 +76,32 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         gap: 11,
         backgroundColor: colors.LIGHT,
+    },
+    label: {
+        color: colors.DARK,
+        fontFamily: fonts.MONTSERRAT_MEDIUM,
+        fontSize: 14,
+        backgroundColor: "transparent",
+        width: "100%",
+    },
+    location: {
+        width: '100%',
+        color: colors.PRIMARY,
+        fontFamily: fonts.MONTSERRAT_MEDIUM,
+        fontSize: 14,
+    },
+    submitBtnInvisible: {
+        opacity: 0,
+        width: 0,
+        height: 0,
+    },
+    error: {
+        color: colors.ERROR,
+        fontFamily: fonts.MONTSERRAT_BOLD,
+        fontSize: 12,
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
+        marginTop: -1,
     },
 });
 

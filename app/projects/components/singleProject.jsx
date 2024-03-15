@@ -23,7 +23,7 @@ const SingleProject = () => {
 
     useEffect(() => {
         if (!loading && data) {
-            fetchForm(backendAPI.singleFrom(data.data.form[0]?.id));
+            fetchForm(backendAPI.allFormSections(data.data.form[0]?.id));
             dispatch(setFormId(data.data.form[0]?.id));
         }
     }, [data, loading]);
@@ -72,7 +72,8 @@ const SingleProject = () => {
                             dataForm={dataForm}
                             handleBackPage={handleBackPage}
                             handleNextPage={handleNextPage}
-                        />}
+                        />
+                    }
                 </View>
             }
         </View>
