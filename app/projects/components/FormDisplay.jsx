@@ -21,9 +21,9 @@ const FormDisplay = (props) => {
     const handlePreviewForm = () => {
         formSubmitRef.current?.forEach(element => element ? element.onPress() : null);
         //if all fields are filled, then we can launch Preview
-        if (formValues.length === allFields.length) {
-            setShowPreview(true)
-        }
+        // if (formValues.length === allFields.length) {
+        setShowPreview(true)
+        // }
     }
 
     //close Modal
@@ -31,7 +31,7 @@ const FormDisplay = (props) => {
         setShowPreview(false)
     }
 
-    console.log(allFields.length, formValues.length, 'showPreview')
+    console.log(showPreview, 'showPreview')
 
     const handleCountFields = (field) => {
         const previousFields = allFields?.filter(item => item.id !== field.id);
@@ -53,12 +53,14 @@ const FormDisplay = (props) => {
                                 section.fields?.map((field, index) => {
                                     //count fields that are mandatory to be filled
                                     useEffect(() => {
-                                        handleCountFields(field)
+                                        if (field.is_required) {
+                                            handleCountFields(field)
+                                        }
                                     }, [field]);
 
                                     return (
                                         <SingleField key={field.id} formSubmitRef={formSubmitRef} isFormSubmited={isFormSubmited}>
-                                            <FieldtypesWithTypes field={{ ...field, sectionName: section.name }} inputIndex={index} />
+                                            <FieldtypesWithTypes key={field.id} field={{ ...field, sectionName: section.name }} inputIndex={index} />
                                         </SingleField>
                                     )
                                 })
