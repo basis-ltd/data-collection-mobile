@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setFormValues } from "./formDataSlice";
 
 
-const FilesInputType = ({ field, inputIndex }) => {
+const FilesInputType = ({ field }) => {
     const { formSubmitRef, isFormSubmited } = useContext(FormikSubmitContext);
     const [uploadedFiles, setUploadedFiles] = useState([]);
     const { formValues } = useSelector(state => state.formDataReducers);
@@ -109,8 +109,8 @@ const FilesInputType = ({ field, inputIndex }) => {
                             </View>
                         }
                         <Pressable
-                            ref={(el) => (formSubmitRef.current[inputIndex] = { onPress: () => { handleSubmit() } })}
-                            onPress={handleSubmit}
+                            ref={(el) => (formSubmitRef.current[field.id] = { onPress: () => { handleSubmit() } })}
+                            // onPress={handleSubmit}
                             style={styles.submitBtnInvisible}
                         >
                             <Text>Submit</Text>

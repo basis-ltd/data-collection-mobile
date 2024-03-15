@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FormikSubmitContext } from './SingleField';
 import { setFormValues } from './formDataSlice';
 
-const LocationRecord = ({ field, inputIndex }) => {
+const LocationRecord = ({ field }) => {
     const [location, setLocation] = useState(null);
     const { formSubmitRef } = useContext(FormikSubmitContext);
     const { formValues } = useSelector(state => state.formDataReducers);
@@ -59,8 +59,8 @@ const LocationRecord = ({ field, inputIndex }) => {
             {!location && <AppButton title="Record Location" handleOnPress={requestPermission} fullWidth={true} />}
             {locationErrors && <Text style={styles.error}>{locationErrors}</Text>}
             <Pressable
-                ref={(el) => (formSubmitRef.current[inputIndex] = { onPress: () => { handleSubmitForm() } })}
-                onPress={handleSubmitForm}
+                ref={(el) => (formSubmitRef.current[field.id] = { onPress: () => { handleSubmitForm() } })}
+                // onPress={handleSubmitForm}
                 style={styles.submitBtnInvisible}>
                 <Text>Submit</Text>
             </Pressable>

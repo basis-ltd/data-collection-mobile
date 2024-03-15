@@ -6,51 +6,51 @@ import DateInputType from "../fieldDataComponents/DateInputType";
 import FilesInputType from "../fieldDataComponents/FilesInputType";
 import LocationRecord from "./LocationRecord";
 
-const FieldtypesWithTypes = ({ field, inputIndex }) => {
+const FieldtypesWithTypes = ({ field }) => {
     const typesComponent = [
         {
             type: inputTypes.tel,
-            FieldInput: <TextInputType field={field} inputIndex={inputIndex} />
+            FieldInput: <TextInputType field={field} />
         },
         {
             type: inputTypes.textarea,
-            FieldInput: <TextInputType field={field} inputIndex={inputIndex} />
+            FieldInput: <TextInputType field={field} />
         },
         {
             type: inputTypes.text,
-            FieldInput: <TextInputType field={field} inputIndex={inputIndex} />
+            FieldInput: <TextInputType field={field} />
         },
         {
             type: inputTypes.number,
-            FieldInput: <TextInputType field={field} inputIndex={inputIndex} />
+            FieldInput: <TextInputType field={field} />
         },
         {
             type: inputTypes.email,
-            FieldInput: <TextInputType field={field} inputIndex={inputIndex} />
+            FieldInput: <TextInputType field={field} />
         },
         {
             type: inputTypes.url,
-            FieldInput: <TextInputType field={field} inputIndex={inputIndex} />
+            FieldInput: <TextInputType field={field} />
         },
         {
             type: inputTypes.file,
-            FieldInput: <FilesInputType field={field} inputIndex={inputIndex} />
+            FieldInput: <FilesInputType field={field} />
         },
         {
             type: inputTypes.select,
-            FieldInput: <SelectInputType field={field} inputIndex={inputIndex} />
+            FieldInput: <SelectInputType field={field} />
         },
         {
             type: inputTypes.radio,
-            FieldInput: <RadioInputType field={field} inputIndex={inputIndex} />
+            FieldInput: <RadioInputType field={field} />
         },
         {
             type: inputTypes.date,
-            FieldInput: <DateInputType field={field} inputIndex={inputIndex} />
+            FieldInput: <DateInputType field={field} />
         },
         {
             type: inputTypes.location,
-            FieldInput: <LocationRecord field={field} inputIndex={inputIndex} />
+            FieldInput: <LocationRecord field={field} />
         },
     ]
     const FieldType = typesComponent.filter(typeItem => typeItem.type === field.field_type)

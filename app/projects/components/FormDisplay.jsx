@@ -50,7 +50,7 @@ const FormDisplay = (props) => {
                         <View key={section.id} style={styles.singleSection}>
                             <Text style={styles.sectionTitle}>{section.name} Section</Text>
                             {section.fields && section.fields?.length > 0 &&
-                                section.fields?.map((field, index) => {
+                                section.fields?.map((field) => {
                                     //count fields that are mandatory to be filled
                                     useEffect(() => {
                                         if (field.is_required) {
@@ -60,7 +60,7 @@ const FormDisplay = (props) => {
 
                                     return (
                                         <SingleField key={field.id} formSubmitRef={formSubmitRef} isFormSubmited={isFormSubmited}>
-                                            <FieldtypesWithTypes key={field.id} field={{ ...field, sectionName: section.name }} inputIndex={index} />
+                                            <FieldtypesWithTypes key={field.id} field={{ ...field, sectionName: section.name }} />
                                         </SingleField>
                                     )
                                 })
