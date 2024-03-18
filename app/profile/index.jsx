@@ -117,7 +117,7 @@ const Profile = () => {
             <Text style={styles.boxSubTitle}>{defaultUser?.phone || "N/A"}</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.box} onPress={() => recentProjects?.data?.rows[0] ? handleShowSingleProject(recentProjects?.data?.rows[0]?.id) : null}>
+        <TouchableOpacity style={styles.box} onPress={() => recentProjects?.data?.rows[0] ? handleShowSingleProject(recentProjects?.data[0]?.project_id) : null}>
           <Image source={assets.Docs} style={styles.icon} />
           <View style={styles.box1}>
             <Text style={styles.boxTitle}>Active Project</Text>

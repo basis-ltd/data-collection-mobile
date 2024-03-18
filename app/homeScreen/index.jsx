@@ -109,7 +109,7 @@ const HomeScreen = () => {
       </View>
       {recentProjectsLoading && <AppLoadingSpin />}
       {recentProjectsError && !recentProjectsLoading && <Text style={styles.error}>{recentProjectsError?.message || recentProjectsError[0]}</Text>}
-      {!recentProjectsLoading && recentProjects && recentProjects.data && <ProjectCard project={recentProjects?.data?.rows[0]} />}
+      {!recentProjectsLoading && recentProjects && recentProjects.data && <ProjectCard project={recentProjects?.data[0]?.project} />}
     </PageGuard>
   );
 };

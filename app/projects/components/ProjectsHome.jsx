@@ -21,7 +21,7 @@ const ProjectsHome = () => {
 
     useEffect(() => {
         if (data && !loading) {
-            setProjectList(data?.data?.rows || [])
+            setProjectList(data?.data || [])
         }
 
     }, [data, !loading])
@@ -34,10 +34,10 @@ const ProjectsHome = () => {
     // handle filter projects
     useEffect(() => {
         if (selectedValue === 'active') {
-            setProjectList(data?.data?.rows?.filter(project => project.isActive))
+            setProjectList(data?.data?.filter(project => project.project.isActive))
         }
         else if (selectedValue === 'inactive') {
-            setProjectList(data?.data?.rows?.filter(project => !project.isActive))
+            setProjectList(data?.data?.filter(project => !project.project.isActive))
         }
     }, [selectedValue]);
 
@@ -69,7 +69,7 @@ const ProjectsHome = () => {
                     {error && !loading && <Text style={styles.error}>{error?.message || error[0]}</Text>}
                     {!error && !loading && data && data?.data && projectList.length > 0 &&
                         projectList?.map((project, index) => {
-                            return <ProjectCard key={index} project={project} />
+                            return <ProjectCard key={index} project={project.project} />
                         })
                     }
                     {!error && !loading && data && data?.data && projectList.length === 0 && <Text style={styles.noProjects}>Empty Projects List</Text>}
