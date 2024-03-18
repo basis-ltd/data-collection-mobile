@@ -117,14 +117,14 @@ const Profile = () => {
             <Text style={styles.boxSubTitle}>{defaultUser?.phone || "N/A"}</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.box} onPress={() => recentProjects?.data?.rows[0] ? handleShowSingleProject(recentProjects?.data[0]?.project_id) : null}>
+        <TouchableOpacity style={styles.box} onPress={() => recentProjects?.data[0] ? handleShowSingleProject(recentProjects?.data[0]?.project_id) : null}>
           <Image source={assets.Docs} style={styles.icon} />
           <View style={styles.box1}>
             <Text style={styles.boxTitle}>Active Project</Text>
             {recentProjectsLoading && <AppLoadingSpin />}
             {recentProjectsError && !recentProjectsLoading && <Text style={styles.error}>{recentProjectsError?.message || recentProjectsError[0]}</Text>}
             {!recentProjectsError && !recentProjectsLoading && recentProjects && recentProjects?.data &&
-              <Text style={styles.boxSubTitle}>{recentProjects?.data?.rows[0]?.title || "N/A"}</Text>
+              <Text style={styles.boxSubTitle}>{recentProjects?.data[0]?.project?.title || "N/A"}</Text>
             }
           </View>
           {!recentProjectsLoading && <Image source={assets.ArrowBack} style={styles.arrowBottomLink} />}

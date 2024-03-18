@@ -1,6 +1,6 @@
-const BaseUri = 'http://197.243.57.170:5050'
+// const BaseUri = 'http://197.243.57.170:5050'
 
-// const BaseUri = "http://10.10.0.38:8000";
+const BaseUri = "http://10.10.0.43:8000";
 // const BaseUri = "https://rsa-data-hub.onrender.com"
 export const backendAPI = {
     // authentication
