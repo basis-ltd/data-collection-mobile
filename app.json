@@ -17,13 +17,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.nsanzimfura.datacollectionapp"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/favicon.png",
         "backgroundColor": "#064B64"
-      }
+      },
+      "package": "com.nsanzimfura.datacollectionapp"
     },
     "web": {
       "favicon": "./assets/images/favicon.png",
