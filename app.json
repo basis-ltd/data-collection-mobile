@@ -1,18 +1,21 @@
 {
   "expo": {
-    "name": "Data-collection-Mobile",
-    "slug": "Data-collection-Mobile",
+    "name": "Data Collection App",
+    "slug": "data-collection-mobile",
+    "description": "Data Collection Application. Get approved by Rwanda Space Agency, and Boom! Welcome to storing your data. You can then share it with others or keep it private to you or to your people",
     "scheme": "Data-collection-Mobile",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "",
+    "icon": "./assets/images/iconDCA.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "",
+      "image": "./assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -26,6 +29,8 @@
       "favicon": "./assets/images/favicon.png",
       "bundler": "metro"
     },
-    "plugins": ["expo-router"]
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
