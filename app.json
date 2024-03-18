@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Data Collection App",
-    "slug": "data-collection-mobile",
+    "slug": "data-collection-app",
     "description": "Data Collection Application. Get approved by Rwanda Space Agency, and Boom! Welcome to storing your data. You can then share it with others or keep it private to you or to your people",
     "scheme": "Data-collection-Mobile",
     "version": "1.0.0",
@@ -31,6 +31,20 @@
     },
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "576ae882-feb5-420b-a1be-16d5e3b7c0a1"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/576ae882-feb5-420b-a1be-16d5e3b7c0a1"
+    }
   }
 }
