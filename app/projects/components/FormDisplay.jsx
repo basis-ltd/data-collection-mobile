@@ -92,7 +92,7 @@ const FormDisplay = (props) => {
                         handleOnPress={handleNextPage}
                     /> */}
                 </View>
-                {/* HOW PREVIEW FORM */}
+                {/* HOW WE PREVIEW FORM */}
                 {showPreview &&
                     <AppPopUp handleClose={hidePreview} showPreview={showPreview}>
                         <FormPreview setIsFormSubmited={setIsFormSubmited} handleClose={hidePreview} />

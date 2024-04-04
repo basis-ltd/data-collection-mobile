@@ -42,7 +42,7 @@ const LocationRecord = ({ field }) => {
         const previousValues = formValues?.filter(item => item.field_id !== field.id);
         const fieldValues = {
             field_id: field.id,
-            value: JSON.stringify(location),
+            value: JSON.stringify({ long: location['longitude'], lat: location['latitude'] }),
             label: field.label,
             is_required: field.is_required,
             sectionName: field.sectionName,
@@ -55,7 +55,7 @@ const LocationRecord = ({ field }) => {
         <View style={styles.container}>
             <Text style={styles.label}>{field.label}</Text>
             {location &&
-                <Text style={styles.location}>{JSON.stringify(location)}</Text>
+                <Text style={styles.location}>{JSON.stringify({ longitude: location['longitude'], latitude: location['latitude'] })}</Text>
             }
             {!location && <AppButton title="Record Location" handleOnPress={requestPermission} fullWidth={true} />}
             {locationErrors && <Text style={styles.error}>{locationErrors}</Text>}

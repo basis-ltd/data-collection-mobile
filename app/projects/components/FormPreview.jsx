@@ -1,9 +1,8 @@
-import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
+import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity } from "react-native";
 import { colors } from "../../../utils/colors";
 import { fonts } from "../../../utils/fonts";
 import AppButton from '../../../components/AppButton';
 import { useSelector } from "react-redux";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { assets } from "../../../utils/assets";
 import { useEffect, useState } from "react";
 import { groupArrayByKey } from "../../../helpers/groupArrayByKey";
@@ -84,7 +83,7 @@ const FormPreview = (props) => {
             showsHorizontalScrollIndicator={false}
         >
             <View style={styles.goBackSection}>
-                <TouchableOpacity onPress={handleClose}>
+                <TouchableOpacity onPress={handleClose} style={styles.close}>
                     <Image source={assets.CloseIcon} alt="Close btn" width={25} height={25} />
                 </TouchableOpacity>
             </View>
@@ -146,7 +145,8 @@ const styles = StyleSheet.create({
         backgroundColor: colors.LIGHT,
         gap: 17,
         fontFamily: fonts.MONTSERRAT_MEDIUM,
-        minHeight: '100%'
+        minHeight: '100%',
+        paddingTop: 30,
     },
     goBackSection: {
         width: '100%',
@@ -154,6 +154,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'flex-end'
+    },
+    close: {
+        width: 40,
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors.ACCENT_LIGHT,
+        borderRadius: 5
     },
     dataPreview: {
         gap: 5,
