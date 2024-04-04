@@ -10,12 +10,13 @@ import { Formik } from "formik";
 import { formatDate } from '../../../../helpers/formatDate';
 import { FormikSubmitContext } from "./SingleField";
 import { useDispatch, useSelector } from 'react-redux';
-import { setFormValues } from './formDataSlice';
+import { setFormValues, setFormErrors } from './formDataSlice';
 
 
 const DateInputType = ({ field }) => {
     const { formSubmitRef, isFormSubmited } = useContext(FormikSubmitContext);
     const { formValues } = useSelector(state => state.formDataReducers);
+    const { formErrors } = useSelector(state => state.formDataReducers);
     const dispatch = useDispatch()
 
     const handleSubmitForm = (values) => {
@@ -35,6 +36,7 @@ const DateInputType = ({ field }) => {
         value: field.is_required ? Yup.date()
             .required("Date is required") : Yup.date(),
     });
+
 
     return (
         <Formik
@@ -61,6 +63,15 @@ const DateInputType = ({ field }) => {
                         resetForm();
                     }
                 }, [isFormSubmited]);
+
+                //watch date errors
+                useEffect(() => {
+                    if (errors.value) {
+                        dispatch(setFormErrors([...formErrors, `error_id_:_${field.id}`]))
+                    } else {
+                        dispatch(setFormErrors(formErrors.filter(item => item !== `error_id_:_${field.id}`)))
+                    }
+                }, [errors.value]);
 
                 return (
                     <View style={styles.formikContainer}>

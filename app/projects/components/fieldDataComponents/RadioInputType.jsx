@@ -6,12 +6,12 @@ import * as Yup from "yup";
 import { useContext, useEffect } from "react";
 import { FormikSubmitContext } from "./SingleField";
 import { useDispatch, useSelector } from "react-redux";
-import { setFormValues } from "./formDataSlice";
+import { setFormErrors, setFormValues } from "./formDataSlice";
 
 
 const RadioInputType = ({ field, inputIndex }) => {
     const { formSubmitRef, isFormSubmited } = useContext(FormikSubmitContext);
-    const { formValues } = useSelector(state => state.formDataReducers);
+    const { formValues, formErrors } = useSelector(state => state.formDataReducers);
     const dispatch = useDispatch()
 
     const validationSchema = Yup.object({
@@ -46,6 +46,15 @@ const RadioInputType = ({ field, inputIndex }) => {
                         resetForm();
                     }
                 }, [isFormSubmited]);
+
+                //watch errors
+                useEffect(() => {
+                    if (errors.value) {
+                        dispatch(setFormErrors([...formErrors, `error_id_:_${field.id}`]))
+                    } else {
+                        dispatch(setFormErrors(formErrors.filter(item => item !== `error_id_:_${field.id}`)))
+                    }
+                }, [errors.value]);
 
                 return (
                     <View style={styles.formikContainer}>

@@ -7,14 +7,14 @@ import { returnKeyBoardtype } from "../../../../utils/returnKeyBoardType"
 import AppTextarea from "../../../../components/AppTextarea";
 import { useContext, useEffect } from "react";
 import { FormikSubmitContext } from "./SingleField";
-import { setFormValues } from "./formDataSlice";
+import { setFormErrors, setFormValues } from "./formDataSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 
 const TextInputType = ({ field }) => {
 
     const { formSubmitRef, isFormSubmited } = useContext(FormikSubmitContext);
-    const { formValues } = useSelector(state => state.formDataReducers);
+    const { formValues, formErrors } = useSelector(state => state.formDataReducers);
     const dispatch = useDispatch()
 
     const handleSubmitForm = (values) => {
@@ -45,6 +45,15 @@ const TextInputType = ({ field }) => {
                         resetForm()
                     }
                 }, [isFormSubmited]);
+
+                //watch errors
+                useEffect(() => {
+                    if (errors.value) {
+                        dispatch(setFormErrors([...formErrors, `error_id_:_${field.id}`]))
+                    } else {
+                        dispatch(setFormErrors(formErrors.filter(item => item !== `error_id_:_${field.id}`)))
+                    }
+                }, [errors.value]);
 
                 return (
                     <View style={styles.formikContainer}>

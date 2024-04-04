@@ -10,13 +10,13 @@ import * as ImagePicker from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
 import { FormikSubmitContext } from "./SingleField";
 import { useDispatch, useSelector } from "react-redux";
-import { setFormValues } from "./formDataSlice";
+import { setFormErrors, setFormValues } from "./formDataSlice";
 
 
 const FilesInputType = ({ field }) => {
     const { formSubmitRef, isFormSubmited } = useContext(FormikSubmitContext);
     const [uploadedFiles, setUploadedFiles] = useState([]);
-    const { formValues } = useSelector(state => state.formDataReducers);
+    const { formValues, formErrors } = useSelector(state => state.formDataReducers);
     const dispatch = useDispatch()
 
     const handleUpload = async () => {
@@ -79,6 +79,15 @@ const FilesInputType = ({ field }) => {
                         setUploadedFiles([]);
                     }
                 }, [isFormSubmited]);
+
+                //watch file errors
+                useEffect(() => {
+                    if (errors.value) {
+                        dispatch(setFormErrors([...formErrors, `error_id_:_${field.id}`]))
+                    } else {
+                        dispatch(setFormErrors(formErrors.filter(item => item !== `error_id_:_${field.id}`)))
+                    }
+                }, [errors.value]);
 
                 return (
                     <View style={styles.formikContainer}>
