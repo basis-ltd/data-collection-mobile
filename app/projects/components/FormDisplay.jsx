@@ -15,7 +15,7 @@ const FormDisplay = (props) => {
     const [isFormSubmited, setIsFormSubmited] = useState(false);
     const [showPreview, setShowPreview] = useState(false);
     const [allFields, setAllFields] = useState([]);
-    const { formValues } = useSelector(state => state.formDataReducers);
+    const { formErrors } = useSelector(state => state.formDataReducers);
 
     // manage form actions functions
     const handlePreviewForm = () => {
@@ -23,11 +23,8 @@ const FormDisplay = (props) => {
             const pressableComponent = formSubmitRef.current[key];
             pressableComponent.handleSubmit();
         });
-        //get all required form values;
-        const requiredFormValues = formValues.filter(formVal => formVal.is_required);
         //if all  required fields are filled, then we can launch Preview
-
-        if (requiredFormValues.length >= allFields.length) {
+        if (formErrors?.length === 0) {
             setShowPreview(true)
         }
     }

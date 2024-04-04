@@ -12,11 +12,14 @@ const useFetchData = () => {
         setError(null);
         setData(null);
         const token = await AsyncStorage.getItem("accessToken");
-        const axiosConfig = token ? {
+        const axiosConfig = {
             headers: {
-                Authorization: `Bearer ${token}`,
+                ...(token && { Authorization: `Bearer ${token}` }),
+                'Cache-Control': 'no-cache, no-store, must-revalidate',
+                'Pragma': 'no-cache',
+                'Expires': '0',
             },
-        } : {};
+        }
 
         try {
             const response = await axios.get(url, axiosConfig);

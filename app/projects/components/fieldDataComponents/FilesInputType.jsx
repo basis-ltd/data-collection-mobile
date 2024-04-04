@@ -11,6 +11,8 @@ import * as DocumentPicker from 'expo-document-picker';
 import { FormikSubmitContext } from "./SingleField";
 import { useDispatch, useSelector } from "react-redux";
 import { setFormErrors, setFormValues } from "./formDataSlice";
+import { allowedFileTypes, maxFileSize } from "../../../../constants/allowedFileTypes";
+import { isAllowedFileType } from "../../../../helpers/isAllowedTypeFile";
 
 
 const FilesInputType = ({ field }) => {
@@ -27,12 +29,22 @@ const FilesInputType = ({ field }) => {
         }
 
         const pickerResult = await DocumentPicker.getDocumentAsync({
-            type: "*/*",
+            type: allowedFileTypes,
             multiple: true,
         });
-        const newFiles = !pickerResult.canceled ? pickerResult.assets : [];
 
-        setUploadedFiles((currentFiles) => [...currentFiles, ...newFiles]);
+        if (pickerResult.type === "cancel") {
+            return;
+        }
+
+
+
+        const filteredFiles = pickerResult.assets?.filter(file => {
+            const isUnderSizeLimit = file.size <= maxFileSize; // File size <= 5MB
+            return isAllowedFileType(file) && isUnderSizeLimit;
+        });
+
+        setUploadedFiles((currentFiles) => [...currentFiles, ...filteredFiles]);
     };
 
     const validationSchema = Yup.object({
@@ -92,6 +104,7 @@ const FilesInputType = ({ field }) => {
                 return (
                     <View style={styles.formikContainer}>
                         {field.label && <Text style={styles.label}>{field.label}</Text>}
+                        <Text style={styles.labelNB}>NB: Each file can not exceed 5MB of size</Text>
                         <View style={styles.introFiles}>
                             <TouchableOpacity onPress={handleUpload} style={styles.uploadBtn}>
                                 <Image source={assets.FileIcon} style={{ width: 15, height: 30 }} />
@@ -155,6 +168,14 @@ const styles = StyleSheet.create({
         fontSize: 14,
         backgroundColor: "transparent",
         width: "100%",
+    },
+    labelNB: {
+        color: colors.BLUE,
+        fontFamily: fonts.MONTSERRAT_MEDIUM,
+        fontSize: 12,
+        backgroundColor: "transparent",
+        width: "100%",
+        fontStyle: "italic"
     },
     introFiles: {
         flexDirection: 'row',
