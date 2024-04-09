@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppLoadingSpin from "../../components/AppLoadingSpin";
 import { useDispatch } from "react-redux";
 import { setProjectLists } from "../projects/projectSlice";
+import { getInitials } from "../../helpers/getNameInitials";
 
 
 const HomeScreen = () => {
@@ -61,7 +62,9 @@ const HomeScreen = () => {
                 accessibilityLabel="User Profile"
                 alt="User Profile"
               /> :
-              <Ionicons style={styles.icon} name="person" size={40} color="black" />
+              <View style={styles.icon}>
+                <Text style={styles.icon_Icon}>{getInitials(`${userProfile.firstName} ${userProfile.lastName}`)}</Text>
+              </View>
             }
           </View>
           <View style={styles.userWrapper}>
@@ -72,7 +75,6 @@ const HomeScreen = () => {
       }
       <Text style={styles.title}>Your Project’s stats</Text>
       <View style={styles.statusWrapper}>
-
         <View style={styles.statBox}>
           <Text style={styles.statText}>Active Projects</Text>
           {data && <Text style={styles.statNumber}>{data.data}</Text>}
@@ -143,6 +145,14 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     justifyContent: "center",
     alignItems: "center",
+  },
+  icon_Icon: {
+    justifyContent: "center",
+    alignItems: "center",
+    fontFamily: fonts.MONTSERRAT_EXTRA_BOLD,
+    color: colors.PRIMARY,
+    fontSize: 16,
+    textAlign: "center",
   },
   userIntroBox: {
     flexDirection: "row",

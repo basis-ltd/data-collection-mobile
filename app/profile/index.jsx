@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { colors } from "../../utils/colors";
 import { fonts } from "../../utils/fonts";
@@ -6,7 +6,6 @@ import PageGuard from "../../components/Guards";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { assets } from "../../utils/assets";
 import * as ImagePicker from 'expo-image-picker';
-import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useFetchData from "../../hooks/useFetchData";
 import AppLoadingSpin from "../../components/AppLoadingSpin";
@@ -16,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { setProjectId, setProjectLists } from "../projects/projectSlice";
 import { useNavigation } from "expo-router";
 import { frontendAPI } from "../../api/frontendApi";
+import { getInitials } from "../../helpers/getNameInitials";
 
 
 
@@ -92,7 +92,10 @@ const Profile = () => {
     <PageGuard style={styles.profile}>
       <View style={styles.imagesWrapper}>
         {imagePreview && <Image source={{ uri: imagePreview }} resizeMode="cover" style={styles.preview} />}
-        {!imagePreview && <Ionicons style={styles.preview} name="person" size={200} color="black" />}
+        {!imagePreview &&
+          <View style={styles.preview}>
+            <Text style={styles.nameInitial}>{getInitials(`${defaultUser?.firstName} ${defaultUser?.lastName}`)}</Text>
+          </View>}
         <TouchableOpacity onPress={handleUpload} style={styles.btnUpload} >
           <Image source={assets.CamIcon} style={{ width: 39, height: 39 }} />
         </TouchableOpacity>
@@ -160,10 +163,17 @@ const styles = StyleSheet.create({
     borderRadius: 167 / 2,
     borderWidth: 2,
     borderColor: colors.PRIMARY,
+    display: 'flex',
+    flexDirection: 'row',
     justifyContent: "center",
     alignItems: "center",
-    padding: 0.
-
+    padding: 0,
+    backgroundColor: colors.LIGHTEST_WHITE,
+  },
+  nameInitial: {
+    fontSize: 40,
+    fontFamily: fonts.MONTSERRAT_EXTRA_BOLD,
+    color: colors.PRIMARY,
   },
   btnUpload: {
     width: "100%",
